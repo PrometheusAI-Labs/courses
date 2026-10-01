@@ -1,0 +1,273 @@
+<section class="module" id="module-5" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">05</span>
+      <h1 class="module-title">The Teaching Toolkit</h1>
+      <p class="module-subtitle">The interactive tools that make learning stick</p>
+    </header>
+
+    <!-- ── SCREEN 1: More Than Just Text ─────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">More Than Just Text</h2>
+
+      <p>Most programming tutorials are walls of text with occasional code blocks. These books pack interactive tools into every chapter.</p>
+
+      <div class="pattern-cards">
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon">📊</div>
+          <div class="pattern-title"><span class="term" data-definition="A tool that generates diagrams from text descriptions. You write 'A --> B' and it draws boxes with arrows. Supported in GitHub, mdbook, and many documentation tools.">Mermaid</span> Diagrams</div>
+          <p class="pattern-desc">Visualize complex flows — like how async code executes or how data moves between components. Written as text, rendered as beautiful <span class="term" data-definition="Scalable Vector Graphics — an image format that uses math instead of pixels, so it looks sharp at any size. Perfect for diagrams and icons.">SVGs</span>.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-5)">
+          <div class="pattern-icon">▶️</div>
+          <div class="pattern-title">Editable Playgrounds</div>
+          <p class="pattern-desc">Code examples you can edit and run directly in the browser. Change a variable, hit Run, see what happens. No setup required.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-4)">
+          <div class="pattern-icon">🎯</div>
+          <div class="pattern-title">Difficulty Indicators</div>
+          <p class="pattern-desc">Every chapter is tagged with difficulty: green for easy, yellow for intermediate, red for hard. You always know what you are getting into.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon">🔍</div>
+          <div class="pattern-title">Full-Text Search</div>
+          <p class="pattern-desc">Search across all chapters in a book instantly. Forgot where ownership was explained? Search and jump right there.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 2: How Diagrams Are Born ───────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">How Diagrams Are Born</h2>
+
+      <p>The books use <span class="term" data-definition="A tool that generates diagrams from text descriptions. You write 'A --> B' and it draws boxes with arrows. Supported in GitHub, mdbook, and many documentation tools.">Mermaid</span> to create diagrams. Instead of drawing in an image editor, you write plain text — and a <span class="term" data-definition="A program that runs BEFORE the main build step. In mdbook, preprocessors transform the source files — like converting Mermaid text to SVG images — before HTML is generated.">preprocessor</span> converts it into a clean <span class="term" data-definition="Scalable Vector Graphics — an image format that uses math instead of pixels, so it looks sharp at any size. Perfect for diagrams and icons.">SVG</span> diagram during the build. Here is a real example from the async book showing how futures are polled:</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">async-book ch02 — Mermaid diagram</span>
+<code><span class="code-line"><span class="code-keyword">sequenceDiagram</span></span>
+<span class="code-line">    <span class="code-keyword">participant</span> <span class="code-property">E</span> <span class="code-keyword">as</span> <span class="code-string">Executor</span></span>
+<span class="code-line">    <span class="code-keyword">participant</span> <span class="code-property">F</span> <span class="code-keyword">as</span> <span class="code-string">Future (Task)</span></span>
+<span class="code-line">    <span class="code-keyword">participant</span> <span class="code-property">OS</span> <span class="code-keyword">as</span> <span class="code-string">Operating System</span></span>
+<span class="code-line">    <span class="code-keyword">participant</span> <span class="code-property">R</span> <span class="code-keyword">as</span> <span class="code-string">Reactor (Runtime)</span></span>
+<span class="code-line">    <span class="code-property">E</span><span class="code-operator">->></span><span class="code-property">F</span>: <span class="code-string">Calls poll(cx)</span></span>
+<span class="code-line">    <span class="code-property">F</span><span class="code-operator">->></span><span class="code-property">OS</span>: <span class="code-string">Syscall (e.g., read TCP socket)</span></span>
+<span class="code-line">    <span class="code-property">OS</span><span class="code-operator">-->></span><span class="code-property">F</span>: <span class="code-string">Returns Error: Not Ready</span></span>
+<span class="code-line">    <span class="code-property">F</span><span class="code-operator">-->></span><span class="code-property">E</span>: <span class="code-string">Returns Poll::Pending</span></span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Plain English</span>
+          <div class="translation-lines">
+            <div class="tl"><strong><span class="code-keyword">sequenceDiagram</span></strong> — Draw a timeline showing messages flowing between actors, from top to bottom</div>
+            <div class="tl"><strong><span class="code-keyword">participant</span> <span class="code-property">E</span> <span class="code-keyword">as</span> <span class="code-string">Executor</span></strong> — Create an actor called "Executor" (the thing that runs tasks) — label it "E" for short</div>
+            <div class="tl"><strong><span class="code-keyword">participant</span> <span class="code-property">F</span> <span class="code-keyword">as</span> <span class="code-string">Future (Task)</span></strong> — Create an actor called "Future" — a task that will eventually produce a result</div>
+            <div class="tl"><strong><span class="code-keyword">participant</span> <span class="code-property">OS</span> <span class="code-keyword">as</span> <span class="code-string">Operating System</span></strong> — The operating system — the software that manages your computer hardware</div>
+            <div class="tl"><strong><span class="code-keyword">participant</span> <span class="code-property">R</span> <span class="code-keyword">as</span> <span class="code-string">Reactor (Runtime)</span></strong> — The reactor — a listener that watches for events (like data arriving from the network)</div>
+            <div class="tl"><strong><span class="code-property">E</span><span class="code-operator">->></span><span class="code-property">F</span>: <span class="code-string">Calls poll(cx)</span></strong> — Solid arrow from Executor to Future: "Hey, are you done yet?"</div>
+            <div class="tl"><strong><span class="code-property">F</span><span class="code-operator">->></span><span class="code-property">OS</span>: <span class="code-string">Syscall</span></strong> — Future asks the operating system to check the network socket</div>
+            <div class="tl"><strong><span class="code-property">OS</span><span class="code-operator">-->></span><span class="code-property">F</span>: <span class="code-string">Returns Error: Not Ready</span></strong> — Dashed arrow back: "Nope, no data yet"</div>
+            <div class="tl"><strong><span class="code-property">F</span><span class="code-operator">-->></span><span class="code-property">E</span>: <span class="code-string">Returns Poll::Pending</span></strong> — Future tells Executor: "Not ready — I will let you know when I am"</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 3: The Book Configuration ──────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Book Configuration</h2>
+
+      <p>Every book in the project has a <code>book.toml</code> file — a <span class="term" data-definition="A configuration file format designed to be easy to read. It uses [sections] and key = value pairs. The name stands for Tom's Obvious, Minimal Language.">TOML</span> configuration that tells <span class="term" data-definition="A tool that turns plain text files (written in Markdown) into beautiful, searchable websites. Think of it as a website builder specifically designed for documentation and books.">mdbook</span> how to build it. Here is a simplified version from the async book:</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">book.toml</span>
+<code><span class="code-line"><span class="code-keyword">[book]</span></span>
+<span class="code-line"><span class="code-property">title</span> <span class="code-operator">=</span> <span class="code-string">"Async Rust"</span></span>
+<span class="code-line"><span class="code-property">authors</span> <span class="code-operator">=</span> [<span class="code-string">"Rust Training Team"</span>]</span>
+<span class="code-line"><span class="code-property">language</span> <span class="code-operator">=</span> <span class="code-string">"en"</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">[preprocessor.mermaid]</span></span>
+<span class="code-line"><span class="code-property">command</span> <span class="code-operator">=</span> <span class="code-string">"mdbook-mermaid"</span></span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">[output.html]</span></span>
+<span class="code-line"><span class="code-property">default-theme</span> <span class="code-operator">=</span> <span class="code-string">"light"</span></span>
+<span class="code-line"><span class="code-property">preferred-dark-theme</span> <span class="code-operator">=</span> <span class="code-string">"ayu"</span></span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Plain English</span>
+          <div class="translation-lines">
+            <div class="tl"><strong><span class="code-keyword">[book]</span></strong> — Basic book information — title, authors, and language</div>
+            <div class="tl"><strong><span class="code-property">title</span> <span class="code-operator">=</span> <span class="code-string">"Async Rust"</span></strong> — The name shown in the browser tab and page header</div>
+            <div class="tl"><strong><span class="code-property">authors</span> <span class="code-operator">=</span> [<span class="code-string">"Rust Training Team"</span>]</strong> — Who wrote it — shown in the book metadata</div>
+            <div class="tl"><strong><span class="code-property">language</span> <span class="code-operator">=</span> <span class="code-string">"en"</span></strong> — Written in English — affects things like search behavior and text direction</div>
+            <div class="tl"><strong><span class="code-keyword">[preprocessor.mermaid]</span></strong> — Before building, run the <span class="term" data-definition="A tool that generates diagrams from text descriptions. You write 'A --> B' and it draws boxes with arrows. Supported in GitHub, mdbook, and many documentation tools.">Mermaid</span> <span class="term" data-definition="A program that runs BEFORE the main build step. In mdbook, preprocessors transform the source files — like converting Mermaid text to SVG images — before HTML is generated.">preprocessor</span> to convert diagram text into images</div>
+            <div class="tl"><strong><span class="code-property">command</span> <span class="code-operator">=</span> <span class="code-string">"mdbook-mermaid"</span></strong> — The actual program to run for Mermaid processing</div>
+            <div class="tl"><strong><span class="code-keyword">[output.html]</span></strong> — Settings for the HTML output</div>
+            <div class="tl"><strong><span class="code-property">default-theme</span> <span class="code-operator">=</span> <span class="code-string">"light"</span></strong> — Start with a light background (readers can switch to dark mode)</div>
+            <div class="tl"><strong><span class="code-property">preferred-dark-theme</span> <span class="code-operator">=</span> <span class="code-string">"ayu"</span></strong> — When readers choose dark mode, use the "Ayu" color scheme — a popular warm-toned dark <span class="term" data-definition="A set of colors and styles that change how something looks. 'Light theme' has a white background; 'dark theme' has a dark background. The content stays the same.">theme</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 4: The Curriculum Architecture ─────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Curriculum Architecture</h2>
+
+      <p>Each book follows a consistent three-part structure. This is not random — it mirrors how experts actually learn: start with what you know, go deep on the hard parts, then prove you can build something real.</p>
+
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Part I: Foundations</strong>
+            <p>The basics, connecting Rust concepts to what you already know</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Part II: Deep Dives</strong>
+            <p>Focused exploration of major topics (concurrency, async, systems)</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Part III: Practice</strong>
+            <p>Best practices, migration guides, and a <span class="term" data-definition="A final project that ties together everything learned in a course. Like a thesis at the end of a degree — it proves you can apply the concepts.">capstone project</span> to tie it all together</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+          <span class="callout-title">Key Insight</span>
+          <p>Every bridge book ends with a <span class="term" data-definition="A final project that ties together everything learned in a course. Like a thesis at the end of a degree — it proves you can apply the concepts.">capstone project</span> — a real, complete application. The C# book builds a CLI weather tool. The Python book builds a task manager. You do not just learn concepts — you build something real.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 5: The Big Picture ─────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Big Picture</h2>
+
+      <p>Let us zoom out and see how everything fits together. The entire system has three layers: content goes in, the build system transforms it, and the delivery layer gets it to readers.</p>
+
+      <div class="arch-diagram">
+        <div class="arch-zone">
+          <div class="arch-zone-label">Content Layer</div>
+          <div class="arch-component" data-desc="Each folder contains Markdown files, a SUMMARY.md table of contents, a book.toml config, and Mermaid diagram source files.">
+            <span class="arch-icon">📚</span>
+            <span>7 Book Folders</span>
+          </div>
+          <div class="arch-component" data-desc="Chapters are written in Markdown with embedded Mermaid diagram code blocks. The preprocessor converts diagram text to SVG images during build.">
+            <span class="arch-icon">📝</span>
+            <span>Markdown + <span class="term" data-definition="A tool that generates diagrams from text descriptions. You write 'A --> B' and it draws boxes with arrows. Supported in GitHub, mdbook, and many documentation tools.">Mermaid</span></span>
+          </div>
+        </div>
+
+        <div class="arch-zone">
+          <div class="arch-zone-label">Build Layer</div>
+          <div class="arch-component" data-desc="The Rust-based orchestrator. Loops through all books, runs mdbook for each, generates the landing page, and can serve locally on port 3000.">
+            <span class="arch-icon">🔧</span>
+            <span>xtask</span>
+          </div>
+          <div class="arch-component" data-desc="The static site generator. Converts each book folder into a searchable HTML website with syntax highlighting, editable playgrounds, and theme switching.">
+            <span class="arch-icon">📖</span>
+            <span>mdbook</span>
+          </div>
+        </div>
+
+        <div class="arch-zone">
+          <div class="arch-zone-label">Delivery Layer</div>
+          <div class="arch-component" data-desc="Automated CI/CD. On every push to main, it installs tools, runs xtask deploy, and publishes to GitHub Pages. Zero manual steps.">
+            <span class="arch-icon">🤖</span>
+            <span>GitHub Actions</span>
+          </div>
+          <div class="arch-component" data-desc="Alternative deployment. Multi-stage build creates a tiny container with just nginx serving the static HTML. Runs anywhere, even offline.">
+            <span class="arch-icon">🐳</span>
+            <span>Docker + nginx</span>
+          </div>
+        </div>
+
+        <div class="arch-description" id="arch-desc">Click any component to learn what it does</div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 6: Final Quiz ──────────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">Check Your Understanding</h2>
+
+      <div class="quiz-container" id="quiz-module5">
+
+        <!-- Q1 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="Mermaid diagrams are written as text inside Markdown files. The mdbook-mermaid preprocessor automatically converts them to SVGs during build." data-explanation-wrong="Think about how the existing diagrams are created — they are text, not images.">
+          <div class="quiz-question">1. You want to add a diagram showing how Rust ownership works to the C# book. What do you need to do?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Draw the diagram in an image editor and save it as PNG
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Write the diagram as <span class="term" data-definition="A tool that generates diagrams from text descriptions. You write 'A --> B' and it draws boxes with arrows. Supported in GitHub, mdbook, and many documentation tools.">Mermaid</span> text inside the Markdown chapter file
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Create a separate JavaScript visualization
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Use HTML canvas elements
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="The [output.html.playground] section with editable = true controls whether code blocks are interactive. Without it, they are static." data-explanation-wrong="Remember the book.toml configuration — which setting controls code editability?">
+          <div class="quiz-question">2. A reader reports that code examples in the Python book cannot be edited or run. What is the most likely configuration issue?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The Python interpreter is not installed
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The <code>editable = true</code> setting is missing or set to false in book.toml
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> JavaScript is disabled in the browser
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The Docker container is not running
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-question-block" data-correct="option-c" data-explanation-right="Content comes first. Create the book folders, write SUMMARY.md for the table of contents, and configure book.toml. The build and deployment infrastructure is secondary." data-explanation-wrong="Think about what the foundation of this project is — is it the infrastructure or the content?">
+          <div class="quiz-question">3. Your company wants to create a similar training system for Go. Based on what you learned, what would be your recommended first step?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Write a Docker container
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Set up GitHub Actions
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Create the book content structure with mdbook and configure book.toml for each book
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Build a custom web server
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Reset</button>
+      </div>
+    </section>
+
+  </div>
+</section>

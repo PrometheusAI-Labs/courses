@@ -1,0 +1,317 @@
+<!-- ════════════════════════════════════════════════════════════
+     MODULE 6 — Бэкенд на Rust
+     ════════════════════════════════════════════════════════════ -->
+<section class="module" id="module-6" style="background: var(--color-bg-warm);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <div class="module-header animate-in">
+      <span class="module-number">06</span>
+      <h2 class="module-title">Бэкенд на Rust</h2>
+      <p class="module-subtitle">Базы данных, HTTP-серверы и GraphQL API — финальный рубеж</p>
+    </div>
+
+    <!-- ── Metaphor callout ────────────────────────────────────── -->
+    <div class="callout callout-info animate-in">
+      <div class="callout-icon">&#128218;</div>
+      <div class="callout-content">
+        <span class="callout-title">Метафора: диспетчерская башня аэропорта</span>
+        <p>Бэкенд — это центр управления: принимает запросы (самолёты), проверяет их, направляет к нужным данным (терминалам) и отправляет ответы обратно. Каждый компонент системы — HTTP-сервер, GraphQL-резолвер, база данных — это отдельная служба аэропорта, работающая слаженно.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: Три столпа бэкенда ────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Три столпа бэкенда</h3>
+
+      <p class="animate-in">
+        Rust Incubator завершается тремя шагами, которые покрывают весь стек бэкенд-разработки.
+      </p>
+
+      <div class="icon-rows stagger-children animate-in">
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-accent-light); color: var(--color-accent);">
+            &#128451;
+          </div>
+          <div>
+            <strong>4.1 Базы данных</strong>
+            <p><span class="term" data-definition="diesel, sqlx, sea-orm — популярные Rust-библиотеки для работы с базами данных. diesel — типобезопасный ORM, sqlx — асинхронные запросы с проверкой на этапе компиляции, sea-orm — асинхронный ORM.">diesel, sqlx, sea-orm</span>. <span class="term" data-definition="Пул соединений (connection pool) — набор заранее открытых соединений с базой данных, которые переиспользуются запросами. Это экономит ресурсы, потому что открытие нового соединения — дорогая операция.">Пулы соединений</span>, <span class="term" data-definition="Миграция — скрипт, который изменяет структуру базы данных (создаёт таблицы, добавляет столбцы и т.д.). Миграции применяются последовательно и позволяют версионировать схему базы.">миграции</span>, <span class="term" data-definition="ORM (Object-Relational Mapping) — технология, которая связывает таблицы базы данных со структурами в коде. Вместо написания SQL-запросов вы работаете с обычными Rust-структурами.">ORM</span></p>
+          </div>
+        </div>
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-info-light); color: var(--color-info);">
+            &#127760;
+          </div>
+          <div>
+            <strong>4.2 HTTP</strong>
+            <p>actix-web, axum, hyper. Серверы и клиенты, <span class="term" data-definition="WebSocket — протокол, который позволяет серверу и клиенту обмениваться сообщениями в реальном времени через постоянное соединение. В отличие от HTTP, где клиент всегда инициирует запрос, WebSocket позволяет серверу отправлять данные клиенту в любой момент.">WebSocket</span></p>
+          </div>
+        </div>
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-success-light); color: var(--color-success);">
+            &#128640;
+          </div>
+          <div>
+            <strong>4.3 API</strong>
+            <p><span class="term" data-definition="GraphQL — язык запросов для API, разработанный Facebook. Клиент сам описывает, какие поля ему нужны. Сервер возвращает ровно то, что запрошено — ни больше, ни меньше.">GraphQL</span> (async-graphql), <span class="term" data-definition="REST (Representational State Transfer) — архитектурный стиль API, где каждый ресурс имеет свой URL. GET /users/1 возвращает пользователя, POST /users создаёт нового. Простой, но может возвращать лишние данные (over-fetching).">REST</span>, <span class="term" data-definition="gRPC — высокопроизводительный RPC-фреймворк от Google. Использует Protocol Buffers для сериализации и HTTP/2 для транспорта. Быстрее REST, но сложнее в настройке.">gRPC</span>. Проектирование API</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Финальный проект — GraphQL API сервер ──────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Финальный проект — GraphQL API сервер</h3>
+
+      <p class="animate-in">
+        Кульминация всего курса. Финальный проект объединяет всё, что вы изучили: систему типов, async/await, работу с базой данных и HTTP. Вот требования:
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Модель данных</strong>
+            <p>User с полями id, name и список friends (другие User). Рекурсивная структура — друзья тоже имеют друзей.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Аутентификация по паролю</strong>
+            <p>Пользователь вводит логин и пароль, сервер возвращает токен авторизации. Пароли хранятся в хешированном виде.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Регистрация пользователей</strong>
+            <p>Мутация для создания нового пользователя с именем и паролем. Валидация входных данных.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Получение пользователя с друзьями</strong>
+            <p>Запрос пользователя со всеми друзьями (и друзьями друзей) — требует авторизации. Поддержка вложенных запросов.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Добавление и удаление друзей</strong>
+            <p>Мутации для управления списком друзей — требуют авторизации. Только авторизованный пользователь может изменять свой список.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Стек технологий — Data Flow ───────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Стек технологий</h3>
+
+      <p class="animate-in">
+        Как все компоненты работают вместе? Проследим путь GraphQL-запроса от клиента до базы данных и обратно.
+      </p>
+
+      <div class="flow-animation animate-in" data-steps='[{"highlight":"flow-actor-1","label":"Клиент отправляет GraphQL-запрос: query { user(id: 1) { name, friends { name } } }"},{"highlight":"flow-actor-2","label":"HTTP-сервер (axum) принимает запрос и проверяет токен авторизации","packet":true,"from":"actor-1","to":"actor-2"},{"highlight":"flow-actor-3","label":"Запрос передаётся GraphQL-резолверу (async-graphql)","packet":true,"from":"actor-2","to":"actor-3"},{"highlight":"flow-actor-3","label":"Резолвер разбирает запрос: какие поля нужны? Нужны ли вложенные данные?"},{"highlight":"flow-actor-4","label":"Резолвер запрашивает данные у базы через sqlx/diesel","packet":true,"from":"actor-3","to":"actor-4"},{"highlight":"flow-actor-4","label":"База возвращает пользователя и его друзей","packet":true,"from":"actor-4","to":"actor-3"},{"highlight":"flow-actor-3","label":"Резолвер формирует JSON-ответ строго по запрошенным полям"},{"highlight":"flow-actor-1","label":"Ответ отправляется клиенту. Только запрошенные данные — ничего лишнего!","packet":true,"from":"actor-3","to":"actor-1"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">&#9992;</div>
+            <span>Клиент</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">&#127760;</div>
+            <span>axum/actix</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">&#128270;</div>
+            <span>GraphQL Resolver</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">&#128451;</div>
+            <span>База данных</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите &laquo;Следующий шаг&raquo; для начала</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Почему Rust для бэкенда ───────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Почему Rust для бэкенда</h3>
+
+      <p class="animate-in">
+        Rust сочетает три качества, которые редко встречаются вместе в одном языке.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-accent-light); color: var(--color-accent);">&#9889;</div>
+          <div class="pattern-title">Производительность</div>
+          <p class="pattern-desc">Скорость C/C++ без сборщика мусора. Предсказуемая латентность, нет пауз GC. Серверы на Rust обрабатывают миллионы запросов с минимальным потреблением памяти.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-success);">&#128274;</div>
+          <div class="pattern-title">Безопасность</div>
+          <p class="pattern-desc">Никаких data races, null pointer dereference или buffer overflow. Компилятор гарантирует корректность на этапе сборки, а не в продакшене.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-info);">&#128171;</div>
+          <div class="pattern-title">Надёжность</div>
+          <p class="pattern-desc">Если скомпилировалось — с высокой вероятностью работает корректно. Паттерн Result&lt;T, E&gt; вместо исключений. Ошибки обрабатываются явно, а не прячутся в стеке вызовов.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Callout — depth limiting ──────────────────── -->
+    <div class="screen animate-in">
+      <div class="callout callout-accent">
+        <div class="callout-icon">&#9888;&#65039;</div>
+        <div class="callout-content">
+          <span class="callout-title">Важно: depth limiting</span>
+          <p>GraphQL решает проблему REST — over-fetching и under-fetching. Клиент сам описывает, какие именно данные ему нужны. Но это создаёт новую проблему: вложенные запросы могут убить базу данных. Запрос <code>friends { friends { friends { ... } } }</code> генерирует экспоненциальное количество SQL-запросов. Поэтому в задании предлагают реализовать depth limiting — ограничение глубины вложенности запросов.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Итоги курса ───────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Итоги курса</h3>
+
+      <p class="animate-in">
+        Пройдём весь путь Rust Incubator от начала до конца — от первых строк кода до production-ready бэкенда.
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Основы</strong>
+            <p>Владение, заимствование, система типов — фундамент, на котором строится всё остальное.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Концепции</strong>
+            <p>Умные указатели, потокобезопасность, фантомные типы — глубокое понимание механизмов Rust.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Идиомы</strong>
+            <p>Newtype, typestates, zero-cost абстракции — как писать код так, как принято в Rust-сообществе.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Экосистема</strong>
+            <p>Тестирование, serde, async, CLI-инструменты — библиотеки и инструменты для реальных проектов.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Бэкенд</strong>
+            <p>HTTP, базы данных, GraphQL API — всё вместе в финальном проекте.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">&#127942;</div>
+        <div class="callout-content">
+          <span class="callout-title">Финальное слово</span>
+          <p>Rust Incubator — это не просто учебник. Это маршрут трансформации: от человека, который слышал про Rust, до разработчика, способного создать production-ready бэкенд. Каждый шаг имеет значение.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 7: Quiz ──────────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Проверьте себя</h3>
+
+      <div class="quiz-container" id="quiz-module6">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="REST возвращает фиксированные структуры. GraphQL — ровно то, что запросил клиент."
+             data-explanation-wrong="GraphQL выбран не ради моды. Его главное преимущество — клиент сам определяет структуру ответа, избегая over-fetching (получения лишних данных) и under-fetching (нехватки данных).">
+          <p class="quiz-question">1. Почему GraphQL используется вместо REST в финальном проекте?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              GraphQL модный
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              GraphQL позволяет клиенту запрашивать только нужные данные, избегая over-fetching
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              REST не поддерживается в Rust
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Без depth limiting запрос friends { friends { friends { ... } } } может сгенерировать экспоненциальное количество SQL-запросов."
+             data-explanation-wrong="Depth limiting — это именно ограничение глубины вложенных запросов. Без него рекурсивный запрос friends { friends { friends { ... } } } создаст экспоненциальную нагрузку на базу данных.">
+          <p class="quiz-question">2. Что такое depth limiting в GraphQL?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Ограничение на количество полей в ответе
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Ограничение глубины вложенных запросов, чтобы предотвратить чрезмерную нагрузку на базу данных
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Максимальный размер ответа в байтах
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Именно это сочетание делает Rust уникальным: производительность системного языка с гарантиями безопасности на уровне компилятора."
+             data-explanation-wrong="Rust подходит для бэкенда не из-за синтаксиса или устаревания других языков, а благодаря сочетанию производительности, безопасности памяти и compile-time гарантий.">
+          <p class="quiz-question">3. Почему Rust подходит для бэкенд-разработки?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что у Rust красивый синтаксис
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что Rust сочетает производительность C с безопасностью памяти, предсказуемую латентность без GC и compile-time гарантии отсутствия data races
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что все остальные языки устарели
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module6')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module6')">Начать заново</button>
+      </div>
+    </div>
+
+  </div>
+</section>

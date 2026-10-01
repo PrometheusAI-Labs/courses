@@ -1,0 +1,334 @@
+<section class="module" id="module-2" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">02</span>
+      <h1 class="module-title">Meet the Cast</h1>
+      <p class="module-subtitle">The actors, stage crew, and director behind the scenes</p>
+    </header>
+
+    <!-- ── Screen 1: The Cast of Characters ──────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Cast of Characters</h2>
+      <p>Every codebase has characters — pieces of software that each play a specific role. Let's meet the stars of this show.</p>
+
+      <div class="icon-rows">
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-actor-2)">&#x1F4D6;</div>
+          <div>
+            <strong>mdbook</strong>
+            <p>The engine that transforms plain <span class="term" data-definition="A simple text format where you use symbols like # for headings and ** for bold text. It's designed to be readable as plain text and convertable to HTML.">Markdown</span> text files into beautiful, searchable book websites</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-actor-1)">&#x1F527;</div>
+          <div>
+            <strong>xtask</strong>
+            <p>The stage manager. A custom Rust program that orchestrates building all 7 books and serves them locally</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-actor-3)">&#x1F433;</div>
+          <div>
+            <strong><span class="term" data-definition="A tool that packages software into 'containers' — self-contained bundles that include everything needed to run, regardless of what computer you're on.">Docker</span></strong>
+            <p>The shipping container. Packages everything into a portable box that runs anywhere</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-actor-4)">&#x1F916;</div>
+          <div>
+            <strong>GitHub Actions</strong>
+            <p>The automation robot. Deploys the books to the web whenever code changes (<span class="term" data-definition="Continuous Integration / Continuous Deployment — automated systems that test and publish your software every time you make a change. Like having a robot assistant that handles releases.">CI/CD</span>)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screen 2: The Directory Map ────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Directory Map</h2>
+      <p>Let's look at how the files are organized.</p>
+
+      <div class="file-tree">
+        <div class="ft-folder open">
+          <span class="ft-name">RustTraining/</span>
+          <div class="ft-children">
+            <div class="ft-folder">
+              <span class="ft-name">c-cpp-book/</span>
+              <span class="ft-desc">Rust for C/C++ Programmers</span>
+              <div class="ft-children">
+                <div class="ft-folder">
+                  <span class="ft-name">src/</span>
+                  <span class="ft-desc">Chapter content (Markdown files)</span>
+                </div>
+                <div class="ft-file">
+                  <span class="ft-name">book.toml</span>
+                  <span class="ft-desc">Book configuration</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">csharp-book/</span>
+              <span class="ft-desc">Rust for C# Programmers</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">python-book/</span>
+              <span class="ft-desc">Rust for Python Programmers</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">async-book/</span>
+              <span class="ft-desc">Async Rust deep dive</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">rust-patterns-book/</span>
+              <span class="ft-desc">Advanced patterns</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">type-driven-correctness-book/</span>
+              <span class="ft-desc">Expert type techniques</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">engineering-book/</span>
+              <span class="ft-desc">Engineering practices</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">xtask/</span>
+              <span class="ft-desc">The build orchestrator</span>
+              <div class="ft-children">
+                <div class="ft-file">
+                  <span class="ft-name">src/main.rs</span>
+                  <span class="ft-desc">All build logic lives here</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">docker/</span>
+              <span class="ft-desc">Container configuration</span>
+              <div class="ft-children">
+                <div class="ft-file">
+                  <span class="ft-name">Dockerfile</span>
+                  <span class="ft-desc">Multi-stage build recipe</span>
+                </div>
+                <div class="ft-file">
+                  <span class="ft-name"><span class="term" data-definition="A popular web server — software that listens for requests from browsers and sends back web pages. Pronounced 'engine-X.'">nginx</span>.conf</span>
+                  <span class="ft-desc">Web server settings</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">.github/workflows/</span>
+              <span class="ft-desc">CI/CD automation</span>
+            </div>
+            <div class="ft-file">
+              <span class="ft-name"><span class="term" data-definition="The configuration file for Rust projects. It lists dependencies, project settings, and build instructions — like a recipe card for the project.">Cargo.toml</span></span>
+              <span class="ft-desc">Rust <span class="term" data-definition="A way to group multiple related Rust projects under one umbrella, so they share dependencies and can be built together.">workspace</span> configuration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screen 3: Group Chat Animation ─────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">How They Work Together</h2>
+      <p>When you run <code>cargo xtask serve</code>, here is what happens behind the scenes:</p>
+
+      <div class="chat-window" id="chat-module2">
+        <div class="chat-messages">
+          <div class="chat-message" data-msg="0" data-sender="developer" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-5)">D</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-5)">Developer</span>
+              <p>I just pushed a change to the Python book. Let me preview it locally.</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="1" data-sender="xtask" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-1)">X</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1)">xtask</span>
+              <p>On it! First, let me check if mdbook is installed...</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="2" data-sender="xtask" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-1)">X</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1)">xtask</span>
+              <p>Found it! Now building all 7 books. Starting with c-cpp-book...</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="3" data-sender="mdbook" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-2)">M</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2)">mdbook</span>
+              <p>&#x2713; c-cpp-book done! Converting Markdown &#x2192; HTML with syntax highlighting and search index.</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="4" data-sender="mdbook" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-2)">M</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2)">mdbook</span>
+              <p>&#x2713; python-book done! Including your latest changes.</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="5" data-sender="xtask" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-1)">X</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1)">xtask</span>
+              <p>All 7 books built! Now generating the landing page with cards for each book...</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="6" data-sender="xtask" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-1)">X</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1)">xtask</span>
+              <p>Starting the web server at http://localhost:3000. Open your browser!</p>
+            </div>
+          </div>
+          <div class="chat-message" data-msg="7" data-sender="developer" style="display:none">
+            <div class="chat-avatar" style="background: var(--color-actor-5)">D</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-5)">Developer</span>
+              <p>I can see my changes. Looks great!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-typing" id="chat-typing" style="display:none">
+          <div class="chat-avatar" id="chat-module2-typing-avatar">?</div>
+          <div class="chat-typing-dots">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+
+        <div class="chat-controls">
+          <button class="btn chat-next-btn">Next Message</button>
+          <button class="btn chat-all-btn">Play All</button>
+          <button class="btn chat-reset-btn">Replay</button>
+          <span class="chat-progress"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screen 4: The Workspace Glue ───────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Workspace Glue</h2>
+      <p>The root Cargo.toml ties the whole project together. Let's read it line by line.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code><span class="code-line"><span class="code-keyword">[workspace]</span></span>
+<span class="code-line"><span class="code-property">resolver</span> <span class="code-operator">=</span> <span class="code-string">"2"</span></span>
+<span class="code-line"><span class="code-property">members</span> <span class="code-operator">=</span> [<span class="code-string">"xtask"</span>]</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">PLAIN ENGLISH</span>
+          <div class="translation-lines">
+            <p class="tl">This file defines a workspace — a way to group related Rust projects together under one roof</p>
+            <p class="tl">Use the modern dependency resolution strategy (version 2 is smarter about avoiding conflicts). The <span class="term" data-definition="The part of Rust's package manager that figures out which versions of libraries to use when multiple packages need different versions.">resolver</span> handles all of that automatically.</p>
+            <p class="tl">The only actual Rust program in this workspace is xtask — the build tool that manages everything</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent">
+        <div class="callout-icon">&#x1F4A1;</div>
+        <div class="callout-content">
+          <strong class="callout-title">Key Insight</strong>
+          <p>The 7 books aren't Rust programs — they're Markdown text files. The only actual code is the xtask build tool that transforms them into websites.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Screen 5: Quiz ─────────────────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">Check Your Understanding</h2>
+
+      <div class="quiz-container" id="quiz-module2">
+        <div class="quiz-question-block"
+             data-correct="option-c"
+             data-explanation-right="mdbook is the engine that converts Markdown to HTML — it controls how code blocks, search, and styling work."
+             data-explanation-wrong="Think about which actor actually transforms text files into web pages.">
+          <h3 class="quiz-question">You want to change how code examples look in the books. Which actor handles that transformation?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>xtask</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>Docker</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>mdbook</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>GitHub Actions</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-question-block"
+             data-correct="option-b"
+             data-explanation-right="The landing page is generated by xtask — it builds the HTML for the card grid dynamically from the BOOKS list."
+             data-explanation-wrong="The landing page is auto-generated by code, not manually written. Which actor generates things?">
+          <h3 class="quiz-question">You notice the landing page (the page listing all 7 books) looks broken. Where would you look to fix it?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>In one of the book folders</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>In xtask/src/main.rs</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>In docker/nginx.conf</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>In .github/workflows/</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-question-block"
+             data-correct="option-c"
+             data-explanation-right="The books are pure content (Markdown). xtask is the only Rust code — it orchestrates mdbook to build each book."
+             data-explanation-wrong="Remember: the books contain text, not code. Only one folder has actual Rust source.">
+          <h3 class="quiz-question">What is the relationship between the 7 book folders and the xtask folder?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>They all contain Rust programs</span>
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>xtask compiles the books into Rust binaries</span>
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>The books are Markdown content; xtask is the tool that builds them into websites</span>
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <div class="quiz-option-radio"></div>
+              <span>They are completely independent projects</span>
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Try Again</button>
+      </div>
+    </section>
+
+  </div>
+</section>

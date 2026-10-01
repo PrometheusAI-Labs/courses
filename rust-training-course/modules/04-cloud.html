@@ -1,0 +1,225 @@
+<section class="module" id="module-4" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">04</span>
+      <h1 class="module-title">From Code to Cloud</h1>
+      <p class="module-subtitle">How the books travel from source code to your browser</p>
+    </header>
+
+    <!-- ── SCREEN 1: The Two Deployment Paths ─────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Two Deployment Paths</h2>
+
+      <p>The books are built. Now how do they reach readers? This project has two paths to the web — one automated, one containerized.</p>
+
+      <div class="pattern-cards">
+        <div class="pattern-card" style="border-top-color: var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-actor-2);">🚀</div>
+          <div class="pattern-title">GitHub Pages</div>
+          <p class="pattern-desc">Free, automatic. Every push to the main branch triggers a workflow that builds and publishes the books. Zero server maintenance.</p>
+        </div>
+        <div class="pattern-card" style="border-top-color: var(--color-actor-3)">
+          <div class="pattern-icon" style="background: #EDE8F5; color: var(--color-actor-3);">🐳</div>
+          <div class="pattern-title">Docker + nginx</div>
+          <p class="pattern-desc">Self-hosted. Package everything into a <span class="term" data-definition="A lightweight, isolated environment that packages software with everything it needs to run. Unlike a virtual machine, containers share the host operating system, making them fast and efficient.">container</span> and run it anywhere — your own server, a cloud provider, behind a corporate firewall.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 2: The GitHub Actions Workflow ──────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The GitHub Actions Workflow</h2>
+
+      <p>When a developer pushes code to the main branch, a fully automated pipeline takes over. <span class="term" data-definition="A CI/CD service built into GitHub. You write workflow files that define automated tasks — like 'when code is pushed, build and deploy.' Free for public repositories.">GitHub Actions</span> orchestrates every step — no human intervention required.</p>
+
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p>Code is pushed to the main branch</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p>GitHub Actions checks out the code and installs Rust</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p>It caches dependencies so builds are faster next time</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p>It installs mdbook and mdbook-mermaid</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <p>It runs <code>cargo xtask deploy</code> (same build process, outputs to <code>docs/</code>)</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <p>GitHub Pages publishes <code>docs/</code> as a live website</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+          <span class="callout-title">Key Insight</span>
+          <p>The deployment uses the exact same xtask tool as local development. The only difference is the output folder: <code>site/</code> for local preview, <code>docs/</code> for GitHub Pages. Same code, different destination.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 3: The Docker Recipe ────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Docker Recipe</h2>
+
+      <p>The second deployment path uses <span class="term" data-definition="A snapshot of a complete environment — operating system, tools, and files — frozen in time. You can run copies of this snapshot anywhere Docker is installed.">Docker</span> to package the books into a self-contained unit. The key technique is a <span class="term" data-definition="A Docker technique where you use one container to build your software and a second, smaller container to run it. Like using a workshop to build furniture, then moving only the finished pieces to the showroom.">multi-stage build</span> — one stage builds the books, and a second, much smaller stage serves them.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Dockerfile</span>
+<code><span class="code-line"><span class="code-keyword">FROM</span> <span class="code-string">rust:1-slim-bookworm</span> <span class="code-keyword">AS</span> builder</span>
+<span class="code-line"><span class="code-keyword">RUN</span> cargo install mdbook mdbook-mermaid</span>
+<span class="code-line"><span class="code-keyword">COPY</span> . /src</span>
+<span class="code-line"><span class="code-keyword">WORKDIR</span> /src</span>
+<span class="code-line"><span class="code-keyword">RUN</span> cargo xtask build</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">FROM</span> <span class="code-string">nginxinc/nginx-unprivileged:1.27-alpine</span></span>
+<span class="code-line"><span class="code-keyword">COPY</span> --from=builder /src/site/ /usr/share/nginx/html/</span>
+<span class="code-line"><span class="code-keyword">EXPOSE</span> 8080</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Plain English</span>
+          <div class="translation-lines">
+            <div class="tl"><strong>FROM rust:1-slim-bookworm AS builder</strong> — Start with a pre-made box that has Rust installed. Call this stage 'builder' — it will be thrown away later</div>
+            <div class="tl"><strong>RUN cargo install mdbook mdbook-mermaid</strong> — Install the book-building tools inside the box</div>
+            <div class="tl"><strong>COPY . /src</strong> — Copy all the book source files into the box</div>
+            <div class="tl"><strong>WORKDIR /src</strong> — Move into the source directory</div>
+            <div class="tl"><strong>RUN cargo xtask build</strong> — Build all 7 books into HTML — the same command developers run locally</div>
+            <div class="tl"><strong>FROM nginxinc/nginx-unprivileged:1.27-alpine</strong> — Start a NEW, tiny box with only a web server. The builder box (with Rust, compilers, etc.) is discarded</div>
+            <div class="tl"><strong>COPY --from=builder /src/site/ /usr/share/nginx/html/</strong> — Grab just the finished websites from the builder box and place them where <span class="term" data-definition="A fast, lightweight web server that handles incoming browser requests and serves static files. Pronounced 'engine-X.' Used by millions of websites.">nginx</span> can serve them</div>
+            <div class="tl"><strong><span class="term" data-definition="A Docker instruction that documents which network port the container listens on. It does not actually open the port — that happens when you run the container.">EXPOSE</span> 8080</strong> — Tell Docker this container listens on port 8080 for web traffic</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 4: Why Two Stages? ──────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">Why Two Stages?</h2>
+
+      <div class="callout callout-info">
+        <div class="callout-icon">ℹ️</div>
+        <div class="callout-content">
+          <span class="callout-title">Multi-Stage Builds</span>
+          <p>The builder stage includes Rust, cargo, mdbook, and all compilation tools — over 1 GB of software. The final stage is just nginx + static HTML files — under 50 MB. Multi-stage builds keep the final image small and secure by throwing away everything that was only needed for building.</p>
+        </div>
+      </div>
+
+      <p>The final nginx stage is not just small — it is also hardened for production. Here are the three key security and performance features baked into the configuration:</p>
+
+      <div class="pattern-cards">
+        <div class="pattern-card" style="border-top-color: var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-actor-2);">🔐</div>
+          <div class="pattern-title">Security Headers</div>
+          <p class="pattern-desc">X-Content-Type-Options, X-Frame-Options, and Referrer-Policy headers protect against common web attacks</p>
+        </div>
+        <div class="pattern-card" style="border-top-color: var(--color-actor-5)">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-actor-5);">👤</div>
+          <div class="pattern-title">Unprivileged User</div>
+          <p class="pattern-desc">The <span class="term" data-definition="A lightweight, isolated environment that packages software with everything it needs to run. Unlike a virtual machine, containers share the host operating system, making them fast and efficient.">container</span> runs as a non-root user (uid 101) — even if someone breaks in, they cannot harm the system</p>
+        </div>
+        <div class="pattern-card" style="border-top-color: var(--color-actor-4)">
+          <div class="pattern-icon" style="background: #FFF8E1; color: var(--color-actor-4);">⚡</div>
+          <div class="pattern-title">Asset Caching</div>
+          <p class="pattern-desc">Static files are cached for 1 day, with <span class="term" data-definition="A method of shrinking files before sending them over the network. The browser decompresses them automatically. Typically reduces file sizes by 60-80%.">gzip compression</span> for CSS, JS, and SVG — faster page loads for readers</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 5: Quiz ─────────────────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">Check Your Understanding</h2>
+
+      <div class="quiz-container" id="quiz-module4">
+
+        <!-- Q1 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="If the final image is 2 GB, the multi-stage build might be broken — it could be including the builder stage (Rust, cargo, etc.) in the final image." data-explanation-wrong="Think about what makes Docker images large — is it the content or the build tools?">
+          <div class="quiz-question">1. The Docker image is 2 GB in size, making deployments slow. What would you investigate first?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The nginx configuration
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Whether the multi-stage build is working correctly — the final image should only contain nginx and HTML
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The GitHub Actions workflow
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The book content size
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="The workflow is configured with 'on: push: branches: [main]' — only changes to the main branch trigger deployment." data-explanation-wrong="Look at what triggers the automation — not all code changes cause a deployment.">
+          <div class="quiz-question">2. A new team member pushes code to a feature branch, but the books do not update on the website. Why?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Docker is not running
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The GitHub Actions workflow only triggers on pushes to the main branch
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> mdbook is broken
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The books need to be manually published
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-question-block" data-correct="option-c" data-explanation-right="Docker packages everything into a self-contained container that runs anywhere — even without internet. Build once, ship the image." data-explanation-wrong="Think about which option works without any external services.">
+          <div class="quiz-question">3. Your company wants to host the training books behind a corporate firewall with no internet access. Which deployment path would you use?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> GitHub Pages
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Just run cargo xtask serve
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Docker
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Email the HTML files
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Reset</button>
+      </div>
+    </section>
+
+  </div>
+</section>

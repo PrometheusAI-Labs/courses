@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Практикум, рабочая тетрадь, итоговый проект и источники программы по NautilusTrader.">
+  <title>Материалы — NautilusTrader Academy</title>
+  <style>
+    :root{--paper:#faf7f2;--ink:#2c2a28;--muted:#655f59;--line:#d9cfc3;--accent:#9f301f;--surface:#fffdf9}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{width:min(960px,calc(100% - 32px));margin:auto;padding:32px 0 72px}nav{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:42px}a{color:var(--accent)}nav a,.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}h1,h2{font-family:ui-rounded,"Avenir Next","Trebuchet MS",sans-serif;line-height:1.12}h1{font-size:clamp(40px,8vw,72px)}h2{margin-top:54px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card h3{margin:.2em 0}.card p{color:var(--muted)}table{width:100%;border-collapse:collapse;background:var(--surface)}th,td{padding:10px;border:1px solid var(--line);text-align:left;vertical-align:top}code{font-family:ui-monospace,"SFMono-Regular",monospace;background:#eee7dd;padding:2px 5px;border-radius:5px}.notice{border-left:5px solid var(--accent);padding:14px 18px;background:#fff3ed}.skip{position:absolute;left:-999px}.skip:focus{position:static}.card:focus-within, a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}@media(max-width:700px){.grid{grid-template-columns:1fr}table{font-size:15px}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">К содержанию</a>
+  <main id="content">
+    <nav aria-label="Основная навигация"><a href="index.html">Все курсы</a><a href="docs/index.html">Все документы</a><a href="#labs">Лабораторные работы</a><a href="#workbook">Рабочая тетрадь</a><a href="#capstone">Итоговый проект</a><a href="#license">Лицензии</a></nav>
+    <h1>Материалы программы</h1>
+    <p class="notice">Все 12 лабораторных работ содержат входные данные, контрольные точки, итоговый артефакт и критерии приёмки. Плановые 20 часов должны быть подтверждены пилотным хронометражем перед окончательной публикацией.</p>
+
+    <section id="curriculum"><h2>Программа и расписание</h2><p><a href="docs/curriculum.html">Полная программа на 20 часов</a> · <a href="docs/instructor-guide.html">Руководство преподавателя</a> · <a href="docs/pilot-timing-record.html">Протокол пилотного хронометража</a> · <a href="docs/browser-accessibility-qa.html">Проверка в браузерах и доступность</a></p></section>
+
+    <section id="labs"><h2>Практикум: 12 лабораторных работ</h2><div class="grid">
+      <article class="card"><h3>1.1 Потерянная котировка</h3><p>Event trace по наблюдаемым границам.</p></article>
+      <article class="card"><h3>1.2 Кто владеет задачей</h3><p>12 карточек ответственности компонентов.</p></article>
+      <article class="card"><h3>1.3 Тишина в callback</h3><p>Три независимых failure case.</p></article>
+      <article class="card"><h3>1.4 Карта сред</h3><p>Backtest, Sandbox и Live без подмены testnet.</p></article>
+      <article class="card"><h3>2.1 Шесть тиков</h3><p>Порядок, дубли, диапазон и crossed quote.</p></article>
+      <article class="card"><h3>2.2 Manifest A/B</h3><p>Controlled change и воспроизводимость.</p></article>
+      <article class="card"><h3>2.3 Гипотеза</h3><p>Falsifier и untouched-forward test.</p></article>
+      <article class="card"><h3>2.4 Границы утверждения</h3><p>Claim/evidence matrix.</p></article>
+      <article class="card"><h3>3.1 Rust ownership</h3><p>Framework, config, strategy и event-local state.</p></article>
+      <article class="card"><h3>3.2 Где исчезла заявка</h3><p>Incident decision tree.</p></article>
+      <article class="card"><h3>3.3 Native backtest charter</h3><p>Locked build и canonical report.</p></article>
+      <article class="card"><h3>3.4 Live dossier</h3><p>Forward, shadow, reconciliation, kill switch и canary.</p></article>
+    </div><p><a href="docs/labs.html">Открыть полный практикум с входными данными</a></p></section>
+
+    <section id="workbook"><h2>Рабочая тетрадь</h2><p><a href="docs/learner-workbook.html">12 пронумерованных форм для результатов работы</a>. Каждый раздел содержит поля и контрольный список приёмки.</p></section>
+
+    <section id="assessment"><h2>Оценивание и критерии освоения</h2><table><tr><th>Элемент</th><th>Порог</th></tr><tr><td>Проверочное задание модуля</td><td>Не менее 80%</td></tr><tr><td>Лабораторная работа</td><td>Все обязательные критерии выполнены</td></tr><tr><td>Итоговый проект</td><td>Не менее 75/100 и 14/20 за безопасность Live</td></tr></table><p><a href="docs/instructor-answer-key.html">Ответы преподавателя и правила повторной попытки</a></p></section>
+
+    <section id="capstone"><h2>Итоговый проект</h2><p><a href="docs/capstone.html">Задание, восемь обязательных материалов и рубрика</a>. Реальная торговля не требуется и не разрешается этим курсом.</p></section>
+
+    <section id="license"><h2>Лицензии и источники</h2><p><a href="docs/third-party-notices.html">Сведения о сторонних материалах</a> · <a href="docs/nautilus-trader-lgpl-3.0.html">Полный текст LGPL 3.0</a> · <a href="docs/source-notes.html">Источники и версия</a> · <a href="docs/license.html">Лицензирование курса</a></p><p>Независимый учебный материал; не связан с Nautech Systems и не одобрен компанией.</p></section>
+  </main>
+</body>
+</html>

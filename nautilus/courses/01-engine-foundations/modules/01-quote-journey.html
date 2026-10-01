@@ -1,0 +1,166 @@
+<section class="module" id="module-1">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">Путь одной котировки</h1>
+      <p class="module-subtitle">75 минут · проследим одно <span class="term" data-definition="Событие — сообщение о том, что что-то произошло: например, появилась новая цена. Компоненты реагируют на события вместо постоянного опроса друг друга.">событие</span> от рынка до решения стратегии.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">1. Диспетчерская, а не длинный скрипт <small>10 минут</small></h2>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">🚆</div>
+          <h3 class="pattern-title">Вагон</h3>
+          <p class="pattern-desc">Новая котировка несёт цену и время — полезный груз события.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">🚉</div>
+          <h3 class="pattern-title">Станция</h3>
+          <p class="pattern-desc">Каждый компонент делает одну работу и передаёт событие дальше.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">🗺️</div>
+          <h3 class="pattern-title">Маршрут</h3>
+          <p class="pattern-desc">Если цена не дошла, ищем первую границу без подтверждения.</p>
+        </div>
+      </div>
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+          <strong class="callout-title">Главная идея</strong>
+          <p><span class="term" data-definition="Событийный конвейер — цепочка компонентов, где каждый получает событие, выполняет свою работу и передаёт результат дальше.">Событийный конвейер</span> позволяет искать сбой по границам, а не переписывать всю систему.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">2. Пять станций котировки <small>20 минут</small></h2>
+      <p class="animate-in">Нажимайте «Следующий шаг» и проговаривайте вслух: кто получил событие и что должен доказать перед передачей дальше.</p>
+      <div class="flow-animation animate-in" data-steps='[
+        {"highlight":"flow-actor-1","label":"Adapter разбирает venue payload и создаёт QuoteTick"},
+        {"highlight":"flow-actor-2","label":"DataEngine обрабатывает и маршрутизирует доменное событие","packet":true,"from":"actor-1","to":"actor-2"},
+        {"highlight":"flow-actor-3","label":"Cache сохраняет актуальное состояние","packet":true,"from":"actor-2","to":"actor-3"},
+        {"highlight":"flow-actor-4","label":"MessageBus доставляет событие подписчикам","packet":true,"from":"actor-3","to":"actor-4"},
+        {"highlight":"flow-actor-5","label":"Strategy получает событие и решает, реагировать ли","packet":true,"from":"actor-4","to":"actor-5"}
+      ]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1"><div class="flow-actor-icon">📡</div><span>Adapter</span></div>
+          <div class="flow-actor" id="flow-actor-2"><div class="flow-actor-icon">🧭</div><span>DataEngine</span></div>
+          <div class="flow-actor" id="flow-actor-3"><div class="flow-actor-icon">🗃️</div><span>Cache</span></div>
+          <div class="flow-actor" id="flow-actor-4"><div class="flow-actor-icon">📨</div><span>MessageBus</span></div>
+          <div class="flow-actor" id="flow-actor-5"><div class="flow-actor-icon">🧠</div><span>Strategy</span></div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите «Следующий шаг», чтобы отправить котировку</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">3. Где маршрут собирается в коде <small>15 минут</small></h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">КОД ПРОЕКТА</span>
+          <pre><code>engine.add_instrument(EURUSD)
+engine.add_data(bars)
+
+strategy = EMACross(
+    EMACrossConfig(
+        instrument_id=EURUSD.id,
+        bar_type=bar_type,
+        trade_size=Decimal(100000),
+    ),
+)
+engine.add_strategy(strategy)
+
+# Run the backtest
+engine.run()</code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">ПРОСТЫМИ СЛОВАМИ</span>
+          <div class="translation-lines">
+            <p class="tl">Сообщаем движку, каким инструментом занимаемся.</p>
+            <p class="tl">Передаём ему набор баров — данные для маршрута.</p>
+            <p class="tl">Создаём стратегию и её настройки: инструмент, тип бара и размер сделки.</p>
+            <p class="tl">Регистрируем стратегию как участника движка.</p>
+            <p class="tl">Запускаем <span class="term" data-definition="Бэктест — прогон торговой логики по историческим данным. Он проверяет поведение модели в прошлом, но не доказывает готовность к реальной торговле.">бэктест</span>: теперь события начинают проходить маршрут.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">4. Лабораторная работа: «Потерянный вагон» <small>20 минут</small></h2>
+      <p class="animate-in">Симптом: запуск завершился, но стратегия не приняла ни одного бара. Не исправляйте код — сначала локализуйте границу.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">1</div>
+          <h3 class="pattern-title">Наблюдение</h3>
+          <p class="pattern-desc">Есть ли данные после добавления в движок? Зафиксируйте количество и временной диапазон.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">2</div>
+          <h3 class="pattern-title">Граница</h3>
+          <p class="pattern-desc">Сравните вход и выход двух соседних станций. Найдите первое расхождение.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">3</div>
+          <h3 class="pattern-title">Запрос ИИ</h3>
+          <p class="pattern-desc">«Сначала докажи, на какой границе исчезают бары; не меняй торговую логику».</p>
+        </div>
+      </div>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">🧪</div>
+        <div class="callout-content">
+          <strong class="callout-title">Артефакт лаборатории</strong>
+          <p>Карта из пяти узлов: входной сигнал, ожидаемый выход, наблюдение и следующая минимальная проверка.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">5. Проверка понимания: найдите новый сбой <small>10 минут</small></h2>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">✍️</div>
+        <div class="callout-content"><strong class="callout-title">Самостоятельно · 5 минут</strong><p>Нарисуйте маршрут для случая, где забыли <code>add_strategy</code>. Артефакт принят, если отмечены отсутствующая связь, две проверки и запрет менять торговую логику до диагноза.</p></div>
+      </div>
+      <div class="quiz-container animate-in" id="quiz-module1">
+        <div class="quiz-question-block" data-correct="m1q1b" data-explanation-right="Именно: сначала докажите, что данные зарегистрированы и доступны движку; без этого дальнейший маршрут не начнётся." data-explanation-wrong="Начните с самой ранней непроверенной границы. Изменять стратегию до подтверждения входных данных преждевременно.">
+          <h3 class="quiz-question">1. Движок запустился, но ни одного события не видно. Что проверять первым?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m1q1a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Переписать условия входа стратегии</span></button>
+            <button class="quiz-option" data-value="m1q1b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Подтвердить регистрацию и диапазон данных</span></button>
+            <button class="quiz-option" data-value="m1q1c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Увеличить размер сделки</span></button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m1q2c" data-explanation-right="Верно: объект стратегии существует, но без add_strategy движок не знает, что должен доставлять ей события." data-explanation-wrong="Создание объекта ещё не делает его участником конвейера. Нужна явная регистрация в движке.">
+          <h3 class="quiz-question">2. Стратегия создана, данные есть, но пропущен <code>add_strategy</code>. Какой симптом ожидаем?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m1q2a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Cache сам запустит стратегию</span></button>
+            <button class="quiz-option" data-value="m1q2b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Движок автоматически найдёт объект</span></button>
+            <button class="quiz-option" data-value="m1q2c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>События не будут доставлены этой стратегии</span></button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m1q3a" data-explanation-right="Точно: две соседние точки превращают догадку в проверяемую границу и быстро сужают область поиска." data-explanation-wrong="Широкая трассировка создаёт шум. Сначала сравните две соседние границы вокруг подозреваемого перехода.">
+          <h3 class="quiz-question">3. Какой запрос AI лучше всего локализует потерю между DataEngine и MessageBus?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m1q3a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Добавь наблюдение на выход DataEngine и вход MessageBus; сравни события</span></button>
+            <button class="quiz-option" data-value="m1q3b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Перепиши весь pipeline современнее</span></button>
+            <button class="quiz-option" data-value="m1q3c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Добавь логи повсюду и угадай причину</span></button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Проверить решения</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Попробовать снова</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

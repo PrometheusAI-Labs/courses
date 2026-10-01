@@ -1,0 +1,46 @@
+{
+  "title": "NautilusTrader Academy",
+  "language": "ru",
+  "total_minutes": 1200,
+  "source": {
+    "repository": "https://github.com/nautechsystems/nautilus_trader",
+    "branch": "develop",
+    "commit": "84a98f7f3cc786085496976320c3cb320024217f",
+    "captured_on": "2026-09-22"
+  },
+  "courses": [
+    {
+      "id": "01-engine-foundations",
+      "title": "Как устроен торговый движок",
+      "minutes": 330,
+      "modules": [
+        {"id": 1, "title": "Путь одной котировки", "minutes": 75},
+        {"id": 2, "title": "Команда движка", "minutes": 80},
+        {"id": 3, "title": "Стратегия реагирует", "minutes": 85},
+        {"id": 4, "title": "Три среды", "minutes": 90}
+      ]
+    },
+    {
+      "id": "02-backtest-research",
+      "title": "Надёжный бэктест",
+      "minutes": 420,
+      "modules": [
+        {"id": 1, "title": "Данные как доказательство", "minutes": 100},
+        {"id": 2, "title": "Воспроизводимый запуск", "minutes": 105},
+        {"id": 3, "title": "Стратегия как гипотеза", "minutes": 105},
+        {"id": 4, "title": "Границы результата", "minutes": 110}
+      ]
+    },
+    {
+      "id": "03-rust-live",
+      "title": "Стратегия на Rust: от бэктеста к Live",
+      "minutes": 450,
+      "modules": [
+        {"id": 1, "title": "Анатомия Rust-стратегии", "minutes": 105},
+        {"id": 2, "title": "От события к заявке", "minutes": 110},
+        {"id": 3, "title": "Нативный бэктест", "minutes": 110},
+        {"id": 4, "title": "Live без самообмана", "minutes": 125}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NautilusTrader: от котировки до безопасного запуска — 20 часов</title>
+  <meta name="description" content="20-часовая интерактивная программа по архитектуре, бэктесту и безопасной эксплуатации стратегии NautilusTrader на Rust.">
+  <style>
+    :root { --paper:#f7f1e7; --ink:#27231f; --muted:#655f59; --line:#d9cdbd; --code:#1e1e2e; --teal:#2a7b9b; --red:#b23a24; --green:#1f6b41; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 10% 0%,#fffaf2 0 18%,transparent 45%),var(--paper); font:18px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(1120px,calc(100% - 32px)); margin:auto; padding:72px 0 64px; }
+    .eyebrow { font:500 13px/1 ui-monospace,"SFMono-Regular",monospace; letter-spacing:.12em; text-transform:uppercase; color:#a52f1b; }
+    h1,h2 { font-family:ui-rounded,"Avenir Next","Trebuchet MS",sans-serif; line-height:1.02; margin:.35em 0; }
+    h1 { font-size:clamp(48px,8vw,94px); max-width:980px; }
+    .lead { max-width:760px; color:var(--muted); font-size:clamp(19px,2.5vw,25px); }
+    .total { display:inline-flex; gap:12px; align-items:center; margin:26px 0 48px; padding:11px 16px; border:1px solid var(--line); border-radius:999px; background:#fffaf4; font-weight:600; }
+    .total strong { color:var(--red); }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .card { position:relative; display:flex; flex-direction:column; min-height:390px; padding:28px; border:1px solid var(--line); border-radius:24px; background:rgba(255,250,244,.82); box-shadow:0 18px 60px rgba(82,61,38,.08); text-decoration:none; color:inherit; transition:.2s ease; }
+    .card:hover { transform:translateY(-5px); box-shadow:0 24px 70px rgba(82,61,38,.14); }
+    .card::before { content:""; width:54px; height:7px; border-radius:9px; background:var(--accent); }
+    .num { margin-top:26px; font:500 13px/1 ui-monospace,"SFMono-Regular",monospace; color:var(--accent); }
+    .card h2 { font-size:34px; }
+    .card p { color:var(--muted); }
+    .meta { margin-top:auto; display:flex; justify-content:space-between; gap:12px; padding-top:20px; border-top:1px solid var(--line); font-weight:600; }
+    .one { --accent:var(--teal); } .two { --accent:var(--red); } .three { --accent:var(--green); }
+    .route { display:flex; align-items:center; gap:9px; margin:48px 0; color:var(--muted); font:500 14px/1.4 ui-monospace,"SFMono-Regular",monospace; }
+    .resources { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:36px; }
+    .resources a { color:var(--ink); background:#fffaf4; border:1px solid var(--line); border-radius:14px; padding:14px 16px; text-decoration:none; font-weight:600; }
+    .resources a:hover,.resources a:focus-visible { border-color:var(--red); text-decoration:underline; }
+    .card:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+    .route span { color:var(--ink); padding:8px 11px; border:1px solid var(--line); border-radius:10px; background:#fffaf4; }
+    footer { margin-top:54px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:14px; }
+    .skip{position:absolute;left:-9999px}.skip:focus{position:fixed;left:16px;top:16px;z-index:10;background:#fffaf4;padding:10px 14px;border:2px solid var(--red);border-radius:8px}
+    @media(max-width:850px){ .grid,.resources{grid-template-columns:1fr}.card{min-height:300px}.route{align-items:flex-start;flex-direction:column}.arrow{transform:rotate(90deg)} }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}.card:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">К содержанию</a>
+  <main id="content">
+    <div class="eyebrow">интерактивная программа · 12 модулей</div>
+    <h1>NautilusTrader: от котировки до безопасного запуска</h1>
+    <p class="lead">Три последовательных курса: устройство торгового движка, воспроизводимый бэктест и безопасный переход стратегии на Rust к реальному исполнению. Вы научитесь видеть границы системы, проверять доказательства и ставить точные задачи ИИ-агенту.</p>
+    <div class="total"><strong>20 часов</strong><span>теория · визуализации · лабораторные работы · проверочные задания · итоговый проект</span></div>
+
+    <section class="grid" aria-label="Курсы">
+      <a class="card one" href="01-engine-foundations/index.html">
+        <div class="num">КУРС 01 · 5 Ч 30 МИН</div>
+        <h2>Как устроен торговый движок</h2>
+        <p>Пройдите вместе с котировкой через Adapter, DataEngine, Cache и MessageBus. Разберите роли компонентов и три среды исполнения.</p>
+        <div class="meta"><span>4 модуля</span><span>Начать →</span></div>
+      </a>
+      <a class="card two" href="02-backtest-research/index.html">
+        <div class="num">КУРС 02 · 7 ЧАСОВ</div>
+        <h2>Надёжный бэктест</h2>
+        <p>Соберите цепочку доказательств: данные, каталог, конфигурация запуска, гипотеза и честные границы результата.</p>
+        <div class="meta"><span>4 модуля</span><span>Продолжить →</span></div>
+      </a>
+      <a class="card three" href="03-rust-live/index.html">
+        <div class="num">КУРС 03 · 7 Ч 30 МИН</div>
+        <h2>Стратегия на Rust: от бэктеста к Live</h2>
+        <p>Свяжите нативную стратегию, бэктест и последовательные проверки безопасности: сверку состояния, теневой запуск, ограниченный пробный запуск и аварийный останов.</p>
+        <div class="meta"><span>4 модуля</span><span>Завершить →</span></div>
+      </a>
+    </section>
+
+    <div class="route"><span>Событийная архитектура</span><b class="arrow">→</b><span>Исследование</span><b class="arrow">→</b><span>Эксплуатация стратегии на Rust</span></div>
+    <nav class="resources" aria-label="Материалы программы">
+      <a href="resources.html#curriculum">Программа и расписание</a>
+      <a href="resources.html#workbook">Рабочая тетрадь</a>
+      <a href="resources.html#labs">Практикум: 12 лабораторных работ</a>
+      <a href="resources.html#capstone">Итоговый проект</a>
+      <a href="resources.html#assessment">Критерии оценивания и ответы</a>
+      <a href="resources.html#license">Лицензии и источники</a>
+      <a href="docs/index.html">Все документы в HTML</a>
+    </nav>
+    <footer>Основано на NautilusTrader develop @ 84a98f7. Независимый учебный материал, не связанный с Nautech Systems. Не является инвестиционной рекомендацией и не разрешает реальную торговлю.</footer>
+  </main>
+</body>
+</html>

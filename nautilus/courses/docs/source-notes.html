@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Зафиксированная версия, первичные
+файлы и канонические технические границы.">
+  <meta name="source-file" content="SOURCE_NOTES.md">
+  <meta name="source-sha256" content="49fc17c46e5ac3637dffd6baad9d3cd712e1b51f61ebc776b3a46debedcf927c">
+  <title>Источники и решения по версии — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#зафиксированная-линия"
+     >Зафиксированная линия</a></li>
+      <li><a href="#главные-первичные-файлы"
+     >Главные первичные файлы</a></li>
+      <li><a href="#канонические-границы"
+     >Канонические границы</a></li>
+      <li><a href="#план-обновления-курса"
+     >План обновления курса</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Редактор
+курса</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Источники и решения по версии</h1>
+      <p class="doc-summary">Зафиксированная версия, первичные файлы и
+канонические технические границы.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#зафиксированная-линия"
+       >Зафиксированная линия</a></li>
+        <li><a href="#главные-первичные-файлы"
+       >Главные первичные
+        файлы</a></li>
+        <li><a href="#канонические-границы"
+       >Канонические границы</a></li>
+        <li><a href="#план-обновления-курса"
+       >План обновления курса</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <h2 id="зафиксированная-линия">Зафиксированная линия</h2>
+        <p>Материалы подготовлены по ветке <code>develop</code> на
+        commit <code>84a98f7f3cc786085496976320c3cb320024217f</code>. На
+        этой линии README описывает Rust-native v2 runtime, Python как
+        control plane и возможность писать mission-critical trading
+        systems полностью на Rust.</p>
+        <p>Для production-практики нельзя автоматически переносить
+        примеры с <code>develop</code>: upstream рекомендует
+        <code>master</code> как последнюю выпущенную версию, а
+        <code>develop</code> — как активную ветку разработки. Перед
+        новым потоком курса преподаватель должен перепроверить migration
+        guide, API и строки сниппетов.</p>
+        <h2 id="главные-первичные-файлы">Главные первичные файлы</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Тема</th>
+        <th>Файл в NautilusTrader</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Общая архитектура и поток событий</td>
+        <td><code>docs/concepts/architecture.md</code></td>
+        </tr>
+        <tr>
+        <td>MessageBus и модели сообщений</td>
+        <td><code>docs/concepts/message_bus.md</code></td>
+        </tr>
+        <tr>
+        <td>Стратегия и быстрый бэктест</td>
+        <td><code>docs/getting_started/quickstart.py</code></td>
+        </tr>
+        <tr>
+        <td>Catalog + config-driven backtest</td>
+        <td><code>docs/getting_started/backtest_high_level.py</code></td>
+        </tr>
+        <tr>
+        <td>Rust-стратегия</td>
+        <td><code>docs/how_to/write_rust_strategy.md</code></td>
+        </tr>
+        <tr>
+        <td>Rust-бэктест</td>
+        <td><code>docs/how_to/run_rust_backtest.md</code></td>
+        </tr>
+        <tr>
+        <td>Rust LiveNode</td>
+        <td><code>docs/how_to/run_rust_live_trading.md</code></td>
+        </tr>
+        <tr>
+        <td>Различия backtest/live</td>
+        <td><code>docs/concepts/live.md</code></td>
+        </tr>
+        <tr>
+        <td>Адаптеры</td>
+        <td><code>docs/developer_guide/adapters.md</code></td>
+        </tr>
+        </tbody>
+        </table>
+        <h2 id="канонические-границы">Канонические границы</h2>
+        <ul>
+        <li>Venue-specific Adapter разбирает внешний payload и создаёт
+        доменное рыночное событие; DataEngine затем обрабатывает,
+        кэширует, публикует и маршрутизирует его к подписчикам.</li>
+        <li>Команда стратегии проходит RiskEngine до ExecutionEngine и
+        venue client.</li>
+        <li>В документации ветки <code>develop</code> контексты
+        определены так: Backtest — исторические данные и симулированное
+        исполнение; Sandbox — данные реального времени и симулированное
+        исполнение; Live — данные реального времени и реальные
+        подключения к площадкам. Live может работать с paper или real
+        account в зависимости от адаптера и аккаунта.</li>
+        <li>Backtest и Live разделяют каркас, но не одинаковые
+        транспорт, тайминг, внешнюю активность и reconciliation.</li>
+        <li><code>with_reconciliation(false)</code> в live guide
+        помечено как упрощение; production-пример должен включать
+        reconciliation.</li>
+        <li>Публичное подключение к данным не доказывает authenticated
+        submit/cancel, reconciliation, shadow или canary.</li>
+        <li>В Rust-first треке Python допустим только как необязательный
+        инструмент ручного просмотра; он не является обязательной
+        runtime- или canonical-report зависимостью.</li>
+        </ul>
+        <p>Эти формулировки повторно сверены 22 сентября 2026 года с
+        текущей документацией NautilusTrader <code>develop</code>:
+        <code>docs/concepts/overview.md</code>,
+        <code>docs/concepts/architecture.md</code>,
+        <code>docs/how_to/run_rust_backtest.md</code> и Rust
+        <code>LiveNode</code> examples. Зафиксированные кодовые выдержки
+        по-прежнему проверяются локально относительно точного commit,
+        указанного выше.</p>
+        <h2 id="план-обновления-курса">План обновления курса</h2>
+        <ol type="1">
+        <li>Обновить локальный снимок репозитория.</li>
+        <li>Сравнить <code>README.md</code>, migration guide и версии
+        toolchain.</li>
+        <li>Перепроверить все пути и номера строк из
+        <code>briefs/</code>.</li>
+        <li>Запустить сборку трёх курсов и визуальную проверку
+        desktop/mobile/zoom 200%.</li>
+        <li>Зафиксировать новый commit в <a
+        href="../../course-manifest.json"><code>course-manifest.json</code></a>,
+        <code>README.md</code> и этой заметке.</li>
+        </ol>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>SOURCE_NOTES.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

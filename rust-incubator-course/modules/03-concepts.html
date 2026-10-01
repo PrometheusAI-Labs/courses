@@ -1,0 +1,240 @@
+<!-- ═══════════════════════════════════════════════════════════
+     MODULE 3 — Ключевые концепции
+     ═══════════════════════════════════════════════════════════ -->
+<section class="module" id="module-3" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">03</span>
+      <h1 class="module-title">Ключевые концепции</h1>
+      <p class="module-subtitle">Default, Clone, Copy, Box, Rc, Cell — инструменты для управления данными</p>
+    </header>
+
+    <!-- ── Screen 1: Зачем нужны эти концепции ─────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Зачем нужны эти концепции</h2>
+
+      <p class="animate-in">
+        В модуле 2 мы узнали, что у каждого значения один владелец. Но что, если нужно скопировать данные? Или иметь несколько владельцев? Или менять данные через неизменяемую ссылку? Для этого в Rust есть набор <span class="term" data-definition="Трейт (trait) — это набор методов, который можно реализовать для любого типа. Как интерфейс в Java или протокол в Swift. Трейты определяют поведение: например, трейт Clone говорит, что тип умеет клонировать себя.">трейтов</span> и <span class="term" data-definition="Умный указатель (smart pointer) — это структура, которая ведёт себя как ссылка, но при этом владеет данными и управляет их временем жизни. Примеры: Box, Rc, Arc. В отличие от обычных ссылок, умные указатели сами решают, когда освободить память.">умных указателей</span>.
+      </p>
+
+      <p class="animate-in">
+        Представьте набор инструментов электрика. Каждый инструмент решает конкретную задачу: отвёрткой закручивают шурупы, мультиметром измеряют напряжение, кусачками режут провода. Нельзя закрутить шуруп молотком — нужно знать, когда какой инструмент брать. Точно так же каждый трейт и умный указатель в Rust предназначен для своей задачи.
+      </p>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">&#128218;</span>
+        <div class="callout-content">
+          <span class="callout-title">Зачем столько инструментов?</span>
+          <p>Rust не использует сборщик мусора. Вместо этого он даёт вам точные инструменты для управления памятью. Каждый трейт — это договор между вами и компилятором: &laquo;Я обещаю, что мой тип умеет делать вот это&raquo;.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Copy vs Clone — код из проекта ────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Copy vs Clone — код из проекта</h2>
+
+      <p class="animate-in">
+        Посмотрим на реальный код из проекта Rust Incubator. Две структуры — <code>Point</code> и <code>Polyline</code> — демонстрируют разницу между Copy и Clone.
+      </p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">1_concepts/1_1_default_clone_copy/src/main.rs</span>
+<pre><code><span class="code-line"><span class="code-comment">// Определяем структуру Point</span></span>
+<span class="code-line"><span class="code-keyword">#[derive(Debug, Copy, Clone, Default, PartialEq)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Point</span> {</span>
+<span class="code-line">    <span class="code-property">x</span>: <span class="code-keyword">f64</span>,</span>
+<span class="code-line">    <span class="code-property">y</span>: <span class="code-keyword">f64</span>,</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Определяем структуру Polyline</span></span>
+<span class="code-line"><span class="code-keyword">#[derive(Debug, Clone)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Polyline</span> {</span>
+<span class="code-line">    <span class="code-property">points</span>: <span class="code-keyword">Vec</span>&lt;<span class="code-function">Point</span>&gt;,</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">НА РУССКОМ</span>
+          <div class="translation-lines">
+            <p class="tl">Определяем структуру <strong>Point</strong> с двумя координатами</p>
+            <p class="tl"><strong><span class="code-keyword">#[derive(...)]</span></strong> — автоматически реализует трейты: <strong>Copy</strong> (побитовое копирование), <strong>Clone</strong> (глубокое копирование), <strong>Default</strong> (значение по умолчанию: x = 0.0, y = 0.0)</p>
+            <p class="tl"><strong>x</strong> и <strong>y</strong> — числа с плавающей точкой (<span class="code-keyword">f64</span>). Простые типы фиксированного размера — значит Copy возможен</p>
+            <p class="tl"><strong>Polyline</strong> — набор точек, образующих ломаную линию</p>
+            <p class="tl"><strong>Vec&lt;Point&gt;</strong> хранится в <span class="term" data-definition="Куча (heap) — область динамической памяти. Данные в куче живут, пока их не освободят. Vec, String, Box хранят свои данные в куче. В отличие от стека, размер данных в куче может быть неизвестен заранее.">куче</span> (heap) — значит Copy невозможен, только Clone. Копирование Vec означает выделение новой памяти и копирование всех элементов</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Pattern Cards — умные указатели ────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Семейство умных указателей</h2>
+
+      <p class="animate-in">
+        Когда обычного владения недостаточно, Rust предлагает умные указатели. Каждый решает свою задачу — как инструмент в наборе электрика.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in">
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">&#128230;</div>
+          <div class="pattern-title">Box&lt;T&gt;</div>
+          <p class="pattern-desc">Кладёт данные в кучу (heap). Один владелец, как обычно. Нужен для <span class="term" data-definition="Рекурсивный тип — это тип, который содержит себя. Например, узел связного списка содержит ссылку на следующий узел того же типа. Без Box компилятор не может вычислить размер такого типа.">рекурсивных типов</span> или больших данных, которые дорого копировать на стеке.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">&#128279;</div>
+          <div class="pattern-title">Rc&lt;T&gt;</div>
+          <p class="pattern-desc">Счётчик ссылок. Несколько владельцев одних данных. Только для одного потока! Когда счётчик достигает нуля, данные уничтожаются.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">&#9889;</div>
+          <div class="pattern-title">Arc&lt;T&gt;</div>
+          <p class="pattern-desc">Атомарный Rc. Как Rc, но безопасен для <span class="term" data-definition="Многопоточность — выполнение нескольких задач одновременно в разных потоках (threads). Rust гарантирует безопасность многопоточного кода на этапе компиляции через трейты Send и Sync.">многопоточности</span>. Дороже по производительности из-за атомарных операций.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-4)">
+          <div class="pattern-icon" style="background: var(--color-actor-4)">&#128275;</div>
+          <div class="pattern-title">Cell&lt;T&gt; / RefCell&lt;T&gt;</div>
+          <p class="pattern-desc">Внутренняя мутабельность. Позволяют менять данные через <code>&amp;T</code> (неизменяемую ссылку). Проверка заимствований — в runtime, не в compile time.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Data Flow — Rc и общее владение ────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Rc и общее владение</h2>
+
+      <p class="animate-in">
+        Как работает <code>Rc&lt;T&gt;</code> — счётчик ссылок? Проследим шаг за шагом, как две переменные делят одни данные.
+      </p>
+
+      <div class="flow-animation animate-in" data-steps='[{"highlight":"flow-actor-1","label":"Переменная A создаёт Rc::new(данные)"},{"highlight":"flow-actor-2","label":"Rc оборачивает данные и считает ссылки: count = 1"},{"highlight":"flow-actor-3","label":"Переменная B = Rc::clone(&a) — это НЕ клонирование данных!","packet":true,"from":"actor-1","to":"actor-3"},{"highlight":"flow-actor-2","label":"Счётчик увеличивается: count = 2. Данные — одни и те же"},{"highlight":"flow-actor-1","label":"Переменная A выходит из области видимости. count = 1"},{"highlight":"flow-actor-4","label":"Переменная B выходит из области видимости. count = 0. Данные уничтожаются"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">A</div>
+            <span>Переменная A</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">&#128279;</div>
+            <span>Rc&lt;T&gt;</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">B</div>
+            <span>Переменная B</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">&#128451;</div>
+            <span>Данные</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите &laquo;Следующий шаг&raquo; для начала</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Send и Sync ───────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Send и Sync — безопасность потоков</h2>
+
+      <p class="animate-in">
+        Rust проверяет безопасность многопоточного кода на этапе компиляции. Два маркерных трейта — <span class="term" data-definition="Send — маркерный трейт. Тип реализует Send, если его можно безопасно передать из одного потока в другой. Большинство типов — Send, но не Rc (его счётчик не атомарный).">Send</span> и <span class="term" data-definition="Sync — маркерный трейт. Тип реализует Sync, если на него можно безопасно ссылаться из нескольких потоков одновременно. Тип T является Sync, если &T является Send.">Sync</span> — определяют, какие типы можно использовать в многопоточном контексте.
+      </p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">1_concepts/1_8_thread_safety/src/main.rs</span>
+<pre><code><span class="code-line"><span class="code-keyword">pub struct</span> <span class="code-function">SyncAndSend</span>&lt;<span class="code-property">T</span>&gt; {</span>
+<span class="code-line">    <span class="code-property">data</span>: <span class="code-function">Arc</span>&lt;<span class="code-function">Mutex</span>&lt;<span class="code-property">T</span>&gt;&gt;,</span>
+<span class="code-line">    <span class="code-property">_phantom</span>: <span class="code-function">PhantomData</span>&lt;<span class="code-property">T</span>&gt;,</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">НА РУССКОМ</span>
+          <div class="translation-lines">
+            <p class="tl"><strong>SyncAndSend&lt;T&gt;</strong> — тип, безопасный для передачи (Send) и разделения (Sync) между потоками</p>
+            <p class="tl"><strong>Arc&lt;<span class="term" data-definition="Mutex (mutual exclusion) — примитив синхронизации. Гарантирует, что только один поток в каждый момент времени имеет доступ к данным. Как ключ от комнаты: пока один поток внутри, остальные ждут.">Mutex</span>&lt;T&gt;&gt;</strong> — атомарный счётчик ссылок + блокировка для эксклюзивного доступа к данным. Arc даёт общее владение между потоками, Mutex даёт безопасную мутабельность</p>
+            <p class="tl"><strong><span class="term" data-definition="PhantomData — тип нулевого размера, который сообщает компилятору дополнительную информацию о связи типа с параметром T. Не занимает памяти, но влияет на проверки владения и времени жизни.">PhantomData</span>&lt;T&gt;</strong> — фантомный тип, сообщает компилятору дополнительную информацию о T. Не занимает памяти, но важен для корректности проверок</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Callout ──────────────────────────────────────────── -->
+    <div class="callout callout-accent animate-in">
+      <span class="callout-icon">&#128161;</span>
+      <div class="callout-content">
+        <span class="callout-title">Правило большого пальца</span>
+        <p>Если данные живут в одном потоке — используйте <code>Rc&lt;RefCell&lt;T&gt;&gt;</code>. Если данные делятся между потоками — используйте <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>. Это два главных паттерна общего владения в Rust.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 7: Quiz ──────────────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Проверьте себя</h2>
+
+      <div class="quiz-container animate-in" id="quiz-module3">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="option-a" data-explanation-right="Верно! Copy — это побитовое копирование, которое происходит неявно и дёшево. Clone — это явный вызов .clone(), который может выполнять глубокое копирование и быть дорогим." data-explanation-wrong="Не совсем. Copy — побитовое копирование (неявное, дешёвое). Clone — глубокое копирование (явное, может быть дорогим). Copy всегда подразумевает Clone, но не наоборот.">
+          <div class="quiz-question">1. В чём разница между Copy и Clone?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Copy — побитовое копирование (неявное, дешёвое), Clone — глубокое копирование (явное, может быть дорогим)
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Clone быстрее Copy
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Copy работает только с числами
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="Именно так! Rc позволяет нескольким владельцам разделять данные, когда время жизни заранее неизвестно. Обычные ссылки требуют, чтобы время жизни было известно компилятору." data-explanation-wrong="Не совсем. Rc нужен, когда несколько частей программы должны владеть одними данными, а время жизни этих данных заранее неизвестно.">
+          <div class="quiz-question">2. Зачем нужен Rc&lt;T&gt;, если есть обычные ссылки?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rc быстрее обычных ссылок
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rc позволяет иметь несколько владельцев одних данных, когда время жизни неизвестно заранее
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rc нужен только для многопоточности
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="Верно! Компилятор защитит вас от гонок данных на этапе компиляции. Rc не реализует Send, поэтому его невозможно отправить в другой поток." data-explanation-wrong="Не совсем. Rc не реализует трейт Send, поэтому компилятор не позволит отправить его в другой поток. Это ошибка компиляции, а не runtime-ошибка.">
+          <div class="quiz-question">3. Что произойдёт, если попытаться отправить Rc&lt;T&gt; в другой поток?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Всё будет работать
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Ошибка компиляции: Rc не реализует Send
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Программа упадёт в runtime
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Сбросить</button>
+      </div>
+    </div>
+
+  </div>
+</section>

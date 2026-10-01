@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Актуальные решения, закрытые
+замечания и внешние условия публикации.">
+  <meta name="source-file" content="RELEASE_CANDIDATE_STATUS.md">
+  <meta name="source-sha256" content="621a16a44d5340174c40b4bf5c78e60944bf2008bba75efa1851148cf756deae">
+  <title>Статус версии-кандидата — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#текущий-вердикт">Текущий
+      вердикт</a></li>
+      <li><a href="#автоматически-подтверждено"
+     >Автоматически
+      подтверждено</a></li>
+      <li><a href="#закрытые-замечания-независимой-проверки"
+     >Закрытые
+      замечания независимой проверки</a></li>
+      <li><a href="#оставшиеся-внешние-условия-публикации"
+     >Оставшиеся внешние
+      условия публикации</a>
+      <ul>
+      <li><a href="#0-контраст-и-license-review"
+     >0. Контраст и license
+      review</a></li>
+      <li><a href="#1-пилотный-хронометраж"
+     >1. Пилотный хронометраж</a></li>
+      <li><a href="#2-проверка-в-браузерах-и-доступность"
+     >2. Проверка в
+      браузерах и доступность</a></li>
+      </ul></li>
+      <li><a href="#условие-разрешения-на-публичную-публикацию"
+     >Условие
+      разрешения на публичную публикацию</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Редактор
+курса</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Статус версии-кандидата</h1>
+      <p class="doc-summary">Актуальные решения, закрытые замечания и
+внешние условия публикации.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#текущий-вердикт">Текущий
+        вердикт</a></li>
+        <li><a href="#автоматически-подтверждено"
+       >Автоматически
+        подтверждено</a></li>
+        <li><a href="#закрытые-замечания-независимой-проверки"
+       >Закрытые
+        замечания независимой проверки</a></li>
+        <li><a href="#оставшиеся-внешние-условия-публикации"
+       >Оставшиеся
+        внешние условия публикации</a>
+        <ul>
+        <li><a href="#0-контраст-и-license-review"
+       >0. Контраст и license
+        review</a></li>
+        <li><a href="#1-пилотный-хронометраж"
+       >1. Пилотный хронометраж</a></li>
+        <li><a href="#2-проверка-в-браузерах-и-доступность"
+       >2. Проверка в
+        браузерах и доступность</a></li>
+        </ul></li>
+        <li><a href="#условие-разрешения-на-публичную-публикацию"
+       >Условие
+        разрешения на публичную публикацию</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <p><strong>Дата:</strong> 2026-09-22<br />
+        <strong>Источник:</strong> NautilusTrader <code>develop</code> @
+        <code>84a98f7f3cc786085496976320c3cb320024217f</code><br />
+        <strong>Объект:</strong> 3 курса, 12 модулей, 1200 плановых
+        минут</p>
+        <h2 id="текущий-вердикт">Текущий вердикт</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Область</th>
+        <th>Статус</th>
+        <th>Evidence</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Техническая корректность</td>
+        <td><strong>GO</strong></td>
+        <td>Независимый read-only review; точные snippets; согласованные
+        Backtest/Sandbox/Live, Rust-first и safety semantics</td>
+        </tr>
+        <tr>
+        <td>Внутренние учебные материалы</td>
+        <td><strong>GO</strong></td>
+        <td>Независимый read-only review; 12 labs, 12 workbook
+        artifacts, executable mastery и capstone rubric</td>
+        </tr>
+        <tr>
+        <td>Release artifact</td>
+        <td><strong>REVISION REQUIRED</strong></td>
+        <td>Publish root, локальные assets/links, localization и
+        статические keyboard controls готовы; contrast defect и
+        формальная license review остаются открыты</td>
+        </tr>
+        <tr>
+        <td>Публичный релиз</td>
+        <td><strong>NO-GO</strong></td>
+        <td>Не исправлен подтверждённый contrast defect; не заполнены
+        pilot timing и ручной browser/accessibility QA</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><code>GO</code> в первых двух строках означает готовность
+        учебного содержания к внешним проверкам. Release artifact и
+        публичный допуск остаются заблокированы перечисленными ниже
+        условиями.</p>
+        <h2 id="автоматически-подтверждено">Автоматически
+        подтверждено</h2>
+        <ul>
+        <li><code>python3 verify_courses.py</code> — PASS: 3 курса, 12
+        модулей, 1200 плановых минут.</li>
+        <li><code>python3 verify_source_snippets.py --source /tmp/nautilus_trader-course-source</code>
+        — PASS: 12 точных непрерывных excerpts на pinned commit.</li>
+        <li><code>node --check courses/01-engine-foundations/main.js</code>
+        — PASS; shared runtime идентичен во всех трёх курсах.</li>
+        <li>Собранные <code>index.html</code> идентичны
+        <code>_base.html + modules/*.html + _footer.html</code>.</li>
+        <li>Локальные ссылки существуют, duplicate IDs не найдены,
+        обязательных внешних runtime/font requests нет.</li>
+        <li>Release junk (<code>.DS_Store</code>, <code>*.pyc</code>,
+        caches) отсутствует и проверяется verifier-ом.</li>
+        </ul>
+        <h2 id="закрытые-замечания-независимой-проверки">Закрытые
+        замечания независимой проверки</h2>
+        <ul>
+        <li>Исправлена семантика Sandbox и Live; Sandbox отделён от
+        exchange testnet.</li>
+        <li>Все 12 source snippets восстановлены как точные непрерывные
+        excerpts.</li>
+        <li>Добавлены 12 исполнимых labs, 12 workbook artifacts, answer
+        key, mastery verdict и многоуровневая capstone rubric.</li>
+        <li>Синхронизирована лестница
+        <code>build → replay/backtest → untouched forward → shadow → bounded canary → live expansion</code>.</li>
+        <li>Исправлены границы Adapter/DataEngine и scope
+        reconciliation; balance/margin вынесены в отдельный
+        account-state/risk gate.</li>
+        <li>Добавлены LGPL text, third-party notice, pinned source и
+        non-affiliation notice.</li>
+        <li>Русифицирован runtime; добавлены keyboard semantics, focus
+        styles, reduced motion и mobile reflow. Contrast finding не
+        закрыт: белый текст на <code>#D94F30</code> даёт около
+        <code>4.11:1</code> вместо требуемых <code>4.5:1</code>.</li>
+        <li>Добавлены publish root, каталог, resources route и
+        межкурсовая навигация.</li>
+        </ul>
+        <h2 id="оставшиеся-внешние-условия-публикации">Оставшиеся
+        внешние условия публикации</h2>
+        <h3 id="0-контраст-и-license-review">0. Контраст и license
+        review</h3>
+        <ul>
+        <li>заменить либо скорректировать
+        <code>--color-accent: #D94F30</code> для controls с белым
+        текстом и повторить проверку всех состояний;</li>
+        <li>зафиксировать ответственную проверку формата распространения
+        LGPL snippets и подготовленных notices.</li>
+        </ul>
+        <h3 id="1-пилотный-хронометраж">1. Пилотный хронометраж</h3>
+        <p>Заполнить <a
+        href="pilot-timing-record.html"><code>PILOT_TIMING_RECORD.md</code></a>
+        минимум по трём представителям аудитории, рассчитать медиану и
+        диапазон, затем:</p>
+        <ul>
+        <li>подтвердить диапазон 1080–1320 минут; либо</li>
+        <li>скорректировать <a
+        href="../../course-manifest.json"><code>course-manifest.json</code></a>,
+        curriculum и learner-facing duration claims по фактическому
+        evidence.</li>
+        </ul>
+        <h3 id="2-проверка-в-браузерах-и-доступность">2. Проверка в
+        браузерах и доступность</h3>
+        <p>Заполнить <a
+        href="browser-accessibility-qa.html"><code>BROWSER_ACCESSIBILITY_QA.md</code></a>
+        на том же release archive:</p>
+        <ul>
+        <li>desktop 1440×900;</li>
+        <li>mobile 390×844;</li>
+        <li>200% zoom;</li>
+        <li>keyboard-only;</li>
+        <li>screen reader;</li>
+        <li>reduced motion и forced colors;</li>
+        <li>console/runtime regression.</li>
+        </ul>
+        <h2 id="условие-разрешения-на-публичную-публикацию">Условие
+        разрешения на публичную публикацию</h2>
+        <p>Публичный релиз получает <code>GO</code> только если оба
+        протокола имеют итоговый <code>PASS</code>, найденные дефекты
+        исправлены, автоматические проверки повторно зелёные и финальный
+        чистый архив проверен по checksum. Реальная публикация требует
+        отдельной явной авторизации.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>RELEASE_CANDIDATE_STATUS.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

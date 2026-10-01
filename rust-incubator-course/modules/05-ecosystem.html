@@ -1,0 +1,271 @@
+<!-- ════════════════════════════════════════════════════════════
+     MODULE 5 — Экосистема Rust
+     ════════════════════════════════════════════════════════════ -->
+<section class="module" id="module-5" style="background: var(--color-bg);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">05</span>
+      <h1 class="module-title">Экосистема Rust</h1>
+      <p class="module-subtitle">Тестирование, макросы, сериализация, async и все, что нужно для реальных проектов</p>
+    </header>
+
+    <!-- ── Metaphor callout ────────────────────────────────────── -->
+    <div class="callout callout-info animate-in">
+      <div class="callout-icon">&#128218;</div>
+      <div class="callout-content">
+        <span class="callout-title">Метафора: швейцарский армейский нож</span>
+        <p>Сам по себе Rust — это лезвие. Но экосистема библиотек (<span class="term" data-definition="Crate — единица компиляции и распространения кода в Rust. Аналог пакета (package) в других языках. Публикуются на crates.io.">crates</span>) — это все остальные инструменты: ножницы, отвертка, штопор. Без них далеко не уедешь.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: 11 подшагов экосистемы ────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">11 подшагов экосистемы</h3>
+
+      <p class="animate-in">
+        Rust Incubator посвящает экосистеме целых 11 подшагов — больше, чем любому другому разделу. Потому что знать язык мало: нужно знать инструменты.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-accent-light); color: var(--color-accent);">3.1</div>
+          <div class="pattern-title">Тестирование</div>
+          <p class="pattern-desc"><code>#[test]</code>, mockall, proptest. <span class="term" data-definition="Behavior-Driven Development — стиль написания тестов, в котором тесты описывают поведение системы на естественном языке: given (дано), when (когда), then (тогда).">BDD</span>-стиль тестов для описания поведения системы.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-info);">3.2</div>
+          <div class="pattern-title">Макросы</div>
+          <p class="pattern-desc"><code>macro_rules!</code> и <code>proc_macro</code>. Генерация кода на этапе компиляции для устранения boilerplate.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-success);">3.6</div>
+          <div class="pattern-title">Serde</div>
+          <p class="pattern-desc"><span class="term" data-definition="Сериализация — процесс преобразования структуры данных в последовательность байтов (JSON, TOML, бинарный формат) для хранения или передачи. Десериализация — обратный процесс.">Сериализация</span>/десериализация: JSON, TOML, YAML и любой другой формат данных.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(123,109,170,0.12); color: #7B6DAA;">3.8</div>
+          <div class="pattern-title">Логирование</div>
+          <p class="pattern-desc">tracing, structured logging. Переменная RUST_LOG для управления уровнями логирования.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(212,168,67,0.12); color: #D4A843;">3.10</div>
+          <div class="pattern-title">Потоки</div>
+          <p class="pattern-desc"><code>std::thread</code>, rayon для параллелизма. <code>Mutex</code>, <code>RwLock</code> для синхронизации доступа к данным.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(72,166,167,0.12); color: #48A6A7;">3.11</div>
+          <div class="pattern-title">Async</div>
+          <p class="pattern-desc">tokio, futures, <span class="term" data-definition="async/await — синтаксис для написания асинхронного кода, который выглядит как синхронный. async-функция возвращает Future, а await приостанавливает выполнение до получения результата.">async/await</span>. Тысячи задач на одном потоке без блокировки.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Serde — король сериализации ───────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Serde — король сериализации</h3>
+
+      <p class="animate-in">
+        Serde — самая скачиваемая библиотека Rust. Одна аннотация <code>#[derive(Serialize, Deserialize)]</code> — и ваша структура умеет превращаться в JSON, TOML, YAML, MessagePack и десятки других форматов.
+      </p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<code><span class="code-line"><span class="code-keyword">use</span> serde::{Serialize, Deserialize};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">#[derive(Debug, Serialize, Deserialize)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Config</span> {</span>
+<span class="code-line">    host: <span class="code-keyword">String</span>,</span>
+<span class="code-line">    port: <span class="code-keyword">u16</span>,</span>
+<span class="code-line">    debug: <span class="code-keyword">bool</span>,</span>
+<span class="code-line">}</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчно по-русски</span>
+          <div class="translation-lines">
+            <div class="tl">Подключаем трейты Serialize и Deserialize из библиотеки serde</div>
+            <div class="tl">derive автоматически генерирует код для сериализации на этапе компиляции</div>
+            <div class="tl">Структура Config с тремя полями: host (строка), port (число), debug (флаг)</div>
+            <div class="tl">Теперь Config умеет превращаться в JSON: {"host":"...", "port":8080, "debug":true}</div>
+            <div class="tl">И обратно: из строки JSON можно восстановить структуру Config</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Async — тысячи задач на одном потоке ───────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Async — тысячи задач на одном потоке</h3>
+
+      <p class="animate-in">
+        Асинхронность в Rust основана на <span class="term" data-definition="Future — это обещание результата, который будет доступен в будущем. Future не выполняется, пока его не опросит runtime через метод poll(). Это ленивая модель вычислений.">Future</span> и кооперативной многозадачности. Вместо того чтобы создавать тысячи потоков ОС, runtime (tokio) управляет тысячами легковесных задач на нескольких потоках.
+      </p>
+
+      <div class="flow-animation animate-in" data-steps='[{"highlight":"flow-actor-1","label":"Пользователь вызывает async-функцию"},{"highlight":"flow-actor-2","label":"Tokio создает Future — это обещание результата","packet":true,"from":"actor-1","to":"actor-2"},{"highlight":"flow-actor-3","label":"Runtime вызывает poll() у Future","packet":true,"from":"actor-2","to":"actor-3"},{"highlight":"flow-actor-4","label":"Future запрашивает данные у ОС (сеть, файл)","packet":true,"from":"actor-3","to":"actor-4"},{"highlight":"flow-actor-4","label":"ОС: данные не готовы. Future возвращает Pending"},{"highlight":"flow-actor-2","label":"Runtime переключается на другую задачу. Ни один поток не простаивает!"},{"highlight":"flow-actor-3","label":"ОС: данные готовы! Runtime снова вызывает poll()","packet":true,"from":"actor-4","to":"actor-3"},{"highlight":"flow-actor-3","label":"Future возвращает Ready(результат). Задача завершена!"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">&#128100;</div>
+            <span>Пользователь</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">&#9881;&#65039;</div>
+            <span>Tokio Runtime</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">&#128230;</div>
+            <span>Future (задача)</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">&#128187;</div>
+            <span>Операционная система</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите &laquo;Следующий шаг&raquo;</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Финальный проект Step 3 — CLI-утилита ──────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Финальный проект Step 3 — CLI-утилита</h3>
+
+      <p class="animate-in">
+        Итоговый проект этапа экосистемы — настоящая CLI-утилита для обработки JPEG-изображений: удаление метаданных и минимизация размера файла. Здесь сходятся все изученные темы: CLI-парсинг, конфигурация, параллелизм, логирование.
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Ввод из разных источников</strong>
+            <p>Принимает файлы и URL через CLI-аргументы, stdin или файл-список. Используются библиотеки clap и reqwest.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Параллельная обработка</strong>
+            <p>Несколько изображений обрабатываются одновременно с помощью rayon или tokio — без блокировки основного потока.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Настраиваемое качество</strong>
+            <p>Параметр качества JPEG на выходе задается пользователем. Баланс между размером файла и визуальным качеством.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Каскадная конфигурация</strong>
+            <p>Настройки загружаются из файла конфигурации, переменных окружения и CLI-аргументов — с приоритетом в этом порядке.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Управляемое логирование</strong>
+            <p>Поддержка RUST_LOG для управления уровнями логирования: от тихого режима до подробной отладки через tracing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Callout ───────────────────────────────────── -->
+    <div class="screen animate-in">
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">&#9889;</div>
+        <div class="callout-content">
+          <span class="callout-title">Async — это не магия</span>
+          <p>Async в Rust — это кооперативная многозадачность: каждая задача сама решает, когда уступить управление. В отличие от потоков ОС, переключение между Future практически бесплатно. Поэтому Tokio может обрабатывать сотни тысяч соединений на одном сервере.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Quiz ──────────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Проверьте себя</h3>
+
+      <div class="quiz-container animate-in" id="quiz-module5">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="a"
+             data-explanation-right="Serde использует макросы для генерации кода сериализации на этапе компиляции — без runtime-рефлексии."
+             data-explanation-wrong="derive(Serialize, Deserialize) генерирует код для автоматического преобразования структуры в различные форматы данных и обратно.">
+          <p class="quiz-question">1. Что делает <code>#[derive(Serialize, Deserialize)]</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Автоматически генерирует код для преобразования структуры в JSON/TOML/etc. и обратно
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Сжимает данные для экономии памяти
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Добавляет шифрование к полям структуры
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Верно! Async-задачи управляются runtime-ом и значительно легче потоков ОС, что позволяет масштабироваться до тысяч одновременных задач."
+             data-explanation-wrong="Async лучше для I/O-bound задач. Для CPU-bound задач обычные потоки (rayon) могут быть эффективнее. Async-задачи не выполняются последовательно — они переключаются кооперативно.">
+          <p class="quiz-question">2. Чем async/await отличается от обычных потоков?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Async-задачи выполняются последовательно
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Async-задачи легче потоков ОС и управляются runtime-ом (tokio), что позволяет обрабатывать тысячи задач на нескольких потоках
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Async быстрее потоков во всех случаях
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Именно! Язык без экосистемы — как нож без остальных инструментов швейцарского ножа. В реальных проектах библиотеки решают большую часть задач."
+             data-explanation-wrong="Дело не в сложности и не в незавершённости: экосистема занимает больше шагов, потому что знание библиотек критично для продуктивной работы.">
+          <p class="quiz-question">3. Почему экосистема в Rust Incubator занимает больше всего шагов?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что это самая сложная часть
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что знание библиотек и инструментов критично для реальных проектов — язык без экосистемы бесполезен
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Авторы не успели дописать другие разделы
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Начать заново</button>
+      </div>
+    </div>
+
+  </div>
+</section>

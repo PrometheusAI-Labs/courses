@@ -1,0 +1,156 @@
+<section class="module" id="module-1">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 1 · 100 минут</span>
+      <h1 class="module-title">Данные как доказательство</h1>
+      <p class="module-subtitle">До выводов о стратегии восстановим проверяемую цепочку: от строки поставщика до запроса к каталогу.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Криминалистический архив, а не мешок файлов</h2>
+      <p>Представьте архив улик: важны не только образцы, но и подписи, время и порядок. В исследовании таким архивом становится <span class="term" data-definition="Catalog — структурированное хранилище рыночных данных, которое можно повторно запрашивать по типу, инструменту и времени. В заданиях AI называйте его источником входов эксперимента.">catalog</span>, а <span class="term" data-definition="Бэктест — симуляция торговых правил на исторических данных и заданной модели исполнения. Он показывает модельный результат, но не гарантирует будущее поведение рынка.">бэктест</span> использует его как вход.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">①</div>
+          <h3 class="pattern-title">Происхождение</h3>
+          <p class="pattern-desc">Кто дал данные, какой файл и какой диапазон были получены.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">②</div>
+          <h3 class="pattern-title">Порядок</h3>
+          <p class="pattern-desc"><span class="term" data-definition="ts_init — временная метка инициализации записи в модели NautilusTrader. Перед использованием уточняйте семантику конкретной метки и не путайте её автоматически со временем события на бирже.">ts_init</span> задаёт проверяемую последовательность записей.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">③</div>
+          <h3 class="pattern-title">Преобразования</h3>
+          <p class="pattern-desc">Нормализация, фильтры и удаления должны оставлять след в отчёте.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-5)">
+          <div class="pattern-icon" style="background: var(--color-actor-5)">④</div>
+          <h3 class="pattern-title">Граница вывода</h3>
+          <p class="pattern-desc">Чистый архив доказывает воспроизводимость входов, но не будущую прибыль.</p>
+        </div>
+      </div>
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content"><strong class="callout-title">Ключевой принцип</strong><p>Сортировка исправляет порядок записей, но не исправляет неверные цены, пропуски или скрытые преобразования.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Путь одной записи: нажимайте «Следующий шаг»</h2>
+      <p><span class="term" data-definition="Data flow — маршрут данных через последовательные этапы обработки. Используйте этот термин, когда просите AI показать, где запись изменилась или потерялась.">Поток данных</span> помогает найти место, где доказательство могло стать слабее.</p>
+      <div class="flow-animation" data-steps='[
+        {"highlight":"flow-actor-1","label":"Поставщик отдаёт исходные строки"},
+        {"highlight":"flow-actor-2","label":"Строки превращаются в типизированные тики","packet":true,"from":"actor-1","to":"actor-2"},
+        {"highlight":"flow-actor-3","label":"Тики сортируются по ts_init","packet":true,"from":"actor-2","to":"actor-3"},
+        {"highlight":"flow-actor-4","label":"Инструмент и тики записываются в catalog","packet":true,"from":"actor-3","to":"actor-4"},
+        {"highlight":"flow-actor-5","label":"Исследователь делает ограниченный запрос","packet":true,"from":"actor-4","to":"actor-5"}
+      ]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1"><div class="flow-actor-icon">CSV</div><span>Строки</span></div>
+          <div class="flow-actor" id="flow-actor-2"><div class="flow-actor-icon">T</div><span>Тики</span></div>
+          <div class="flow-actor" id="flow-actor-3"><div class="flow-actor-icon">⇅</div><span>Сортировка</span></div>
+          <div class="flow-actor" id="flow-actor-4"><div class="flow-actor-icon">C</div><span>Catalog</span></div>
+          <div class="flow-actor" id="flow-actor-5"><div class="flow-actor-icon">?</div><span>Запрос</span></div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label">Нажмите «Следующий шаг», чтобы начать</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Что именно делает код архива</h2>
+      <p>Слева — точный фрагмент проекта. Справа — смысл действий без предположений о качестве источника.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code># Create a catalog instance
+catalog = ParquetDataCatalog(str(CATALOG_PATH))
+
+# Write instrument to the catalog
+catalog.write_instruments([instrument])
+
+# Write ticks to the catalog
+catalog.write_quote_ticks(ticks)
+</code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">ПО-РУССКИ</span>
+          <div class="translation-lines">
+            <p class="tl">Открыть <span class="term" data-definition="Parquet — колоночный формат файлов, удобный для аналитических запросов. Формат хранения не гарантирует корректность содержимого.">Parquet</span>-каталог по заранее выбранному пути.</p>
+            <p class="tl">Сохранить описание инструмента, чтобы тики имели однозначный контекст.</p>
+            <p class="tl">Сохранить подготовленные quote ticks как вход исследования.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-warning animate-in">
+        <div class="callout-icon">⚠</div>
+        <div class="callout-content"><strong class="callout-title">Не переносите механику примера бездумно</strong><p>Удаление каталога даёт чистый учебный запуск, но в реальном исследовании политика хранения и резервного копирования должна быть отдельным решением.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: паспорт данных</h2>
+      <p>У вас шесть тиков: два стоят не по `ts_init`, преобразование цены не описано, заявлен диапазон 10:00–10:05. Цель — не «починить всё», а отделить проверенное от неизвестного.</p>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Зафиксируйте происхождение</strong><p>Источник, файл, часовой пояс, заявленный диапазон и число строк.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Проверьте форму</strong><p>Монотонность времени, дубликаты, пропуски, границы и преобразования.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Сформулируйте границу</strong><p>После сортировки порядок известен; истинность цен и полнота ещё не доказаны.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Дайте задание AI</strong><p>Попросите таблицу проверок с входом, методом, наблюдением и выводом.</p></div></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · 10 минут</h3>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">Артефакт</code><span class="badge-desc">Одностраничный паспорт набора данных и prompt на аудит.</span></div>
+        <div class="badge-item"><code class="badge-code">Приёмка</code><span class="badge-desc">Источник + диапазон + поле сортировки + минимум 4 проверки + явные ограничения.</span></div>
+        <div class="badge-item"><code class="badge-code">Запрет</code><span class="badge-desc">Не называть набор качественным или стратегию прибыльной без измеримых критериев.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Проверка понимания: решение по новым данным</h2>
+      <div class="quiz-container" id="quiz-module1">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Сначала нужен отчёт о дубликатах и правило их обработки; сортировка отвечает только за порядок." data-explanation-wrong="Сортировка не удаляет повторные наблюдения и не объясняет, откуда они взялись.">
+          <h3 class="quiz-question">После сортировки остались одинаковые `ts_init` и цены. Что делать первым?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Считать набор готовым: порядок уже исправлен</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Отдельно измерить дубликаты и зафиксировать правило обработки</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Удалить каждую вторую строку</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Паспорт должен показать преобразование и позволить воспроизвести его; совпадение итоговых чисел недостаточно." data-explanation-wrong="Красивый результат не восстанавливает скрытый этап подготовки данных.">
+          <h3 class="quiz-question">AI пересчитал цены перед записью, но не сохранил правило. Какой вывод допустим?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Результат доказателен, если equity curve гладкая</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Можно доверять, если запуск повторился дважды</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Цепочка неполна, пока преобразование не описано и не воспроизводится</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Границы и ожидаемая частота помогают отличить нормальное отсутствие записи от пробела." data-explanation-wrong="Количество строк без временной структуры не показывает, где именно данные отсутствуют.">
+          <h3 class="quiz-question">Как лучше проверить пропуски в минутном диапазоне?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сравнить наблюдаемые интервалы с ожидаемой частотой и границами</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Проверить только общий размер файла</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запустить стратегию и посмотреть на итоговый финансовый результат</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Такое утверждение ровно соответствует доказательству: известные входы и повторяемая запись, но не рыночная валидность." data-explanation-wrong="Catalog усиливает трассируемость, но не превращает историческую модель в подтверждение live-результата.">
+          <h3 class="quiz-question">Какое утверждение после записи catalog является evidence-bounded?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Стратегия готова к live</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Эти входы можно повторно запросить при указанных ограничениях</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Данные гарантируют прибыль</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Проверить рассуждение</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

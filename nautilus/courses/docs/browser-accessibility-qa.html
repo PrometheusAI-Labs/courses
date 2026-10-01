@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Настольные и мобильные браузеры,
+масштаб 200%, клавиатура, экранный диктор и повторная проверка.">
+  <meta name="source-file" content="BROWSER_ACCESSIBILITY_QA.md">
+  <meta name="source-sha256" content="f16c9c369fff38489e4a399cb80006be754aaf7d51852b75f6105ceb0ac56105">
+  <title>Проверка в браузерах и
+доступность — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#идентификация-сборки"
+     >Идентификация сборки</a></li>
+      <li><a href="#матрица-представлений"
+     >Матрица представлений</a></li>
+      <li><a href="#управление-только-с-клавиатуры"
+     >Управление только с
+      клавиатуры</a></li>
+      <li><a href="#экранный-диктор">Экранный
+      диктор</a></li>
+      <li><a href="#уменьшение-анимации"
+     >Уменьшение анимации</a></li>
+      <li><a href="#контраст-и-принудительные-цвета"
+     >Контраст и принудительные
+      цвета</a></li>
+      <li><a href="#финальная-повторная-проверка"
+     >Финальная повторная
+      проверка</a></li>
+      <li><a href="#решение">Решение</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Контроль
+качества</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Проверка в браузерах и доступность</h1>
+      <p class="doc-summary">Настольные и мобильные браузеры, масштаб
+200%, клавиатура, экранный диктор и повторная проверка.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#идентификация-сборки"
+       >Идентификация сборки</a></li>
+        <li><a href="#матрица-представлений"
+       >Матрица представлений</a></li>
+        <li><a href="#управление-только-с-клавиатуры"
+       >Управление только с
+        клавиатуры</a></li>
+        <li><a href="#экранный-диктор">Экранный
+        диктор</a></li>
+        <li><a href="#уменьшение-анимации"
+       >Уменьшение анимации</a></li>
+        <li><a href="#контраст-и-принудительные-цвета"
+       >Контраст и
+        принудительные цвета</a></li>
+        <li><a href="#финальная-повторная-проверка"
+       >Финальная повторная
+        проверка</a></li>
+        <li><a href="#решение">Решение</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <p>Этот файл — журнал обязательной ручной проверки release
+        candidate. Пустые поля означают <code>NOT VERIFIED</code>, а не
+        <code>PASS</code>. Проверку проводят на собранных
+        <code>index.html</code> из того же архива, который планируется
+        публиковать.</p>
+        <h2 id="идентификация-сборки">Идентификация сборки</h2>
+        <ul>
+        <li>Дата проверки: ____________________</li>
+        <li>Проверяющий: ____________________</li>
+        <li>Архив / SHA256: ____________________</li>
+        <li>ОС и версия: ____________________</li>
+        <li>Браузер и версия: ____________________</li>
+        <li>Screen reader и версия: ____________________</li>
+        <li>Итог: <code>PASS</code> /
+        <code>REVISION_REQUIRED</code></li>
+        </ul>
+        <h2 id="матрица-представлений">Матрица представлений</h2>
+        <p>Заполните все строки. <code>PASS</code> допустим, только если
+        нет перекрытия, обрезанного текста, недоступного управления и
+        обязательного горизонтального скролла страницы. Горизонтальный
+        скролл внутри осознанного code region также должен быть
+        описан.</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Страница</th>
+        <th>Desktop 1440×900, 100%</th>
+        <th>Mobile 390×844, 100%</th>
+        <th>Desktop, 200% zoom</th>
+        <th>Примечания / evidence</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>courses/index.html</code></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><code>courses/resources.html</code></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><code>courses/01-engine-foundations/index.html</code></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><code>courses/02-backtest-research/index.html</code></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><code>courses/03-rust-live/index.html</code></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Для каждого курса просмотрите начало и конец каждого модуля,
+        длинный code block, quiz, tooltip, chat, flow animation, layer
+        tabs и footer. Приложите скриншоты либо запись к release
+        evidence; не помещайте персональные данные или credentials в
+        кадр.</p>
+        <h2 id="управление-только-с-клавиатуры">Управление только с
+        клавиатуры</h2>
+        <p>Выполните без мыши во всех трёх курсах.</p>
+        <ul class="task-list">
+        <li><label><input type="checkbox" />Skip link получает фокус
+        первым и переносит к основному содержанию.</label></li>
+        <li><label><input type="checkbox" />Ссылка «Все курсы» и все
+        module dots доступны в логичном порядке.</label></li>
+        <li><label><input type="checkbox" />У каждого интерактивного
+        элемента виден focus indicator.</label></li>
+        <li><label><input type="checkbox" />Quiz options выбираются
+        клавишами <code>Tab</code> +
+        <code>Enter</code>/<code>Space</code>; кнопки проверки и повтора
+        работают.</label></li>
+        <li><label><input type="checkbox" />Итог quiz («Зачёт» / «Нужна
+        повторная попытка») объявляется и остаётся визуально
+        доступным.</label></li>
+        <li><label><input type="checkbox" />Glossary tooltip открывается
+        <code>Enter</code>/<code>Space</code>, закрывается без ловушки
+        фокуса.</label></li>
+        <li><label><input type="checkbox" />Architecture cards и layer
+        tabs управляются клавиатурой; arrow keys не перехватываются
+        глобальной навигацией.</label></li>
+        <li><label><input type="checkbox" />Chat и flow controls
+        запускаются и повторяются с клавиатуры.</label></li>
+        <li><label><input type="checkbox" />Ни один
+        modal/tooltip/интерактив не создаёт keyboard trap.</label></li>
+        <li><label><input type="checkbox" />Footer navigation
+        достигается и ведёт по ожидаемым адресам.</label></li>
+        </ul>
+        <p>Evidence / дефекты: ____________________</p>
+        <h2 id="экранный-диктор">Экранный диктор</h2>
+        <p>Рекомендуемая пара для macOS: Safari + VoiceOver.
+        Зафиксируйте фактическую пару выше.</p>
+        <ul class="task-list">
+        <li><label><input type="checkbox" />Заголовок страницы, язык
+        <code>ru</code> и основной landmark объявляются
+        корректно.</label></li>
+        <li><label><input type="checkbox" />Иерархия headings позволяет
+        понять структуру курса без визуального просмотра.</label></li>
+        <li><label><input type="checkbox" />Module dots объявляются как
+        обычные кнопки с русскими labels; текущая получает
+        <code>aria-current</code>.</label></li>
+        <li><label><input type="checkbox" />Progress bar имеет имя либо
+        его назначение однозначно из контекста и обновление не создаёт
+        речевой шум.</label></li>
+        <li><label><input type="checkbox" />Quiz option сообщает
+        выбранное состояние; feedback и итоговый score объявляются один
+        раз.</label></li>
+        <li><label><input type="checkbox" />Tooltip term имеет понятное
+        имя и определение доступно без мыши.</label></li>
+        <li><label><input type="checkbox" />Architecture/layer controls
+        сообщают выбранное или раскрытое состояние и связанное
+        описание.</label></li>
+        <li><label><input type="checkbox" />Анимационные chat/flow
+        updates не создают неконтролируемый поток
+        announcements.</label></li>
+        <li><label><input type="checkbox" />Emoji или декоративные
+        значки не скрывают смысл текстового label.</label></li>
+        <li><label><input type="checkbox" />Все ссылки имеют различимые
+        названия вне окружающего контекста.</label></li>
+        </ul>
+        <p>Evidence / дефекты: ____________________</p>
+        <h2 id="уменьшение-анимации">Уменьшение анимации</h2>
+        <ol type="1">
+        <li>Включите системное <code>Reduce motion</code> /
+        <code>prefers-reduced-motion: reduce</code>.</li>
+        <li>Перезагрузите каждый курс.</li>
+        </ol>
+        <ul class="task-list">
+        <li><label><input type="checkbox" />Появление экранов и hover
+        effects не требуют движения для понимания.</label></li>
+        <li><label><input type="checkbox" />Smooth scrolling
+        отключён.</label></li>
+        <li><label><input type="checkbox" />Chat/flow остаются
+        управляемыми и не запускают неостановимую анимацию.</label></li>
+        <li><label><input type="checkbox" />Ни один элемент не исчезает
+        из-за отключённой animation.</label></li>
+        </ul>
+        <p>Evidence / дефекты: ____________________</p>
+        <h2 id="контраст-и-принудительные-цвета">Контраст и
+        принудительные цвета</h2>
+        <ul class="task-list">
+        <li><label><input type="checkbox" />Normal text и labels
+        соответствуют минимум 4.5:1.</label></li>
+        <li><label><input type="checkbox" />Large text соответствует
+        минимум 3:1.</label></li>
+        <li><label><input type="checkbox" />Focus indicator и границы
+        controls различимы минимум 3:1 относительно соседних
+        цветов.</label></li>
+        <li><label><input type="checkbox" />Success/error/warning не
+        различаются только цветом: присутствует текстовый
+        verdict.</label></li>
+        <li><label><input type="checkbox" />В Windows High Contrast /
+        forced colors controls, focus и выбранные состояния остаются
+        видимыми либо найденные ограничения записаны и
+        исправлены.</label></li>
+        </ul>
+        <p>Инструмент, версии и сохранённый отчёт:
+        ____________________</p>
+        <h2 id="финальная-повторная-проверка">Финальная повторная
+        проверка</h2>
+        <ul class="task-list">
+        <li><label><input type="checkbox" />Root <code>index.html</code>
+        приводит в каталог.</label></li>
+        <li><label><input type="checkbox" />Все три курса открываются из
+        каталога и возвращаются обратно.</label></li>
+        <li><label><input type="checkbox" />Resources, labs, workbook,
+        capstone, notices и license доступны.</label></li>
+        <li><label><input type="checkbox" />Один полный quiz в каждом
+        курсе проверен на PASS и retry path.</label></li>
+        <li><label><input type="checkbox" />Один tooltip, chat, flow,
+        architecture view и layer switch фактически
+        проверены.</label></li>
+        <li><label><input type="checkbox" />Нет запросов к Google Fonts,
+        tracker или другому обязательному внешнему runtime.</label></li>
+        <li><label><input type="checkbox" />Console не содержит uncaught
+        JavaScript errors.</label></li>
+        <li><label><input type="checkbox" />После проверки запущены
+        <code>verify_courses.py</code> и
+        <code>verify_source_snippets.py</code>.</label></li>
+        </ul>
+        <h2 id="решение">Решение</h2>
+        <p>Критические дефекты и ссылки на evidence:
+        ____________________</p>
+        <p>Исправления и повторная проверка: ____________________</p>
+        <p>Итоговый verdict: <code>PASS</code> /
+        <code>REVISION_REQUIRED</code></p>
+        <p>Подпись проверяющего / дата: ____________________</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>BROWSER_ACCESSIBILITY_QA.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

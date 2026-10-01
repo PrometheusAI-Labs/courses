@@ -1,0 +1,88 @@
+<section class="module" id="module-2">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 2 · 105 минут</span>
+      <h1 class="module-title">Воспроизводимый запуск</h1>
+      <p class="module-subtitle">Паспорт эксперимента делает каждый вход видимым: что тестировали, где, когда и при какой модели.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Запуску нужен паспорт</h2>
+      <p>Два результата сравнимы только тогда, когда их рецепты известны. <span class="term" data-definition="Воспроизводимость — способность повторить эксперимент с теми же зафиксированными входами, конфигурацией и версией кода и получить согласованный результат в пределах модели.">Воспроизводимость</span> начинается не с графика, а с явных полей.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">D</div><h3 class="pattern-title">Данные</h3><p class="pattern-desc">Путь к catalog, тип записи и версия набора.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">I</div><h3 class="pattern-title">Инструмент</h3><p class="pattern-desc"><span class="term" data-definition="instrument_id — однозначный идентификатор торгуемого инструмента. Он защищает от случайного теста не того рынка.">instrument_id</span> фиксирует рынок исследования.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-3)">T</div><h3 class="pattern-title">Период</h3><p class="pattern-desc">Начало и конец ограничивают видимую историю.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">V</div><h3 class="pattern-title">Модель площадки</h3><p class="pattern-desc">Допущения симуляции принадлежат рецепту, а не примечанию после теста.</p></div>
+      </div>
+      <div class="callout callout-accent"><div class="callout-icon">💡</div><div class="callout-content"><strong class="callout-title">Один фактор за раз</strong><p>Если между запусками поменялись и период, и инструмент, и модель исполнения, причина различия результата не определена.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Компоненты согласуют рецепт</h2>
+      <p>Пройдите чат по одному сообщению. Здесь <span class="term" data-definition="BacktestNode — координатор высокоуровневого запуска: он получает конфигурации, строит окружение и запускает эксперимент.">BacktestNode</span> не угадывает отсутствующие решения исследователя.</p>
+      <div class="chat-window" id="chat-module2">
+        <div class="chat-messages">
+          <div class="chat-message" data-msg="0" data-sender="researcher" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-1)">И</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-1)">Исследователь</span><p>Тестируем один инструмент, период от start_ns до end_ns. Остальные поля фиксируем.</p></div></div>
+          <div class="chat-message" data-msg="1" data-sender="catalog" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-2)">C</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-2)">Catalog</span><p>Я отдам QuoteTick только по указанному пути, инструменту и диапазону.</p></div></div>
+          <div class="chat-message" data-msg="2" data-sender="node" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-3)">N</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-3)">BacktestNode</span><p>Я соберу запуск из data, venue и engine config — сохраните весь рецепт.</p></div></div>
+          <div class="chat-message" data-msg="3" data-sender="venue" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-4)">V</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-4)">SimulatedVenue</span><p>Мои допущения влияют на модель исполнения. Не называйте их реальным поведением биржи.</p></div></div>
+          <div class="chat-message" data-msg="4" data-sender="researcher" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-1)">И</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-1)">Исследователь</span><p>Сохраняю <span class="term" data-definition="Run manifest — паспорт запуска: структурированный список входов, параметров, версии кода и ссылок на результаты, достаточный для аудита и повтора.">manifest</span> и меняю в следующем запуске ровно один фактор.</p></div></div>
+        </div>
+        <div class="chat-typing" id="chat-module2-typing" style="display:none"><div class="chat-avatar" id="chat-module2-typing-avatar">?</div><div class="chat-typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>
+        <div class="chat-controls"><button class="btn chat-next-btn">Следующее сообщение</button><button class="btn chat-all-btn">Показать всё</button><button class="btn chat-reset-btn">Сначала</button><span class="chat-progress"></span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Точный рецепт входов</h2>
+      <p><span class="term" data-definition="Конфигурация — набор явно заданных параметров, управляющих поведением запуска. Просите AI выводить её полностью, а не прятать значения в переменных ноутбука.">Конфигурация</span> превращает скрытые предположения в проверяемые поля.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">CODE</span><pre><code>config = BacktestRunConfig(
+    venues=venue_configs,
+    data=data_configs,
+    engine=BacktestEngineConfig(),
+)
+</code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-РУССКИ</span><div class="translation-lines">
+          <p class="tl">Собрать общий рецепт бэктеста.</p>
+          <p class="tl">Включить в него заранее подготовленные конфигурации площадок и данных.</p>
+          <p class="tl">Добавить явную конфигурацию <span class="term" data-definition="Engine — движок, который координирует события и компоненты во время симуляции. Его настройки являются частью экспериментального рецепта.">движка</span>.</p>
+        </div></div>
+      </div>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Заморозить входы</strong><p>Data ID, период, инструмент, venue, engine, стратегия.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Привязать версию</strong><p>Сохранить commit или иной точный reference кода.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Сохранить manifest</strong><p>Положить рецепт рядом с результатом, а не в память исследователя.</p></div></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: сравните запуски A и B</h2>
+      <p>В A и B отличаются `start_time`, `instrument_id` и <span class="term" data-definition="Venue model — набор допущений симуляции о торговой площадке и исполнении. При сравнении запусков эта модель должна быть зафиксирована как часть рецепта.">venue model</span>. Ваша задача — сначала признать несопоставимость, затем спроектировать B2 с одним изменением.</p>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">DATA</code><span class="badge-desc">Тип, catalog ID/path, диапазон, инструмент.</span></div>
+        <div class="badge-item"><code class="badge-code">MODEL</code><span class="badge-desc">Venue и engine config, комиссии и допущения исполнения.</span></div>
+        <div class="badge-item"><code class="badge-code">CODE</code><span class="badge-desc">Версия стратегии и все параметры.</span></div>
+        <div class="badge-item"><code class="badge-code">DELTA</code><span class="badge-desc">Ровно один заявленный фактор между A и B2.</span></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · 10 минут</h3>
+      <div class="pattern-cards">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-5)">✓</div><h3 class="pattern-title">Артефакт</h3><p class="pattern-desc">Run manifest + таблица diff A/B2 + prompt для AI.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">!</div><h3 class="pattern-title">Граница</h3><p class="pattern-desc">Повторяемость внутри модели не доказывает реалистичность live.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Проверка понимания: аудит запуска</h2>
+      <div class="quiz-container" id="quiz-module2">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Окна разные, поэтому результат может измениться из-за рыночного периода, а не из-за стратегии." data-explanation-wrong="Одинаковый код не делает разные временные выборки эквивалентными."><h3 class="quiz-question">Код и параметры одинаковы, но один запуск заканчивается на месяц позже. Что верно?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запуски полностью сопоставимы</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Нужно пометить различие периода и не приписывать эффект стратегии</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Достаточно сравнить итоговый PnL</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Instrument ID является частью входа; сравнение разных рынков отвечает на другой вопрос." data-explanation-wrong="Название стратегии не нейтрализует различия ликвидности, цены и поведения инструментов."><h3 class="quiz-question">AI незаметно сменил instrument ID. Как отнестись к результату?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Принять, если метрика улучшилась</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Усреднить с прошлым результатом</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Считать отдельным экспериментом и обновить manifest</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Так сохраняется причинная интерпретация: известен единственный delta между рецептами." data-explanation-wrong="Несколько одновременных изменений превращают причину результата в догадку."><h3 class="quiz-question">Как проверить влияние venue model?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сохранить все входы и изменить только venue model</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Одновременно сменить период и параметры EMA</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Выбрать лучший из множества незадокументированных запусков</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Manifest должен сопровождать результат и связывать его с данными, моделью и кодом." data-explanation-wrong="Скриншот не позволяет повторить входы и проверить скрытые различия."><h3 class="quiz-question">Какой артефакт лучше поддерживает аудит через месяц?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Скриншот графика</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Manifest с входами, параметрами, версией кода и ссылкой на результат</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сообщение «запуск повторён»</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Проверить рассуждение</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

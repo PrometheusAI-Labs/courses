@@ -1,0 +1,19 @@
+{
+  "documents": [
+    {"source": "CURRICULUM.md", "output": "curriculum.html", "title": "Программа и расписание", "audience": "Для всех", "category": "learning", "summary": "Три курса, 12 модулей и плановые 20 часов обучения."},
+    {"source": "LABS.md", "output": "labs.html", "title": "Практикум: 12 лабораторных работ", "audience": "Ученик", "category": "learning", "summary": "Входные данные, контрольные точки, результаты и критерии приёмки."},
+    {"source": "LEARNER_WORKBOOK.md", "output": "learner-workbook.html", "title": "Рабочая тетрадь", "audience": "Ученик", "category": "learning", "summary": "Заполняемые формы для 12 обязательных артефактов."},
+    {"source": "CAPSTONE.md", "output": "capstone.html", "title": "Итоговый проект", "audience": "Ученик", "category": "learning", "summary": "Задание, обязательные материалы и многоуровневая рубрика."},
+    {"source": "INSTRUCTOR_GUIDE.md", "output": "instructor-guide.html", "title": "Руководство преподавателя", "audience": "Преподаватель", "category": "teaching", "summary": "Формат проведения, контрольные точки и правила безопасности."},
+    {"source": "INSTRUCTOR_ANSWER_KEY.md", "output": "instructor-answer-key.html", "title": "Ответы и правила оценивания", "audience": "Преподаватель", "category": "teaching", "summary": "Ожидаемые наблюдения, минимальный проходной результат и правила оценивания."},
+    {"source": "SOURCE_NOTES.md", "output": "source-notes.html", "title": "Источники и решения по версии", "audience": "Редактор курса", "category": "reference", "summary": "Зафиксированная версия, первичные файлы и канонические технические границы."},
+    {"source": "THIRD_PARTY_NOTICES.md", "output": "third-party-notices.html", "title": "Сведения о сторонних материалах", "audience": "Для всех", "category": "reference", "summary": "Атрибуция NautilusTrader, версия исходного кода, лицензия и заявление о независимости курса."},
+    {"source": "LICENSE.md", "output": "license.html", "title": "Лицензирование курса", "audience": "Для всех", "category": "reference", "summary": "Условия использования оригинальных материалов и сторонних фрагментов."},
+    {"source": "LICENSES/nautilus-trader-LGPL-3.0.txt", "output": "nautilus-trader-lgpl-3.0.html", "title": "GNU LGPL 3.0 — полный текст", "audience": "Для всех", "category": "reference", "format": "plain", "summary": "Полный текст лицензии, применимой к исходным фрагментам NautilusTrader."},
+    {"source": "RELEASE_CANDIDATE_STATUS.md", "output": "release-candidate-status.html", "title": "Статус версии-кандидата", "audience": "Редактор курса", "category": "release", "summary": "Актуальные решения, закрытые замечания и внешние условия публикации."},
+    {"source": "PILOT_TIMING_RECORD.md", "output": "pilot-timing-record.html", "title": "Протокол пилотного хронометража", "audience": "Исследователь", "category": "release", "summary": "Журнал трёх наблюдаемых прохождений и итоговое решение по длительности."},
+    {"source": "BROWSER_ACCESSIBILITY_QA.md", "output": "browser-accessibility-qa.html", "title": "Проверка в браузерах и доступность", "audience": "Контроль качества", "category": "release", "summary": "Настольные и мобильные браузеры, масштаб 200%, клавиатура, экранный диктор и повторная проверка."},
+    {"source": "DOCUMENTS_SITE_QA.md", "output": "documents-site-qa.html", "title": "Проверка встраивания документов", "audience": "Контроль качества", "category": "release", "summary": "Фактическая проверка HTML-документов, переходов и адаптивной вёрстки в браузере."},
+    {"source": "PUBLISH_READINESS_REVIEW.md", "output": "publish-readiness-review.html", "title": "Архивная проверка готовности к публикации", "audience": "Редактор курса", "category": "release", "summary": "Снимок первой проверки с зачёркнутыми исправлениями и текущими открытыми условиями."}
+  ]
+}

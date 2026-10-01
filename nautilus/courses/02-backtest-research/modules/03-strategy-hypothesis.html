@@ -1,0 +1,95 @@
+<section class="module" id="module-3">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 3 · 105 минут</span>
+      <h1 class="module-title">Стратегия как проверяемая гипотеза</h1>
+      <p class="module-subtitle"><span class="term" data-definition="EMA cross — событие, при котором быстрое экспоненциальное среднее пересекает медленное. Это наблюдаемое условие правила, а не прогноз или гарантия прибыли.">EMA cross</span> здесь — прозрачный объект исследования: правило можно трассировать, опровергнуть и ограничить.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Термостат, а не оракул</h2>
+      <p>Термостат сравнивает наблюдение с порогом и действует по правилу; он не предсказывает погоду. Так же <span class="term" data-definition="Стратегия — набор явных правил, которые превращают рыночные события и состояние портфеля в торговые намерения. Правило не гарантирует результат исполнения.">стратегия</span> реагирует на данные и состояние.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">≈</div><h3 class="pattern-title">Наблюдение</h3><p class="pattern-desc"><span class="term" data-definition="EMA — экспоненциальное скользящее среднее: сглаженная оценка прошлых цен, где свежие наблюдения имеют больший вес.">Fast и slow EMA</span> описывают прошлые значения по-разному.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">◇</div><h3 class="pattern-title">Состояние</h3><p class="pattern-desc"><span class="term" data-definition="Flat, long и short — состояния позиции: нет позиции, ставка на рост или ставка на снижение. Одно и то же событие может требовать разных действий в разных состояниях.">Flat / short</span> меняют допустимую ветвь.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-3)">→</div><h3 class="pattern-title">Намерение</h3><p class="pattern-desc">`buy()` выражает решение стратегии, но ещё не доказывает fill.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">⊘</div><h3 class="pattern-title">Опровержение</h3><p class="pattern-desc">Гипотеза заранее говорит, какое наблюдение заставит её отвергнуть.</p></div>
+      </div>
+      <div class="callout callout-accent"><div class="callout-icon">💡</div><div class="callout-content"><strong class="callout-title">Сигнал не равен исполнению</strong><p>Между условием и сделкой остаются модель заявок, ликвидность, задержка, комиссии и проскальзывание.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Дерево решений по состоянию</h2>
+      <p>Пройдите слева направо. <span class="term" data-definition="Warm-up — период накопления достаточного числа наблюдений для расчёта индикатора. До завершения warm-up значение не считается готовым к решению.">Warm-up</span> стоит до сигнала: без готовых индикаторов действие запрещено.</p>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Индикаторы готовы?</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>fast EMA ≥ slow EMA?</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Портфель flat или short?</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Buy либо close + buy</p></div>
+      </div>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">NOT READY</code><span class="badge-desc">Вернуться без действия: индикаторам не хватает истории.</span></div>
+        <div class="badge-item"><code class="badge-code">FLAT</code><span class="badge-desc">Создать намерение buy.</span></div>
+        <div class="badge-item"><code class="badge-code">SHORT</code><span class="badge-desc">Закрыть позицию, затем создать намерение buy.</span></div>
+        <div class="badge-item"><code class="badge-code">UNKNOWN</code><span class="badge-desc">Из этого сниппета нельзя выводить fill, цену и PnL.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Читаем реальный обработчик</h2>
+      <p><span class="term" data-definition="Обработчик события — функция, которую система вызывает при поступлении конкретного события. Здесь on_bar реагирует на новый бар.">`on_bar`</span> сначала проверяет готовность, затем выбирает действие по сигналу и состоянию.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">CODE</span><pre><code>    def on_bar(self, _bar: Bar) -> None:
+        if not self.indicators_initialized():
+            return
+
+        if self.fast_ema.value >= self.slow_ema.value:
+            if self.portfolio.is_net_flat(self.config.instrument_id):
+                self.buy()
+            elif self.portfolio.is_net_short(self.config.instrument_id):
+                self.close_all_positions(self.config.instrument_id)
+                self.buy()
+</code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-РУССКИ</span><div class="translation-lines">
+          <p class="tl">Когда приходит новый бар, запустить эту логику.</p>
+          <p class="tl">Если индикаторы ещё не готовы, ничего не делать.</p>
+          <p class="tl">Проверить условие: fast EMA не ниже slow EMA.</p>
+          <p class="tl">Если позиции нет, вызвать `buy()`.</p>
+          <p class="tl">Если позиция short, сначала закрыть все позиции по инструменту.</p>
+          <p class="tl">После закрытия вызвать `buy()` — это намерение, не доказанный fill.</p>
+        </div></div>
+      </div>
+      <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-content"><strong class="callout-title">Не дописывайте поведение мысленно</strong><p>Фрагмент показывает только bullish-ветвь. Он не даёт права угадывать ветвь fast EMA &lt; slow EMA или детали исполнения.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: трасса четырёх баров</h2>
+      <p>Для каждого бара получите «готовность, fast/slow, состояние». Запишите только ожидаемое намерение, а <span class="term" data-definition="Fill — подтверждённое исполнение заявки полностью или частично. Вызов buy ещё не является fill.">fill</span>, <span class="term" data-definition="Latency — задержка между событием, решением, отправкой и обработкой заявки. Она может изменить доступную цену.">latency</span>, <span class="term" data-definition="Fees — комиссии площадки и другие расходы исполнения, которые нужно моделировать отдельно.">fees</span> и <span class="term" data-definition="Slippage — разница между ожидаемой и фактической ценой исполнения из-за рынка, задержки и ликвидности.">slippage</span> оставьте как неизвестные.</p>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Bar A · not ready</strong><p>Сработает guard: намерения нет.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Bar B · fast ≥ slow · flat</strong><p>Ожидается вызов `buy()`.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Bar C · fast ≥ slow · short</strong><p>Ожидается `close_all_positions()`, затем `buy()`.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Bar D · fast &lt; slow</strong><p>Этот фрагмент не показывает действие: вывод ограничен.</p></div></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · карточка гипотезы</h3>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">RULE</code><span class="badge-desc">Явное условие и один изменяемый параметр.</span></div>
+        <div class="badge-item"><code class="badge-code">FALSIFY</code><span class="badge-desc">Наблюдение, при котором гипотеза отвергается.</span></div>
+        <div class="badge-item"><code class="badge-code">OOS</code><span class="badge-desc"><span class="term" data-definition="Out-of-sample — отложенный период, который не использовали для выбора параметров. Он уменьшает риск принять подгонку за обобщаемый результат.">Out-of-sample</span> период, не участвующий в подборе.</span></div>
+        <div class="badge-item"><code class="badge-code">BOUNDARY</code><span class="badge-desc">Никаких обещаний прибыли или переноса на live.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Проверка понимания: что сделал бы исследователь?</h2>
+      <div class="quiz-container" id="quiz-module3">
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 1</span><p>Первый бар пришёл до warm-up, но AI всё равно создал buy.</p></div><div class="quiz-question-block" data-correct="b" data-explanation-right="Guard требует выйти до торговой логики, поэтому действие указывает на несоответствие реализации правилу." data-explanation-wrong="До инициализации индикаторов сравнение EMA не должно вести к решению."><h3 class="quiz-question">Какой первый вывод?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Это сильный ранний сигнал</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Проверить guard: действие не соответствует показанному коду</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Увеличить trade size</span></button></div><div class="quiz-feedback"></div></div></div>
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 2</span><p>Fast EMA выше slow EMA, позиция short.</p></div><div class="quiz-question-block" data-correct="c" data-explanation-right="В показанной ветви сначала закрывается short, затем создаётся buy-намерение." data-explanation-wrong="Состояние short требует другой последовательности, чем flat."><h3 class="quiz-question">Какую трассу ожидать?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Только buy без закрытия</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Ничего не делать</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Close all positions → buy</span></button></div><div class="quiz-feedback"></div></div></div>
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 3</span><p>AI подобрал периоды EMA на всём датасете и там же измерил результат.</p></div><div class="quiz-question-block" data-correct="a" data-explanation-right="Параметры увидели тестовый период; нужен независимый out-of-sample gate." data-explanation-wrong="Высокая метрика на данных подбора совместима с переобучением и не является независимой проверкой."><h3 class="quiz-question">Что исправить?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Отделить подбор от независимого out-of-sample теста</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Выбрать ещё больше комбинаций на том же периоде</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Назвать лучший результат production-ready</span></button></div><div class="quiz-feedback"></div></div></div>
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 4</span><p>`buy()` был вызван, но отчёта об исполнении нет.</p></div><div class="quiz-question-block" data-correct="b" data-explanation-right="Код доказывает путь к намерению; исполнение требует отдельных событий и модели." data-explanation-wrong="Вызов метода стратегии нельзя автоматически приравнять к сделке по ожидаемой цене."><h3 class="quiz-question">Как сформулировать вывод?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сделка точно исполнена</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Создано торговое намерение; fill пока не подтверждён</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Прибыль уже известна</span></button></div><div class="quiz-feedback"></div></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить рассуждение</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

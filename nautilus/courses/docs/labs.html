@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Входные данные, контрольные точки,
+результаты и критерии приёмки.">
+  <meta name="source-file" content="LABS.md">
+  <meta name="source-sha256" content="ab51092624c9714eac02374a1062468061bb9cf504774128539b3daf8e99ba5e">
+  <title>Практикум: 12 лабораторных
+работ — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#11-потерянная-котировка--25-минут"
+     >1.1 Потерянная
+      котировка — 25 минут</a>
+      <ul>
+      <li><a href="#вход">Вход</a></li>
+      <li><a href="#работа">Работа</a></li>
+      </ul></li>
+      <li><a href="#12-кто-владеет-задачей--25-минут"
+     >1.2 Кто владеет задачей
+      — 25 минут</a>
+      <ul>
+      <li><a href="#вход-12-задач">Вход: 12
+      задач</a></li>
+      <li><a href="#работа-1">Работа</a></li>
+      </ul></li>
+      <li><a href="#13-тишина-в-callback--35-минут"
+     >1.3 Тишина в callback — 35
+      минут</a>
+      <ul>
+      <li><a href="#вход-три-случая">Вход: три
+      случая</a></li>
+      <li><a href="#работа-2">Работа</a></li>
+      </ul></li>
+      <li><a href="#14-карта-сред--30-минут"
+     >1.4 Карта сред — 30 минут</a>
+      <ul>
+      <li><a href="#вход-1">Вход</a></li>
+      <li><a href="#работа-3">Работа</a></li>
+      </ul></li>
+      <li><a href="#21-шесть-тиков--30-минут"
+     >2.1 Шесть тиков — 30 минут</a>
+      <ul>
+      <li><a href="#входной-набор">Входной
+      набор</a></li>
+      <li><a href="#работа-4">Работа</a></li>
+      </ul></li>
+      <li><a href="#22-manifest-ab--30-минут"
+     >2.2 Manifest A/B — 30 минут</a>
+      <ul>
+      <li><a href="#вход-2">Вход</a></li>
+      <li><a href="#работа-5">Работа</a></li>
+      </ul></li>
+      <li><a href="#23-гипотеза-а-не-сигнал--30-минут"
+     >2.3 Гипотеза, а не
+      сигнал — 30 минут</a>
+      <ul>
+      <li><a href="#вход-3">Вход</a></li>
+      <li><a href="#работа-6">Работа</a></li>
+      </ul></li>
+      <li><a href="#24-границы-утверждения--30-минут"
+     >2.4 Границы утверждения
+      — 30 минут</a>
+      <ul>
+      <li><a href="#входной-пакет-доказательств"
+     >Входной пакет
+      доказательств</a></li>
+      <li><a href="#работа-7">Работа</a></li>
+      </ul></li>
+      <li><a href="#31-карта-владения-rust-state--28-минут"
+     >3.1 Карта владения
+      Rust state — 28 минут</a>
+      <ul>
+      <li><a href="#вход-4">Вход</a></li>
+      <li><a href="#работа-8">Работа</a></li>
+      </ul></li>
+      <li><a href="#32-где-исчезла-заявка--35-минут"
+     >3.2 Где исчезла заявка —
+      35 минут</a>
+      <ul>
+      <li><a href="#входная-трассировка"
+     >Входная трассировка</a></li>
+      <li><a href="#работа-9">Работа</a></li>
+      </ul></li>
+      <li><a href="#33-native-backtest-charter--30-минут"
+     >3.3 Native backtest
+      charter — 30 минут</a>
+      <ul>
+      <li><a href="#вход-5">Вход</a></li>
+      <li><a href="#работа-10">Работа</a></li>
+      </ul></li>
+      <li><a href="#34-live-promotion-dossier--45-минут"
+     >3.4 Live promotion
+      dossier — 45 минут</a>
+      <ul>
+      <li><a href="#вход-6">Вход</a></li>
+      <li><a href="#работа-11">Работа</a></li>
+      </ul></li>
+      <li><a href="#как-сдавать">Как
+      сдавать</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Ученик</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Практикум: 12 лабораторных работ</h1>
+      <p class="doc-summary">Входные данные, контрольные точки,
+результаты и критерии приёмки.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#11-потерянная-котировка--25-минут"
+       >1.1 Потерянная
+        котировка — 25 минут</a>
+        <ul>
+        <li><a href="#вход">Вход</a></li>
+        <li><a href="#работа">Работа</a></li>
+        </ul></li>
+        <li><a href="#12-кто-владеет-задачей--25-минут"
+       >1.2 Кто владеет
+        задачей — 25 минут</a>
+        <ul>
+        <li><a href="#вход-12-задач">Вход: 12
+        задач</a></li>
+        <li><a href="#работа-1">Работа</a></li>
+        </ul></li>
+        <li><a href="#13-тишина-в-callback--35-минут"
+       >1.3 Тишина в callback —
+        35 минут</a>
+        <ul>
+        <li><a href="#вход-три-случая">Вход:
+        три случая</a></li>
+        <li><a href="#работа-2">Работа</a></li>
+        </ul></li>
+        <li><a href="#14-карта-сред--30-минут"
+       >1.4 Карта сред — 30 минут</a>
+        <ul>
+        <li><a href="#вход-1">Вход</a></li>
+        <li><a href="#работа-3">Работа</a></li>
+        </ul></li>
+        <li><a href="#21-шесть-тиков--30-минут"
+       >2.1 Шесть тиков — 30 минут</a>
+        <ul>
+        <li><a href="#входной-набор">Входной
+        набор</a></li>
+        <li><a href="#работа-4">Работа</a></li>
+        </ul></li>
+        <li><a href="#22-manifest-ab--30-минут"
+       >2.2 Manifest A/B — 30
+        минут</a>
+        <ul>
+        <li><a href="#вход-2">Вход</a></li>
+        <li><a href="#работа-5">Работа</a></li>
+        </ul></li>
+        <li><a href="#23-гипотеза-а-не-сигнал--30-минут"
+       >2.3 Гипотеза, а не
+        сигнал — 30 минут</a>
+        <ul>
+        <li><a href="#вход-3">Вход</a></li>
+        <li><a href="#работа-6">Работа</a></li>
+        </ul></li>
+        <li><a href="#24-границы-утверждения--30-минут"
+       >2.4 Границы
+        утверждения — 30 минут</a>
+        <ul>
+        <li><a href="#входной-пакет-доказательств"
+       >Входной пакет
+        доказательств</a></li>
+        <li><a href="#работа-7">Работа</a></li>
+        </ul></li>
+        <li><a href="#31-карта-владения-rust-state--28-минут"
+       >3.1 Карта
+        владения Rust state — 28 минут</a>
+        <ul>
+        <li><a href="#вход-4">Вход</a></li>
+        <li><a href="#работа-8">Работа</a></li>
+        </ul></li>
+        <li><a href="#32-где-исчезла-заявка--35-минут"
+       >3.2 Где исчезла заявка
+        — 35 минут</a>
+        <ul>
+        <li><a href="#входная-трассировка"
+       >Входная трассировка</a></li>
+        <li><a href="#работа-9">Работа</a></li>
+        </ul></li>
+        <li><a href="#33-native-backtest-charter--30-минут"
+       >3.3 Native
+        backtest charter — 30 минут</a>
+        <ul>
+        <li><a href="#вход-5">Вход</a></li>
+        <li><a href="#работа-10">Работа</a></li>
+        </ul></li>
+        <li><a href="#34-live-promotion-dossier--45-минут"
+       >3.4 Live promotion
+        dossier — 45 минут</a>
+        <ul>
+        <li><a href="#вход-6">Вход</a></li>
+        <li><a href="#работа-11">Работа</a></li>
+        </ul></li>
+        <li><a href="#как-сдавать">Как
+        сдавать</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <p>Каждая лабораторная работа содержит входные данные,
+        контрольные точки, ожидаемый результат и критерии приёмки. Не
+        открывайте ответы преподавателя до завершения работы.</p>
+        <h2 id="11-потерянная-котировка--25-минут">1.1 Потерянная
+        котировка — 25 минут</h2>
+        <h3 id="вход">Вход</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Наблюдение</th>
+        <th>Значение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Adapter received</td>
+        <td><code>QuoteTick EUR/USD ts_event=10:00:00.100</code></td>
+        </tr>
+        <tr>
+        <td>DataEngine input</td>
+        <td>1 event</td>
+        </tr>
+        <tr>
+        <td>Cache last quote</td>
+        <td><code>None</code></td>
+        </tr>
+        <tr>
+        <td>MessageBus publication</td>
+        <td>0 events</td>
+        </tr>
+        <tr>
+        <td>Strategy callback</td>
+        <td>0 calls</td>
+        </tr>
+        </tbody>
+        </table>
+        <h3 id="работа">Работа</h3>
+        <ol type="1">
+        <li>За 5 минут отметьте первую границу, на которой вход есть, а
+        подтверждения выхода нет.</li>
+        <li>За 8 минут заполните event trace: компонент, вход, ожидаемый
+        выход, наблюдение.</li>
+        <li>За 7 минут напишите три минимальные проверки без изменения
+        strategy logic.</li>
+        <li>За 5 минут сформулируйте prompt AI, который запрещает
+        широкую переработку до локализации.</li>
+        </ol>
+        <p><strong>Checkpoint:</strong> причина не называется до
+        сравнения соседних границ.<br />
+        <strong>Артефакт:</strong> event trace + диагностический
+        prompt.<br />
+        <strong>Приёмка:</strong> пять узлов, первая непроверенная
+        граница, минимум две наблюдаемые проверки.</p>
+        <h2 id="12-кто-владеет-задачей--25-минут">1.2 Кто владеет
+        задачей — 25 минут</h2>
+        <h3 id="вход-12-задач">Вход: 12 задач</h3>
+        <p>Нормализовать QuoteTick; проверить max notional; сохранить
+        last quote; пересчитать unrealized PnL; доставить event
+        подписчикам; отправить команду venue; зарегистрировать Strategy;
+        восстановить account report; выбрать data client; отклонить
+        reduce-only violation; хранить position state; вызвать callback
+        стратегии.</p>
+        <h3 id="работа-1">Работа</h3>
+        <p>Разложите карточки между <code>DataEngine</code>,
+        <code>RiskEngine</code>, <code>ExecutionEngine</code>,
+        <code>Cache</code>, <code>Portfolio</code>,
+        <code>MessageBus</code>, <code>Trader</code>. Для каждой
+        карточки укажите вход и выход. Три спорные карточки защитите
+        письменно.</p>
+        <p><strong>Checkpoint:</strong> «отправить команду venue» не
+        принадлежит Strategy.<br />
+        <strong>Артефакт:</strong> responsibility matrix 12×4.<br />
+        <strong>Приёмка:</strong> один primary owner на задачу; соседний
+        компонент указан только как collaborator.</p>
+        <h2 id="13-тишина-в-callback--35-минут">1.3 Тишина в callback —
+        35 минут</h2>
+        <h3 id="вход-три-случая">Вход: три случая</h3>
+        <pre class="text"><code>A: on_start completed; subscribe_bars absent; on_bar calls=0
+B: subscription active; bars received=8; indicator initialized=false
+C: subscription active; indicator initialized=true; on_bar calls=8; orders=0</code></pre>
+        <h3 id="работа-2">Работа</h3>
+        <p>Для каждого случая заполните callback passport: prerequisite,
+        subscription, event, readiness gate, handler effect, diagnostic
+        signal. Назначьте следующую минимальную проверку.</p>
+        <p><strong>Checkpoint:</strong> B не исправляется
+        <code>sleep</code>; C требует проверять branch/state, а не
+        доставку.<br />
+        <strong>Артефакт:</strong> три callback passports.<br />
+        <strong>Приёмка:</strong> причины A/B/C различены, polling loop
+        не предлагается.</p>
+        <h2 id="14-карта-сред--30-минут">1.4 Карта сред — 30 минут</h2>
+        <h3 id="вход-1">Вход</h3>
+        <p>Сценарий: исторический replay прошёл; стратегия 40 минут
+        обрабатывала real-time quotes с simulated execution; live
+        execution client не подключался; exchange testnet не
+        использовался.</p>
+        <h3 id="работа-3">Работа</h3>
+        <ol type="1">
+        <li>Классифицируйте пройденные этапы как
+        Backtest/Sandbox/Live.</li>
+        <li>Отдельно укажите, что доказал и чего не доказал Nautilus
+        Sandbox.</li>
+        <li>Постройте следующий gate без предположения, что Sandbox
+        равен testnet.</li>
+        </ol>
+        <p><strong>Артефакт:</strong> environment evidence matrix.<br />
+        <strong>Приёмка:</strong>
+        <code>Sandbox = real-time data + simulated execution</code>;
+        <code>Live</code> допускает paper или real account.</p>
+        <h2 id="21-шесть-тиков--30-минут">2.1 Шесть тиков — 30
+        минут</h2>
+        <h3 id="входной-набор">Входной набор</h3>
+        <table>
+        <thead>
+        <tr>
+        <th style="text-align: right;">row</th>
+        <th>ts_event UTC</th>
+        <th>ts_init UTC</th>
+        <th style="text-align: right;">bid</th>
+        <th style="text-align: right;">ask</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td style="text-align: right;">1</td>
+        <td>10:00:00.100</td>
+        <td>10:00:00.110</td>
+        <td style="text-align: right;">1.1000</td>
+        <td style="text-align: right;">1.1002</td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">2</td>
+        <td>10:00:01.100</td>
+        <td>10:00:01.115</td>
+        <td style="text-align: right;">1.1001</td>
+        <td style="text-align: right;">1.1003</td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">3</td>
+        <td>10:00:03.100</td>
+        <td>10:00:03.120</td>
+        <td style="text-align: right;">1.1003</td>
+        <td style="text-align: right;">1.1005</td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">4</td>
+        <td>10:00:02.100</td>
+        <td>10:00:02.118</td>
+        <td style="text-align: right;">1.1002</td>
+        <td style="text-align: right;">1.1004</td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">5</td>
+        <td>10:00:03.100</td>
+        <td>10:00:03.120</td>
+        <td style="text-align: right;">1.1003</td>
+        <td style="text-align: right;">1.1005</td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">6</td>
+        <td>10:05:30.000</td>
+        <td>10:05:30.010</td>
+        <td style="text-align: right;">1.1010</td>
+        <td style="text-align: right;">1.1009</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Заявлено: EUR/USD, диапазон 10:00–10:05, UTC, без дублей,
+        <code>bid &lt;= ask</code>.</p>
+        <h3 id="работа-4">Работа</h3>
+        <p>Найдите нарушение порядка, дубликат, выход за диапазон и
+        crossed quote. Отделите наблюдение от решения: ничего не
+        удаляйте молча. Сформируйте data evidence sheet и quarantine
+        list.</p>
+        <p><strong>Артефакт:</strong> паспорт данных + четыре
+        disposition решения.<br />
+        <strong>Приёмка:</strong> каждая проблема связана с row;
+        исходная строка сохраняется; преобразование имеет причину и
+        audit note.</p>
+        <h2 id="22-manifest-ab--30-минут">2.2 Manifest A/B — 30
+        минут</h2>
+        <h3 id="вход-2">Вход</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Поле</th>
+        <th>A</th>
+        <th>B</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>commit</td>
+        <td><code>abc111</code></td>
+        <td><code>abc111</code></td>
+        </tr>
+        <tr>
+        <td>instrument</td>
+        <td><code>AUD/USD.SIM</code></td>
+        <td><code>AUD/USD.SIM</code></td>
+        </tr>
+        <tr>
+        <td>start</td>
+        <td><code>2026-01-01</code></td>
+        <td><code>2026-01-01</code></td>
+        </tr>
+        <tr>
+        <td>end</td>
+        <td><code>2026-03-31</code></td>
+        <td><code>2026-03-31</code></td>
+        </tr>
+        <tr>
+        <td>fee model</td>
+        <td><code>zero</code></td>
+        <td><code>0.2 bps</code></td>
+        </tr>
+        <tr>
+        <td>slippage</td>
+        <td><code>zero</code></td>
+        <td><code>1 tick</code></td>
+        </tr>
+        <tr>
+        <td>fast/slow</td>
+        <td><code>10/20</code></td>
+        <td><code>10/20</code></td>
+        </tr>
+        <tr>
+        <td>catalog hash</td>
+        <td><code>h1</code></td>
+        <td><code>h2</code></td>
+        </tr>
+        </tbody>
+        </table>
+        <h3 id="работа-5">Работа</h3>
+        <p>Определите, какие различия делают результаты несопоставимыми,
+        какие требуют нового run ID и какие артефакты надо запросить для
+        <code>h1/h2</code>. Создайте B2, изменив только одну
+        переменную.</p>
+        <p><strong>Артефакт:</strong> manifest diff + B2.<br />
+        <strong>Приёмка:</strong> B2 имеет один controlled change;
+        fee/slippage и catalog hash не скрыты.</p>
+        <h2 id="23-гипотеза-а-не-сигнал--30-минут">2.3 Гипотеза, а не
+        сигнал — 30 минут</h2>
+        <h3 id="вход-3">Вход</h3>
+        <p>EMA cross дал положительный gross PnL на одном квартале.
+        После fee/slippage PnL близок к нулю. На втором инструменте
+        результат отрицателен. Период <code>10/20</code> выбран после
+        просмотра пяти вариантов.</p>
+        <h3 id="работа-6">Работа</h3>
+        <p>Заполните hypothesis card: механизм, сигнал, действие,
+        состояние, издержки, falsifier, альтернативное объяснение.
+        Запишите один untouched-forward test.</p>
+        <p><strong>Артефакт:</strong> hypothesis card + preregistered
+        test.<br />
+        <strong>Приёмка:</strong> gross PnL не назван прибылью; multiple
+        testing и selection bias отражены.</p>
+        <h2 id="24-границы-утверждения--30-минут">2.4 Границы
+        утверждения — 30 минут</h2>
+        <h3 id="входной-пакет-доказательств">Входной пакет
+        доказательств</h3>
+        <p>Есть build log, catalog manifest, deterministic replay и один
+        positive result. Нет forward window, shadow report,
+        reconciliation report, canary budget и kill-switch drill.</p>
+        <h3 id="работа-7">Работа</h3>
+        <p>Классифицируйте пять утверждений: «код собирается», «replay
+        воспроизводим», «идея прибыльна», «система live-ready», «можно
+        увеличить капитал». Для каждого дайте <code>SUPPORTED</code>,
+        <code>NOT_EVALUABLE</code> или <code>NO-GO</code> и следующий
+        необходимый evidence.</p>
+        <p><strong>Артефакт:</strong> claim/evidence matrix.<br />
+        <strong>Приёмка:</strong> отсутствие артефакта не превращается в
+        PASS; следующий gate — forward, а не live.</p>
+        <h2 id="31-карта-владения-rust-state--28-минут">3.1 Карта
+        владения Rust state — 28 минут</h2>
+        <h3 id="вход-4">Вход</h3>
+        <p>Поля: <code>StrategyCore</code>, <code>instrument_a</code>,
+        <code>instrument_b</code>, <code>trade_size</code>,
+        <code>latest_spread</code>, <code>entry_threshold</code>,
+        <code>logger</code>, <code>current_quote</code> внутри
+        callback.</p>
+        <h3 id="работа-8">Работа</h3>
+        <p>Разделите framework plumbing, persistent strategy state,
+        configuration и event-local values. Для каждого поля укажите
+        owner и lifecycle. Затем составьте два AI-prompts, запрещающих
+        дублировать <code>StrategyCore</code>.</p>
+        <p><strong>Артефакт:</strong> Rust ownership map.<br />
+        <strong>Приёмка:</strong> Rust остаётся canonical runtime;
+        event-local quote не хранится без причины.</p>
+        <h2 id="32-где-исчезла-заявка--35-минут">3.2 Где исчезла заявка
+        — 35 минут</h2>
+        <h3 id="входная-трассировка">Входная трассировка</h3>
+        <pre class="text"><code>quote_received=PASS
+callback_entered=PASS
+order_created=PASS client_order_id=O-17
+risk_command=PASS
+risk_event=DENIED reason=max_notional
+execution_submit=ABSENT
+venue_ack=ABSENT</code></pre>
+        <h3 id="работа-9">Работа</h3>
+        <p>Постройте decision tree для четырёх симптомов: нет quote, нет
+        callback, risk deny, unknown venue outcome. Для данного trace
+        выберите owner и безопасную реакцию.</p>
+        <p><strong>Артефакт:</strong> incident decision tree.<br />
+        <strong>Приёмка:</strong> deny не называется transport failure;
+        повторный submit запрещён без idempotency/reconciliation.</p>
+        <h2 id="33-native-backtest-charter--30-минут">3.3 Native
+        backtest charter — 30 минут</h2>
+        <h3 id="вход-5">Вход</h3>
+        <p>Два запуска Rust EmaCross: <code>10/20</code> и
+        <code>20/50</code>; один и тот же catalog hash, fee model,
+        slippage, time window и seed. Требуется canonical report без
+        Python runtime dependency.</p>
+        <h3 id="работа-10">Работа</h3>
+        <p>Заполните charter: build command, locked dependencies, run
+        configs, invariant inputs, single changed parameter, output
+        hashes, report schema и failure policy.</p>
+        <p><strong>Артефакт:</strong> native validation plan + A/B
+        manifest.<br />
+        <strong>Приёмка:</strong> Python не требуется для
+        build/replay/report; результаты имеют machine-readable
+        provenance.</p>
+        <h2 id="34-live-promotion-dossier--45-минут">3.4 Live promotion
+        dossier — 45 минут</h2>
+        <h3 id="вход-6">Вход</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Gate</th>
+        <th>Evidence</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>build</td>
+        <td>PASS</td>
+        </tr>
+        <tr>
+        <td>deterministic replay</td>
+        <td>PASS</td>
+        </tr>
+        <tr>
+        <td>untouched forward</td>
+        <td>missing</td>
+        </tr>
+        <tr>
+        <td>shadow</td>
+        <td>24 h, 2 disconnects, recovered</td>
+        </tr>
+        <tr>
+        <td>reconciliation</td>
+        <td>one unresolved position mismatch</td>
+        </tr>
+        <tr>
+        <td>kill switch</td>
+        <td>not drilled</td>
+        </tr>
+        <tr>
+        <td>canary</td>
+        <td>budget proposed, not approved</td>
+        </tr>
+        </tbody>
+        </table>
+        <h3 id="работа-11">Работа</h3>
+        <ol type="1">
+        <li>Вынесите текущий вердикт.</li>
+        <li>Опишите порядок закрытия пробелов.</li>
+        <li>Заполните startup abort conditions, account-specific limits,
+        kill-switch trigger, rollback и human owner.</li>
+        <li>Проведите tabletop incident: venue ack потерян после
+        submit.</li>
+        </ol>
+        <p><strong>Артефакт:</strong> gate matrix + kill-switch runbook
+        + incident log.<br />
+        <strong>Приёмка:</strong> verdict <code>NO-GO</code>; unresolved
+        reconciliation и undrilled kill switch блокируют canary; повтор
+        submit не выполняется вслепую.</p>
+        <h2 id="как-сдавать">Как сдавать</h2>
+        <p>Используйте соответствующие 12 разделов <a
+        href="learner-workbook.html"><code>LEARNER_WORKBOOK.md</code></a>.
+        Каждый артефакт получает <code>PASS</code>,
+        <code>REVISION_REQUIRED</code> или <code>NOT_EVALUABLE</code>. К
+        итоговому проекту допускаются только 12 <code>PASS</code>;
+        отсутствие входных данных не заменяется предположением.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>LABS.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

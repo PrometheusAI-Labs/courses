@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Заполняемые формы для 12
+обязательных артефактов.">
+  <meta name="source-file" content="LEARNER_WORKBOOK.md">
+  <meta name="source-sha256" content="3d50760e3dc0091718d39fc1bfea0c54ada6fa10a4b8868b7d356c6543b30ae6">
+  <title>Рабочая тетрадь — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#шаблон-трассировки-события"
+     >Шаблон трассировки
+      события</a></li>
+      <li><a href="#шаблон-архитектурного-решения"
+     >Шаблон архитектурного
+      решения</a></li>
+      <li><a href="#паспорт-данных">Паспорт
+      данных</a></li>
+      <li><a href="#паспорт-запуска">Паспорт
+      запуска</a></li>
+      <li><a href="#карточка-гипотезы"
+     >Карточка гипотезы</a></li>
+      <li><a href="#лестница-доказательств"
+     >Лестница доказательств</a></li>
+      <li><a href="#карточка-безопасности-live"
+     >Карточка безопасности
+      Live</a></li>
+      <li><a href="#12-обязательных-результатов-по-модулям"
+     >12 обязательных
+      результатов по модулям</a></li>
+      <li><a href="#артефакт-11--event-trace"
+     >Артефакт 1.1 — Event
+      trace</a></li>
+      <li><a href="#артефакт-12--responsibility-matrix"
+     >Артефакт 1.2 —
+      Responsibility matrix</a></li>
+      <li><a href="#артефакт-13--callback-passports"
+     >Артефакт 1.3 — Callback
+      passports</a></li>
+      <li><a href="#артефакт-14--environment-evidence-matrix"
+     >Артефакт 1.4 —
+      Environment evidence matrix</a></li>
+      <li><a href="#артефакт-21--data-evidence-sheet"
+     >Артефакт 2.1 — Data
+      evidence sheet</a></li>
+      <li><a href="#артефакт-22--manifest-diff-и-b2"
+     >Артефакт 2.2 — Manifest
+      diff и B2</a></li>
+      <li><a href="#артефакт-23--hypothesis-card"
+     >Артефакт 2.3 — Hypothesis
+      card</a></li>
+      <li><a href="#артефакт-24--claimevidence-matrix"
+     >Артефакт 2.4 —
+      Claim/evidence matrix</a></li>
+      <li><a href="#артефакт-31--rust-ownership-map"
+     >Артефакт 3.1 — Rust
+      ownership map</a></li>
+      <li><a href="#артефакт-32--incident-decision-tree"
+     >Артефакт 3.2 —
+      Incident decision tree</a></li>
+      <li><a href="#артефакт-33--native-backtest-charter"
+     >Артефакт 3.3 —
+      Native backtest charter</a></li>
+      <li><a href="#артефакт-34--live-promotion-dossier"
+     >Артефакт 3.4 — Live
+      promotion dossier</a></li>
+      <li><a href="#связь-с-итоговым-проектом"
+     >Связь с итоговым
+      проектом</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Ученик</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Рабочая тетрадь</h1>
+      <p class="doc-summary">Заполняемые формы для 12 обязательных
+артефактов.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#шаблон-трассировки-события"
+       >Шаблон трассировки
+        события</a></li>
+        <li><a href="#шаблон-архитектурного-решения"
+       >Шаблон архитектурного
+        решения</a></li>
+        <li><a href="#паспорт-данных">Паспорт
+        данных</a></li>
+        <li><a href="#паспорт-запуска">Паспорт
+        запуска</a></li>
+        <li><a href="#карточка-гипотезы"
+       >Карточка гипотезы</a></li>
+        <li><a href="#лестница-доказательств"
+       >Лестница доказательств</a></li>
+        <li><a href="#карточка-безопасности-live"
+       >Карточка безопасности
+        Live</a></li>
+        <li><a href="#12-обязательных-результатов-по-модулям"
+       >12 обязательных
+        результатов по модулям</a></li>
+        <li><a href="#артефакт-11--event-trace"
+       >Артефакт 1.1 — Event
+        trace</a></li>
+        <li><a href="#артефакт-12--responsibility-matrix"
+       >Артефакт 1.2 —
+        Responsibility matrix</a></li>
+        <li><a href="#артефакт-13--callback-passports"
+       >Артефакт 1.3 — Callback
+        passports</a></li>
+        <li><a href="#артефакт-14--environment-evidence-matrix"
+       >Артефакт 1.4 —
+        Environment evidence matrix</a></li>
+        <li><a href="#артефакт-21--data-evidence-sheet"
+       >Артефакт 2.1 — Data
+        evidence sheet</a></li>
+        <li><a href="#артефакт-22--manifest-diff-и-b2"
+       >Артефакт 2.2 — Manifest
+        diff и B2</a></li>
+        <li><a href="#артефакт-23--hypothesis-card"
+       >Артефакт 2.3 — Hypothesis
+        card</a></li>
+        <li><a href="#артефакт-24--claimevidence-matrix"
+       >Артефакт 2.4 —
+        Claim/evidence matrix</a></li>
+        <li><a href="#артефакт-31--rust-ownership-map"
+       >Артефакт 3.1 — Rust
+        ownership map</a></li>
+        <li><a href="#артефакт-32--incident-decision-tree"
+       >Артефакт 3.2 —
+        Incident decision tree</a></li>
+        <li><a href="#артефакт-33--native-backtest-charter"
+       >Артефакт 3.3 —
+        Native backtest charter</a></li>
+        <li><a href="#артефакт-34--live-promotion-dossier"
+       >Артефакт 3.4 — Live
+        promotion dossier</a></li>
+        <li><a href="#связь-с-итоговым-проектом"
+       >Связь с итоговым
+        проектом</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <p>Сохраняйте ответы после каждого модуля. Итоговый проект
+        собирается из этих артефактов, поэтому не заменяйте их устными
+        объяснениями.</p>
+        <h2 id="шаблон-трассировки-события">Шаблон трассировки
+        события</h2>
+        <table>
+        <thead>
+        <tr>
+        <th style="text-align: right;">Шаг</th>
+        <th>Компонент-владелец</th>
+        <th>Вход</th>
+        <th>Выход</th>
+        <th>Где наблюдать</th>
+        <th>Что может сломаться</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td style="text-align: right;">1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td style="text-align: right;">3</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        </tbody>
+        </table>
+        <h2 id="шаблон-архитектурного-решения">Шаблон архитектурного
+        решения</h2>
+        <ul>
+        <li>Задача:</li>
+        <li>Компонент-владелец:</li>
+        <li>Почему не соседний компонент:</li>
+        <li>Событие или команда на входе:</li>
+        <li>Событие или состояние на выходе:</li>
+        <li>Проверка успеха:</li>
+        <li>Безопасное поведение при ошибке:</li>
+        </ul>
+        <h2 id="паспорт-данных">Паспорт данных</h2>
+        <ul>
+        <li>Поставщик и формат:</li>
+        <li>Инструмент и venue:</li>
+        <li>Тип данных:</li>
+        <li>Диапазон времени и timezone:</li>
+        <li>Значение <code>ts_event</code>:</li>
+        <li>Значение <code>ts_init</code>:</li>
+        <li>Проверка монотонности:</li>
+        <li>Пропуски и дубликаты:</li>
+        <li>Преобразования до каталога:</li>
+        <li>Версия/хэш набора:</li>
+        </ul>
+        <h2 id="паспорт-запуска">Паспорт запуска</h2>
+        <ul>
+        <li>Версия NautilusTrader:</li>
+        <li>Версия стратегии:</li>
+        <li>Параметры стратегии:</li>
+        <li>Venue model:</li>
+        <li>Data config:</li>
+        <li>Execution/fee/slippage assumptions:</li>
+        <li>Начальный баланс:</li>
+        <li>Временной диапазон:</li>
+        <li>Seed, если используется случайность:</li>
+        <li>Команда запуска:</li>
+        <li>Пути к отчётам:</li>
+        </ul>
+        <h2 id="карточка-гипотезы">Карточка гипотезы</h2>
+        <ul>
+        <li>Наблюдаемая неэффективность:</li>
+        <li>Механизм, который может её создавать:</li>
+        <li>Сигнал:</li>
+        <li>Действие:</li>
+        <li>Ограничения риска:</li>
+        <li>Фальсифицирующий результат:</li>
+        <li>Альтернативное объяснение:</li>
+        <li>Метрика до издержек:</li>
+        <li>Метрика после издержек:</li>
+        </ul>
+        <h2 id="лестница-доказательств">Лестница доказательств</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Gate</th>
+        <th>Что доказано</th>
+        <th>Что ещё не доказано</th>
+        <th>Артефакт</th>
+        <th>Решение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Build</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>GO / NO-GO</td>
+        </tr>
+        <tr>
+        <td>Deterministic replay</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>GO / NO-GO</td>
+        </tr>
+        <tr>
+        <td>Forward</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>GO / NO-GO</td>
+        </tr>
+        <tr>
+        <td>Shadow</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>GO / NO-GO</td>
+        </tr>
+        <tr>
+        <td>Canary</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>GO / NO-GO</td>
+        </tr>
+        <tr>
+        <td>Live expansion</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>GO / NO-GO</td>
+        </tr>
+        </tbody>
+        </table>
+        <h2 id="карточка-безопасности-live">Карточка безопасности
+        Live</h2>
+        <ul>
+        <li>Account and venue:</li>
+        <li>Allowed instruments:</li>
+        <li>Max order quantity/notional:</li>
+        <li>Max position:</li>
+        <li>Rate limits:</li>
+        <li>Reconciliation policy:</li>
+        <li>Startup abort conditions:</li>
+        <li>Kill switch trigger:</li>
+        <li>Loss/time budget:</li>
+        <li>Rollback procedure:</li>
+        <li>Human owner:</li>
+        </ul>
+        <hr />
+        <h2 id="12-обязательных-результатов-по-модулям">12 обязательных
+        результатов по модулям</h2>
+        <p>Заполняйте раздел после соответствующей лаборатории из <a
+        href="labs.html"><code>LABS.md</code></a>. Каждый раздел сдаётся
+        отдельно.</p>
+        <h2 id="артефакт-11--event-trace">Артефакт 1.1 — Event
+        trace</h2>
+        <ul>
+        <li>Симптом:</li>
+        <li>Последняя подтверждённая граница:</li>
+        <li>Первая неподтверждённая граница:</li>
+        <li>Пять узлов
+        <code>owner / input / expected output / observation / next check</code>:</li>
+        <li>Prompt AI без широкого refactor:</li>
+        <li>Checklist: [ ] 5 узлов [ ] 2 проверки [ ] нет догадки вместо
+        evidence</li>
+        </ul>
+        <h2 id="артефакт-12--responsibility-matrix">Артефакт 1.2 —
+        Responsibility matrix</h2>
+        <p>Для каждой из 12 карточек:
+        <code>task / primary owner / input / output / collaborator / rationale</code>.</p>
+        <ul>
+        <li>Три спорных решения:</li>
+        <li>Checklist: [ ] один primary owner [ ] Strategy не обходит
+        Risk/Execution [ ] state ownership явно</li>
+        </ul>
+        <h2 id="артефакт-13--callback-passports">Артефакт 1.3 — Callback
+        passports</h2>
+        <p>Для A, B и C:
+        <code>prerequisite / subscription / event / readiness gate / effect / diagnostic / next check</code>.</p>
+        <ul>
+        <li>Checklist: [ ] A/B/C различены [ ] нет sleep/polling как
+        исправления [ ] проверка минимальна</li>
+        </ul>
+        <h2 id="артефакт-14--environment-evidence-matrix">Артефакт 1.4 —
+        Environment evidence matrix</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Environment</th>
+        <th>Data</th>
+        <th>Execution</th>
+        <th>Что доказано</th>
+        <th>Что не доказано</th>
+        <th>Следующий gate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Backtest</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Sandbox</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Live</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        </tbody>
+        </table>
+        <ul>
+        <li>Checklist: [ ] Sandbox не равен testnet [ ] Live допускает
+        paper/real [ ] real-money authority отдельно</li>
+        </ul>
+        <h2 id="артефакт-21--data-evidence-sheet">Артефакт 2.1 — Data
+        evidence sheet</h2>
+        <ul>
+        <li>Нарушения по row ID:</li>
+        <li>Quarantine list:</li>
+        <li>Разрешённые преобразования и причины:</li>
+        <li>Hash/версия исходного набора:</li>
+        <li>Checklist: [ ] порядок [ ] дубли [ ] диапазон [ ] bid/ask
+        invariant [ ] audit note</li>
+        </ul>
+        <h2 id="артефакт-22--manifest-diff-и-b2">Артефакт 2.2 — Manifest
+        diff и B2</h2>
+        <ul>
+        <li>Поля A/B, которые различаются:</li>
+        <li>Какие различия invalidating:</li>
+        <li>Единственное изменение B2:</li>
+        <li>Run ID и expected artifact paths:</li>
+        <li>Checklist: [ ] one-variable test [ ] catalog hash [ ]
+        fee/slippage [ ] code version</li>
+        </ul>
+        <h2 id="артефакт-23--hypothesis-card">Артефакт 2.3 — Hypothesis
+        card</h2>
+        <ul>
+        <li>Механизм:</li>
+        <li>Signal / state / action:</li>
+        <li>Издержки:</li>
+        <li>Falsifier:</li>
+        <li>Alternative explanation:</li>
+        <li>Untouched-forward window и preregistered metric:</li>
+        <li>Checklist: [ ] selection bias учтён [ ] gross != net [ ]
+        есть falsifier</li>
+        </ul>
+        <h2 id="артефакт-24--claimevidence-matrix">Артефакт 2.4 —
+        Claim/evidence matrix</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Claim</th>
+        <th>Evidence</th>
+        <th>SUPPORTED / NOT_EVALUABLE / NO-GO</th>
+        <th>Missing artifact</th>
+        <th>Next safe gate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Build</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Replay</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Profitability</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Live readiness</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td>Scale</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        </tbody>
+        </table>
+        <h2 id="артефакт-31--rust-ownership-map">Артефакт 3.1 — Rust
+        ownership map</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Field</th>
+        <th>Framework / config / strategy / event-local</th>
+        <th>Owner</th>
+        <th>Lifecycle</th>
+        <th>Why</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+        <ul>
+        <li>AI prompt 1:</li>
+        <li>AI prompt 2:</li>
+        <li>Checklist: [ ] Rust canonical [ ] StrategyCore не
+        дублируется [ ] event-local state обоснован</li>
+        </ul>
+        <h2 id="артефакт-32--incident-decision-tree">Артефакт 3.2 —
+        Incident decision tree</h2>
+        <ul>
+        <li>Branches: no quote / no callback / risk deny / unknown venue
+        outcome.</li>
+        <li>Для каждой: evidence, owner, safe action, forbidden
+        action.</li>
+        <li>Checklist: [ ] submit != fill [ ] deny != transport error [
+        ] blind retry запрещён</li>
+        </ul>
+        <h2 id="артефакт-33--native-backtest-charter">Артефакт 3.3 —
+        Native backtest charter</h2>
+        <ul>
+        <li>Locked build command:</li>
+        <li>Run A / Run B:</li>
+        <li>Invariant inputs:</li>
+        <li>Single changed parameter:</li>
+        <li>Output hashes:</li>
+        <li>Canonical report schema/path:</li>
+        <li>Failure policy:</li>
+        <li>Checklist: [ ] Python не runtime dependency [ ]
+        machine-readable provenance [ ] one-variable comparison</li>
+        </ul>
+        <h2 id="артефакт-34--live-promotion-dossier">Артефакт 3.4 — Live
+        promotion dossier</h2>
+        <ul>
+        <li>Gate matrix: build / replay / forward / shadow /
+        reconciliation / kill-switch drill / canary.</li>
+        <li>Startup abort conditions:</li>
+        <li>Account-specific limits:</li>
+        <li>Kill-switch trigger and tested action:</li>
+        <li>Unknown-outcome procedure:</li>
+        <li>Rollback and human owner:</li>
+        <li>Verdict and expiry time:</li>
+        <li>Checklist: [ ] unresolved reconciliation blocks [ ]
+        undrilled kill switch blocks [ ] canary bounded [ ] no blind
+        resubmit</li>
+        </ul>
+        <h2 id="связь-с-итоговым-проектом">Связь с итоговым
+        проектом</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Capstone material</th>
+        <th>Supporting module artifacts</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Architecture map</td>
+        <td>1.1, 1.2, 1.3</td>
+        </tr>
+        <tr>
+        <td>Environment and evidence boundaries</td>
+        <td>1.4, 2.4</td>
+        </tr>
+        <tr>
+        <td>Data and reproducible run</td>
+        <td>2.1, 2.2</td>
+        </tr>
+        <tr>
+        <td>Strategy hypothesis</td>
+        <td>2.3</td>
+        </tr>
+        <tr>
+        <td>Rust-native ownership and validation</td>
+        <td>3.1, 3.3</td>
+        </tr>
+        <tr>
+        <td>Order lifecycle</td>
+        <td>3.2</td>
+        </tr>
+        <tr>
+        <td>Live safety dossier</td>
+        <td>3.4</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Перед capstone все 12 артефактов должны иметь
+        <code>PASS</code>. Статус <code>NOT_EVALUABLE</code> допустим
+        как честная промежуточная фиксация недостающего входа, но
+        блокирует допуск к capstone и никогда не считается разрешением
+        live.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>LEARNER_WORKBOOK.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

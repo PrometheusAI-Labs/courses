@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Три курса, 12 модулей и плановые 20
+часов обучения.">
+  <meta name="source-file" content="CURRICULUM.md">
+  <meta name="source-sha256" content="08029eae5d1d614697973fac6dd2309a2ed0dbe00984e3205580c3b912c9d13f">
+  <title>Программа и расписание — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#сквозная-логика">Сквозная
+      логика</a></li>
+      <li><a href="#курс-1--как-устроен-торговый-движок-330-минут"
+     >Курс 1 —
+      Как устроен торговый движок (330 минут)</a></li>
+      <li><a href="#курс-2--надёжный-бэктест-420-минут"
+     >Курс 2 — Надёжный
+      бэктест (420 минут)</a></li>
+      <li><a
+      href="#курс-3--стратегия-на-rust-от-бэктеста-к-live-450-минут"
+     >Курс
+      3 — Стратегия на Rust: от бэктеста к Live (450 минут)</a></li>
+      <li><a href="#правила-хронометража"
+     >Правила хронометража</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Для
+всех</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Программа и расписание</h1>
+      <p class="doc-summary">Три курса, 12 модулей и плановые 20 часов
+обучения.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#сквозная-логика">Сквозная
+        логика</a></li>
+        <li><a href="#курс-1--как-устроен-торговый-движок-330-минут"
+       >Курс 1 —
+        Как устроен торговый движок (330 минут)</a></li>
+        <li><a href="#курс-2--надёжный-бэктест-420-минут"
+       >Курс 2 — Надёжный
+        бэктест (420 минут)</a></li>
+        <li><a
+        href="#курс-3--стратегия-на-rust-от-бэктеста-к-live-450-минут"
+       >Курс
+        3 — Стратегия на Rust: от бэктеста к Live (450 минут)</a></li>
+        <li><a href="#правила-хронометража"
+       >Правила хронометража</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <h2 id="сквозная-логика">Сквозная логика</h2>
+        <p>Программа идёт от наблюдаемого поведения к внутренней
+        архитектуре, затем к воспроизводимому исследованию и только
+        после этого — к нативному Rust и безопасному live-контуру.
+        Каждый модуль заканчивается артефактом, который можно проверить
+        отдельно от устного объяснения.</p>
+        <h2 id="курс-1--как-устроен-торговый-движок-330-минут">Курс 1 —
+        Как устроен торговый движок (330 минут)</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Модуль</th>
+        <th style="text-align: right;">Время</th>
+        <th>Теория и визуализация</th>
+        <th>Практика</th>
+        <th>Проверка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1. Путь одной котировки</td>
+        <td style="text-align: right;">75 мин</td>
+        <td>Событийный конвейер: Adapter → DataEngine → Cache →
+        MessageBus → Strategy</td>
+        <td>Трассировка «пропавшего» QuoteTick</td>
+        <td>Карта потока + quiz</td>
+        </tr>
+        <tr>
+        <td>2. Команда движка</td>
+        <td style="text-align: right;">80 мин</td>
+        <td>Границы Data, Risk, Execution, Portfolio, Cache, Trader,
+        MessageBus</td>
+        <td>Раскладка 12 задач по владельцам</td>
+        <td>Матрица ответственности + quiz</td>
+        </tr>
+        <tr>
+        <td>3. Стратегия реагирует</td>
+        <td style="text-align: right;">85 мин</td>
+        <td>Подписки, callback, warm-up, состояние</td>
+        <td>Диагностика трёх сломанных жизненных циклов</td>
+        <td>Debug canvas + quiz</td>
+        </tr>
+        <tr>
+        <td>4. Три среды</td>
+        <td style="text-align: right;">90 мин</td>
+        <td>Backtest, Sandbox, Live и сила доказательств</td>
+        <td>Построение promotion ladder</td>
+        <td>GO/NO-GO memo + quiz</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Результат курса: ученик может объяснить путь рыночного
+        события, выбрать владельца логики и отделить повторное
+        использование кода от доказательства live-готовности.</p>
+        <h2 id="курс-2--надёжный-бэктест-420-минут">Курс 2 — Надёжный
+        бэктест (420 минут)</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Модуль</th>
+        <th style="text-align: right;">Время</th>
+        <th>Теория и визуализация</th>
+        <th>Практика</th>
+        <th>Проверка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1. Данные как доказательство</td>
+        <td style="text-align: right;">100 мин</td>
+        <td>Нормализация, время, сортировка, каталог</td>
+        <td>Паспорт набора данных и проверки качества</td>
+        <td>Data evidence sheet + quiz</td>
+        </tr>
+        <tr>
+        <td>2. Воспроизводимый запуск</td>
+        <td style="text-align: right;">105 мин</td>
+        <td>Явные venue/data/engine configs</td>
+        <td>Сборка run manifest без hidden state</td>
+        <td>Run manifest + peer review</td>
+        </tr>
+        <tr>
+        <td>3. Стратегия как гипотеза</td>
+        <td style="text-align: right;">105 мин</td>
+        <td>Signal, state, action, assumptions</td>
+        <td>Разбор EMA cross и проектирование альтернативной
+        гипотезы</td>
+        <td>Hypothesis card + quiz</td>
+        </tr>
+        <tr>
+        <td>4. Границы результата</td>
+        <td style="text-align: right;">110 мин</td>
+        <td>Детерминизм, модель исполнения, forward/shadow/canary</td>
+        <td>Классификация утверждений по силе evidence</td>
+        <td>Evidence report + gate decision</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Результат курса: ученик строит воспроизводимый
+        исследовательский запуск и формулирует только те выводы, которые
+        действительно поддержаны данными и моделью.</p>
+        <h2
+        id="курс-3--стратегия-на-rust-от-бэктеста-к-live-450-минут">Курс
+        3 — Стратегия на Rust: от бэктеста к Live (450 минут)</h2>
+        <table>
+        <thead>
+        <tr>
+        <th>Модуль</th>
+        <th style="text-align: right;">Время</th>
+        <th>Теория и визуализация</th>
+        <th>Практика</th>
+        <th>Проверка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1. Анатомия Rust-стратегии</td>
+        <td style="text-align: right;">105 мин</td>
+        <td>StrategyCore, поля домена, конфигурация, wiring</td>
+        <td>Карта владения состоянием</td>
+        <td>Rust component map + quiz</td>
+        </tr>
+        <tr>
+        <td>2. От события к заявке</td>
+        <td style="text-align: right;">110 мин</td>
+        <td>Subscription → callback → order → risk → execution</td>
+        <td>Диагностика четырёх границ</td>
+        <td>Order trace + quiz</td>
+        </tr>
+        <tr>
+        <td>3. Нативный бэктест</td>
+        <td style="text-align: right;">110 мин</td>
+        <td>Сборка engine/venue/data/strategy</td>
+        <td>План replay с проверяемыми артефактами</td>
+        <td>Native validation plan + quiz</td>
+        </tr>
+        <tr>
+        <td>4. Live без самообмана</td>
+        <td style="text-align: right;">125 мин</td>
+        <td>Adapter, auth, reconciliation, shadow, canary, kill
+        switch</td>
+        <td>Итоговый gate review</td>
+        <td>Capstone dossier + defence</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Результат курса: ученик может описать и защитить Rust-native
+        архитектуру и план поэтапной валидации, не делая live-выводов из
+        локального build или публичного data probe.</p>
+        <h2 id="правила-хронометража">Правила хронометража</h2>
+        <p>Каждый модуль включает четыре обязательных блока:</p>
+        <ol type="1">
+        <li>Интерактивное объяснение и трассировку реального кода.</li>
+        <li>Лабораторная работа с пошаговой проверкой.</li>
+        <li>Самостоятельное задание с сохраняемым артефактом.</li>
+        <li>Прикладной quiz или gate review.</li>
+        </ol>
+        <p>Время рассчитано для обучения с выполнением практики, а не
+        для быстрого просмотра HTML. Преподаватель может разделить
+        программу на пять дней по четыре часа или десять занятий по два
+        часа.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>CURRICULUM.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

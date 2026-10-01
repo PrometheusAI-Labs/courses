@@ -1,0 +1,143 @@
+<section class="module" id="module-3">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">03</span>
+      <h1 class="module-title">Как стратегия реагирует на события</h1>
+      <p class="module-subtitle">85 минут · разберём <span class="term" data-definition="Обработчик события — функция, которую система вызывает сама при нужном событии. Это похоже на звонок датчика: не вы постоянно спрашиваете, есть ли дым, а датчик сообщает о нём.">обработчик события</span>, подписку и безопасный прогрев индикаторов.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">1. Датчик дыма, а не дежурный с секундомером <small>10 минут</small></h2>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-success)">
+          <div class="pattern-icon" style="background: var(--color-success)">🔔</div>
+          <h3 class="pattern-title">Событийная модель</h3>
+          <p class="pattern-desc">Стратегия подписывается один раз. Движок сам вызывает обработчик, когда появляется бар.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-error)">
+          <div class="pattern-icon" style="background: var(--color-error)">🔁</div>
+          <h3 class="pattern-title">Постоянный опрос</h3>
+          <p class="pattern-desc"><span class="term" data-definition="Polling loop — цикл, который снова и снова спрашивает, появились ли новые данные. В событийном движке такой опрос часто дублирует уже существующую доставку событий.">Polling loop</span> тратит работу на вопрос «есть ли что-нибудь?» и усложняет время обработки.</p>
+        </div>
+      </div>
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content"><strong class="callout-title">Lifecycle — это договор</strong><p>На старте стратегия объявляет, что ей нужно; затем обработчики отвечают только на доставленные события.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">2. Жизненный цикл одного бара <small>20 минут</small></h2>
+      <p class="animate-in">Идите слева направо. Если шаг не доказан, все последующие выводы пока только гипотезы.</p>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p><code>on_start</code></p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Регистрация индикаторов</p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Подписка на бары</p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Вызов <code>on_bar</code></p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><p>Проверка готовности</p></div>
+      </div>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in"><div class="pattern-icon" style="background: var(--color-actor-1)">📣</div><h3 class="pattern-title">Подписка</h3><p class="pattern-desc">Говорит движку, какой тип события нужно доставлять стратегии.</p></div>
+        <div class="pattern-card animate-in"><div class="pattern-icon" style="background: var(--color-actor-2)">⏳</div><h3 class="pattern-title">Прогрев</h3><p class="pattern-desc"><span class="term" data-definition="Прогрев — период накопления достаточного количества данных, чтобы индикатор мог выдавать осмысленный результат. Это проверка готовности, а не случайная пауза.">Прогрев</span> не даёт принимать решение до готовности индикаторов.</p></div>
+        <div class="pattern-card animate-in"><div class="pattern-icon" style="background: var(--color-actor-3)">🚪</div><h3 class="pattern-title">Ранний выход</h3><p class="pattern-desc">Если готовности нет, обработчик безопасно прекращает текущую реакцию.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">3. Контракт стратегии в реальном коде <small>20 минут</small></h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">КОД ПРОЕКТА</span>
+          <pre><code>    def on_start(self) -&gt; None:
+        self.register_indicator_for_bars(self.config.bar_type, self.fast_ema)
+        self.register_indicator_for_bars(self.config.bar_type, self.slow_ema)
+        self.subscribe_bars(self.config.bar_type)
+
+    def on_bar(self, _bar: Bar) -&gt; None:
+        if not self.indicators_initialized():
+            return</code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">ПРОСТЫМИ СЛОВАМИ</span>
+          <div class="translation-lines">
+            <p class="tl">При запуске стратегии начинается настройка её реакций.</p>
+            <p class="tl">Два <span class="term" data-definition="Индикатор — вычисление на основе рыночных данных, которое помогает описать их состояние. Здесь две EMA должны сначала накопить достаточно баров.">индикатора</span> привязываются к нужному типу баров.</p>
+            <p class="tl">Стратегия просит движок присылать эти бары.</p>
+            <p class="tl">Когда бар приходит, движок вызывает обработчик.</p>
+            <p class="tl">Если индикаторы ещё не готовы, текущий бар не используется для решения.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">🔎</div>
+        <div class="callout-content"><strong class="callout-title">Две разные тишины</strong><p>«<code>on_bar</code> не вызван» указывает на доставку; «вызван и вернулся» указывает на readiness-gate. Не смешивайте эти диагнозы.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">4. Лабораторная работа: «Тишина в обработчике» <small>25 минут</small></h2>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-error)">A</div>
+          <h3 class="pattern-title">Обработчик не вызван</h3>
+          <p class="pattern-desc"><strong>Доказательство:</strong> нет входа в <code>on_bar</code>. Проверьте подписку и совпадение <code>bar_type</code>.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info)">B</div>
+          <h3 class="pattern-title">Обработчик сразу завершает работу</h3>
+          <p class="pattern-desc"><strong>Доказательство:</strong> вход есть, торгового решения нет. Проверьте состояние и прогрев индикаторов.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">C</div>
+          <h3 class="pattern-title">Не тот поток</h3>
+          <p class="pattern-desc"><strong>Доказательство:</strong> публикуется другой тип бара. Сравните конфигурацию подписки и входные данные.</p>
+        </div>
+      </div>
+      <div class="callout callout-warning animate-in">
+        <div class="callout-icon">⛔</div>
+        <div class="callout-content"><strong class="callout-title">Сначала наблюдение, потом изменение</strong><p>Запрос AI должен требовать доказать, какой из трёх случаев произошёл, и только затем предлагать минимальное исправление.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">5. Проверка понимания: локализуйте причину <small>10 минут</small></h2>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">✍️</div>
+        <div class="callout-content"><strong class="callout-title">Самостоятельно · 4 минуты</strong><p>Составьте паспорт <code>on_quote_tick</code>: подписка, событие, readiness-gate и диагностический сигнал. Не используйте бесконечный цикл или паузу «на глаз».</p></div>
+      </div>
+      <div class="quiz-container animate-in" id="quiz-module3">
+        <div class="quiz-question-block" data-correct="m3q1b" data-explanation-right="Верно: без подписки движок не обязан доставлять бары этому обработчику." data-explanation-wrong="Прогрев проверяется уже внутри вызванного on_bar. Если вызовов нет совсем, сначала проверяют подписку и тип события.">
+          <h3 class="quiz-question">1. <code>on_start</code> выполняется, но <code>on_bar</code> не вызывается ни разу. Первая проверка?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m3q1a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Размер сделки</span></button>
+            <button class="quiz-option" data-value="m3q1b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Подписка и совпадение bar_type</span></button>
+            <button class="quiz-option" data-value="m3q1c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Формула выхода из позиции</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m3q2c" data-explanation-right="Именно: обработчик работает, но readiness-gate корректно блокирует преждевременное решение." data-explanation-wrong="Есть доказательство, что доставка исправна: on_bar вызывается. Теперь проверяется готовность зарегистрированных индикаторов.">
+          <h3 class="quiz-question">2. <code>on_bar</code> вызывается 12 раз и каждый раз выходит на проверке готовности. Что это означает?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m3q2a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>MessageBus не доставляет события</span></button>
+            <button class="quiz-option" data-value="m3q2b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Нужно удалить защиту</span></button>
+            <button class="quiz-option" data-value="m3q2c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Индикаторам пока недостаточно данных</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m3q3a" data-explanation-right="Точно: новая реакция начинается с явной подписки, callback и проверяемого условия готовности." data-explanation-wrong="Событийная стратегия не должна заменять контракт бесконечным циклом или случайной задержкой.">
+          <h3 class="quiz-question">3. Вы добавляете реакцию на quote tick. Какой дизайн лучше?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m3q3a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Подписка на старте → callback → readiness-gate</span></button>
+            <button class="quiz-option" data-value="m3q3b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Бесконечный цикл с постоянной проверкой Cache</span></button>
+            <button class="quiz-option" data-value="m3q3c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Пауза на фиксированные 10 секунд</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить решения</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Попробовать снова</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

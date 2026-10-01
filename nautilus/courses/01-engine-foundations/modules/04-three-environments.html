@@ -1,0 +1,184 @@
+<section class="module" id="module-4">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">04</span>
+      <h1 class="module-title">Три среды — разные доказательства</h1>
+      <p class="module-subtitle">90 минут · сравним <span class="term" data-definition="Среда исполнения — режим NautilusTrader, который определяет источник времени и данных, а также тип исполнения: историческая симуляция, реальные данные с симуляцией или подключение к live-клиенту.">Backtest, Sandbox и Live</span> без подмены терминов.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">1. Симулятор, учебный полёт и реальный рейс <small>15 минут</small></h2>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">🖥️</div>
+          <h3 class="pattern-title">Backtest</h3>
+          <p class="pattern-desc">Исторические данные и смоделированное исполнение. Быстро проверяет логику и повторяемость.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">🛫</div>
+          <h3 class="pattern-title">Sandbox</h3>
+          <p class="pattern-desc"><span class="term" data-definition="Sandbox в NautilusTrader — реальные данные в реальном времени вместе с симулированным исполнением. Это не синоним exchange testnet.">Реальные данные + симуляция исполнения</span>. Помогает наблюдать реакцию стратегии на живой поток без отправки заявок через live execution client.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-error)">
+          <div class="pattern-icon" style="background: var(--color-error)">✈️</div>
+          <h3 class="pattern-title">Live</h3>
+          <p class="pattern-desc">Реальные данные и live-подключение к площадке. Аккаунт может быть paper или real: режим <code>Live</code> сам по себе не означает реальные деньги.</p>
+        </div>
+      </div>
+      <div class="callout callout-warning animate-in">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-content"><strong class="callout-title">Одинаковый каркас ≠ одинаковая реальность</strong><p>Переиспользование стратегии уменьшает расхождение кода, но не отменяет сетевые, рыночные и операционные риски.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">2. Переключите среду и сравните доказательства <small>20 минут</small></h2>
+      <div class="layer-demo animate-in">
+        <div class="layer-tabs">
+          <button class="layer-tab active" onclick="showLayer('layer-backtest', this)">Backtest</button>
+          <button class="layer-tab" onclick="showLayer('layer-sandbox', this)">Sandbox</button>
+          <button class="layer-tab" onclick="showLayer('layer-live', this)">Live</button>
+        </div>
+        <div class="layer-viewport">
+          <div class="layer" id="layer-backtest" style="display:block">
+            <div class="badge-list">
+              <div class="badge-item"><code class="badge-code">clock</code><span class="badge-desc">Симулированное время движется по историческим событиям</span></div>
+              <div class="badge-item"><code class="badge-code">data</code><span class="badge-desc">Заранее собранный набор с известными пропусками и границами</span></div>
+              <div class="badge-item"><code class="badge-code">execution</code><span class="badge-desc">Исполнение рассчитывается моделью, а не реальным рынком</span></div>
+              <div class="badge-item"><code class="badge-code">proof</code><span class="badge-desc">Детерминизм, логика, метрики и воспроизводимость</span></div>
+            </div>
+          </div>
+          <div class="layer" id="layer-sandbox" style="display:none">
+            <div class="badge-list">
+              <div class="badge-item"><code class="badge-code">clock</code><span class="badge-desc">Реальное время и настоящие сетевые задержки</span></div>
+              <div class="badge-item"><code class="badge-code">data</code><span class="badge-desc">Реальный поток данных в реальном времени</span></div>
+              <div class="badge-item"><code class="badge-code">execution</code><span class="badge-desc">Исполнение остаётся симулированным внутри NautilusTrader</span></div>
+              <div class="badge-item"><code class="badge-code">proof</code><span class="badge-desc">Поведение стратегии на live-data, устойчивость подписок и реакция на timing</span></div>
+            </div>
+          </div>
+          <div class="layer" id="layer-live" style="display:none">
+            <div class="badge-list">
+              <div class="badge-item"><code class="badge-code">clock</code><span class="badge-desc">Реальное время, задержки и гонки событий</span></div>
+              <div class="badge-item"><code class="badge-code">data</code><span class="badge-desc">Реальный поток с разрывами, дублями и изменениями качества</span></div>
+              <div class="badge-item"><code class="badge-code">execution</code><span class="badge-desc">Команды идут через live execution client; paper или real зависит от аккаунта и адаптера</span></div>
+              <div class="badge-item"><code class="badge-code">proof</code><span class="badge-desc">Маршрутизация, транспорт, reconciliation и операционные процедуры; реальный риск капитала доказывается отдельно</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="layer-description">Сравнивайте не названия режимов, а то, какие риски и факты в них реально наблюдаемы.</p>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">3. Минимальный каркас BacktestEngine <small>15 минут</small></h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">КОД ПРОЕКТА</span>
+          <pre><code>engine = BacktestEngine(
+    config=BacktestEngineConfig(
+        logging=LoggerConfig(stdout_level=LogLevel.ERROR),
+    ),
+)</code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">ПРОСТЫМИ СЛОВАМИ</span>
+          <div class="translation-lines">
+            <p class="tl">Создаём именно движок исторической симуляции.</p>
+            <p class="tl">Передаём ему отдельную конфигурацию бэктеста.</p>
+            <p class="tl">Настраиваем <span class="term" data-definition="Логирование — запись сообщений о работе системы. Уровень ERROR оставляет сообщения об ошибках и скрывает менее важный шум.">логирование</span>, чтобы на экран выводились ошибки.</p>
+            <p class="tl">Завершаем сборку объекта движка.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content"><strong class="callout-title">Конфигурация объявляет среду</strong><p>Стратегия может оставаться похожей, но движок, адаптеры и доказательства готовности зависят от режима исполнения.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">4. Лабораторная работа: «Допуск к рейсу» <small>25 минут</small></h2>
+      <p class="animate-in">Постройте две двери допуска. За каждой карточкой должно стоять измерение, отчёт или проверяемый журнал.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">1</div>
+          <h3 class="pattern-title">Backtest → Sandbox</h3>
+          <p class="pattern-desc">Целостность данных, воспроизводимый прогон, риск-лимиты, отсутствие look-ahead и готовность наблюдать live-data при симулированном исполнении.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">2</div>
+          <h3 class="pattern-title">Sandbox → Live</h3>
+          <p class="pattern-desc">Отдельно проверить live execution client, auth, reconnect, жизненный цикл команд, сверку позиций, мониторинг и kill switch. Exchange testnet может быть дополнительным этапом, но не равен Sandbox.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-error)">STOP</div>
+          <h3 class="pattern-title">Стоп-условия</h3>
+          <p class="pattern-desc">Расхождение позиций, потеря данных, неизвестный статус приказа или нарушение лимита блокируют переход.</p>
+        </div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">evidence</code><span class="badge-desc">У каждого критерия есть число, статус или ссылка на отчёт</span></div>
+        <div class="badge-item"><code class="badge-code">owner</code><span class="badge-desc">Назван человек или процесс, который подтверждает допуск</span></div>
+        <div class="badge-item"><code class="badge-code">rollback</code><span class="badge-desc">Понятно, как остановиться и вернуться в безопасное состояние</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading animate-in">5. Проверка понимания: примите решение о запуске <small>15 минут</small></h2>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">✍️</div>
+        <div class="callout-content"><strong class="callout-title">Самостоятельно · 5 минут</strong><p>Вынесите GO / NO-GO по отчёту «зелёный бэктест + 50 симулированных исполнений на live-data в Sandbox». Артефакт принят, если Sandbox не назван testnet, перечислены недостающие проверки live execution client и AI не получает разрешения запускать реальные деньги.</p></div>
+      </div>
+      <div class="quiz-container animate-in" id="quiz-module4">
+        <div class="quiz-question-block" data-correct="m4q1b" data-explanation-right="Верно: доходность на истории — лишь одно наблюдение. Сначала нужны проверки данных, исполнения, риска и устойчивости." data-explanation-wrong="Даже очень хороший backtest не наблюдает реальную очередь приказов, сеть и операционные сбои.">
+          <h3 class="quiz-question">1. Бэктест прибылен и воспроизводим. Можно сразу в Live?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m4q1a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Да, прибыльность уже всё доказала</span></button>
+            <button class="quiz-option" data-value="m4q1b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Нет, сначала отдельные gates Sandbox и операционной готовности</span></button>
+            <button class="quiz-option" data-value="m4q1c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Да, если увеличить логирование</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m4q2c" data-explanation-right="Точно: тестовая среда полезна для протокола и операций, но не обязана воспроизводить реальную ликвидность." data-explanation-wrong="Sandbox не является гарантией реального качества исполнения и рыночного воздействия.">
+          <h3 class="quiz-question">2. Пятьдесят симулированных исполнений в Sandbox прошли без ошибок. Что всё ещё не доказано?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m4q2a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Что стратегия умеет создавать ордер</span></button>
+            <button class="quiz-option" data-value="m4q2b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Что обработчики получают live-data</span></button>
+            <button class="quiz-option" data-value="m4q2c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Работа live execution client, venue routing и фактическое исполнение аккаунта</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m4q3a" data-explanation-right="Да: неизвестное состояние позиции — прямой повод остановить продвижение до восстановления единой картины." data-explanation-wrong="Новые ордера увеличат неопределённость. Сначала восстанавливают согласованное состояние.">
+          <h3 class="quiz-question">3. Локальная позиция не совпала с площадкой. Какое решение безопаснее?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m4q3a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>NO-GO: остановить приказы и выполнить reconciliation</span></button>
+            <button class="quiz-option" data-value="m4q3b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Продолжить и проверить вечером</span></button>
+            <button class="quiz-option" data-value="m4q3c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Удвоить позицию для выравнивания</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="m4q4b" data-explanation-right="Именно: ограниченный запуск дополняет, но не заменяет критерии, мониторинг и автоматическую остановку." data-explanation-wrong="Размер капитала сам по себе не создаёт контроль. Нужны заранее измеримые gates и стоп-условия.">
+          <h3 class="quiz-question">4. Как формулировать безопасный первый Live-запуск на real account?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="m4q4a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Минимальный капитал — других ограничений не нужно</span></button>
+            <button class="quiz-option" data-value="m4q4b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Ограниченный капитал + мониторинг + лимиты + kill switch + сверка</span></button>
+            <button class="quiz-option" data-value="m4q4c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запустить ночью, чтобы никто не вмешивался</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить решения</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Попробовать снова</button>
+      </div>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Событие</p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Компоненты</p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Callback</p></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Доказательства среды</p></div>
+      </div>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">🧭</div>
+        <div class="callout-content"><strong class="callout-title">Дальше: курс 02</strong><p>Следующий курс углубит данные и исследование: качество истории, каталог, воспроизводимость и границы валидного вывода.</p></div>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

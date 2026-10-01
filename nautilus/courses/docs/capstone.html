@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Задание, обязательные материалы и
+многоуровневая рубрика.">
+  <meta name="source-file" content="CAPSTONE.md">
+  <meta name="source-sha256" content="b44e66e3aecfbbfbaf0b57cbe764a24deedea37a6f40436ee4df5872d72e3690">
+  <title>Итоговый проект — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#задание">Задание</a></li>
+      <li><a href="#обязательные-материалы"
+     >Обязательные материалы</a></li>
+      <li><a href="#рубрика--100-баллов"
+     >Рубрика — 100 баллов</a></li>
+      <li><a href="#защита--20-минут">Защита —
+      20 минут</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Ученик</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Итоговый проект</h1>
+      <p class="doc-summary">Задание, обязательные материалы и
+многоуровневая рубрика.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#задание">Задание</a></li>
+        <li><a href="#обязательные-материалы"
+       >Обязательные материалы</a></li>
+        <li><a href="#рубрика--100-баллов"
+       >Рубрика — 100 баллов</a></li>
+        <li><a href="#защита--20-минут">Защита
+        — 20 минут</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <h2 id="задание">Задание</h2>
+        <p>Спроектируйте путь одной Rust-native стратегии от рыночного
+        события до безопасного решения о live-canary. Реальную торговлю
+        включать не нужно. Цель — защитить архитектуру и доказательства,
+        а не показать доходность.</p>
+        <h2 id="обязательные-материалы">Обязательные материалы</h2>
+        <ol type="1">
+        <li>Архитектурная карта: Adapter, DataEngine, Cache, MessageBus,
+        Strategy, RiskEngine, ExecutionEngine, Portfolio и Venue.</li>
+        <li>Event trace: минимум один market-data event и полный order
+        lifecycle до execution event.</li>
+        <li>Паспорт данных и run manifest.</li>
+        <li>Гипотеза стратегии с фальсифицирующим условием.</li>
+        <li>План нативного Rust build/replay/report, где Python не
+        является обязательной runtime- или report-зависимостью.</li>
+        <li>Evidence ladder: build, replay, forward, shadow, bounded
+        canary, live expansion.</li>
+        <li>Reconciliation plan и условия abort на старте.</li>
+        <li>Kill switch, rollback и account-specific limits.</li>
+        </ol>
+        <h2 id="рубрика--100-баллов">Рубрика — 100 баллов</h2>
+        <p>Оценивание ведётся по четырём уровням. Преподаватель выбирает
+        один уровень по каждому критерию; промежуточный балл допустим,
+        только если в комментарии указано, какие признаки следующего
+        уровня уже доказаны.</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Критерий</th>
+        <th style="text-align: right;">Вес</th>
+        <th>Отлично</th>
+        <th>Достаточно</th>
+        <th>Частично</th>
+        <th>Не доказано</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Архитектурные границы</td>
+        <td style="text-align: right;">15</td>
+        <td><strong>15:</strong> у каждого компонента одна
+        ответственность; команды и события разведены; границы
+        подтверждены трассой.</td>
+        <td><strong>11:</strong> роли верны, но одна граница объяснена
+        неполно.</td>
+        <td><strong>6:</strong> схема есть, однако ответственности
+        пересекаются или часть акторов отсутствует.</td>
+        <td><strong>0:</strong> архитектурной карты нет либо она
+        противоречит потоку.</td>
+        </tr>
+        <tr>
+        <td>Трассировка данных</td>
+        <td style="text-align: right;">15</td>
+        <td><strong>15:</strong> есть входы, выходы, timestamps,
+        наблюдаемость, точки отказа и полный order lifecycle.</td>
+        <td><strong>11:</strong> основной путь полный, но одна точка
+        отказа или измерения не раскрыта.</td>
+        <td><strong>6:</strong> показан happy path без проверяемых
+        состояний.</td>
+        <td><strong>0:</strong> трассу нельзя воспроизвести.</td>
+        </tr>
+        <tr>
+        <td>Воспроизводимость</td>
+        <td style="text-align: right;">15</td>
+        <td><strong>15:</strong> зафиксированы dataset hash, manifest,
+        конфигурация, версии, seed и точная команда запуска.</td>
+        <td><strong>11:</strong> запуск повторяем, но отсутствует один
+        вторичный атрибут.</td>
+        <td><strong>6:</strong> имеются данные и настройки, но результат
+        зависит от незафиксированного окружения.</td>
+        <td><strong>0:</strong> повторный запуск невозможен.</td>
+        </tr>
+        <tr>
+        <td>Исследовательская честность</td>
+        <td style="text-align: right;">15</td>
+        <td><strong>15:</strong> гипотеза фальсифицируема, выводы
+        ограничены данными и моделью, ограничения перечислены.</td>
+        <td><strong>11:</strong> границы вывода корректны, но один риск
+        смещения не разобран.</td>
+        <td><strong>6:</strong> метрики приведены, однако ограничения
+        или критерий опровержения расплывчаты.</td>
+        <td><strong>0:</strong> backtest выдаётся за доказательство
+        live-прибыльности.</td>
+        </tr>
+        <tr>
+        <td>Rust-first целостность</td>
+        <td style="text-align: right;">15</td>
+        <td><strong>15:</strong> build, replay, validation и canonical
+        report выполняются нативным Rust-путём; Python
+        необязателен.</td>
+        <td><strong>11:</strong> основной путь Rust-native, но один
+        вспомогательный шаг недостаточно отделён.</td>
+        <td><strong>6:</strong> Rust используется частично, а
+        обязательный отчёт или проверка зависят от Python.</td>
+        <td><strong>0:</strong> заявленная Rust-native цепочка
+        отсутствует.</td>
+        </tr>
+        <tr>
+        <td>Live safety</td>
+        <td style="text-align: right;">20</td>
+        <td><strong>20:</strong> представлен проверяемый план
+        reconciliation, untouched forward, shadow и bounded canary;
+        tabletop/drill подтверждает kill switch и rollback; заданы
+        лимиты, владельцы и NO-GO условия. Фактический canary не
+        требуется.</td>
+        <td><strong>14:</strong> все обязательные механизмы
+        спроектированы, но один не имеет tabletop-проверки, критерия или
+        владельца.</td>
+        <td><strong>8:</strong> есть отдельные ограничения, но
+        безопасный переход и восстановление неполны.</td>
+        <td><strong>0:</strong> нет плана kill switch, reconciliation
+        или bounded canary.</td>
+        </tr>
+        <tr>
+        <td>Ясность защиты</td>
+        <td style="text-align: right;">5</td>
+        <td><strong>5:</strong> каждое решение связано с evidence и
+        проверяемым последствием.</td>
+        <td><strong>4:</strong> логика ясна, но одна связь с evidence
+        неявна.</td>
+        <td><strong>2:</strong> решение описано, но причинность в
+        основном декларативна.</td>
+        <td><strong>0:</strong> защита не позволяет проверить
+        выводы.</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Минимум для зачёта — 75 баллов, при этом секция Live safety
+        должна набрать не меньше 14 из 20. Проект с реальными
+        credentials, неограниченным canary или без kill switch
+        автоматически возвращается на доработку.</p>
+        <p>Реальные результаты shadow или canary могут быть приложены
+        только как внешнее необязательное evidence при отдельной
+        авторизации. Для максимального учебного балла достаточно
+        безопасного dossier и tabletop/drill; план нельзя выдавать за
+        фактическое live-доказательство.</p>
+        <h2 id="защита--20-минут">Защита — 20 минут</h2>
+        <ul>
+        <li>5 минут: путь market-data event.</li>
+        <li>5 минут: путь заявки и контроль риска.</li>
+        <li>5 минут: evidence ladder.</li>
+        <li>5 минут: разбор одного failure scenario и безопасного
+        восстановления.</li>
+        </ul>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>CAPSTONE.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!-- ═══════════════════════════════════════════════════════════
+     MODULE 4 — Идиомы и паттерны
+     ═══════════════════════════════════════════════════════════ -->
+<section class="module" id="module-4" style="background: var(--color-bg-warm);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">04</span>
+      <h1 class="module-title">Идиомы и паттерны</h1>
+      <p class="module-subtitle">Как писать код, который Rust-сообщество назовёт идиоматичным</p>
+    </header>
+
+    <!-- ── Screen 1: Зачем нужны идиомы ──────────────────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Зачем нужны идиомы</h2>
+
+      <p class="animate-in">
+        Представьте правила дорожного движения. Технически машина может ехать по встречке — но так никто не делает. <span class="term" data-definition="Устоявшийся способ решения типичной задачи в конкретном языке программирования. В Rust идиомы часто опираются на систему типов для предотвращения ошибок на этапе компиляции.">Идиомы</span> — это правила, по которым пишут код профессионалы.
+      </p>
+
+      <p class="animate-in">
+        Компилятор Rust гарантирует безопасность памяти, но не гарантирует качество дизайна. Идиомы — это проверенные <span class="term" data-definition="Повторяемое решение часто встречающейся проблемы в проектировании программного обеспечения. Паттерны описывают не конкретный код, а подход к решению задачи.">паттерны</span>, которые делают код надёжнее, читаемее и удобнее в использовании.
+      </p>
+
+      <p class="animate-in">
+        Хороший <span class="term" data-definition="Application Programming Interface — интерфейс, через который одна часть программы взаимодействует с другой. Качественный API трудно использовать неправильно.">API</span> трудно использовать неправильно. Идиоматичный Rust-код превращает потенциальные ошибки программиста в ошибки компиляции — задолго до того, как код попадёт в продакшн.
+      </p>
+    </div>
+
+    <!-- ── Screen 2: Newtype — типы вместо ошибок ─────────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Newtype — типы вместо ошибок</h2>
+
+      <p class="animate-in">
+        Начнём с реального бага. Посмотрите на структуру <code>Post</code> и функцию <code>repost</code> — видите проблему?
+      </p>
+
+      <!-- Bug version -->
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust — версия с багом</span>
+<pre><code><span class="code-line"><span class="code-keyword">#[derive(Clone)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Post</span> {</span>
+<span class="code-line">    <span class="code-property">id</span>: <span class="code-function">u64</span>,</span>
+<span class="code-line">    <span class="code-property">user_id</span>: <span class="code-function">u64</span>,</span>
+<span class="code-line">    <span class="code-property">title</span>: <span class="code-function">String</span>,</span>
+<span class="code-line">    <span class="code-property">body</span>: <span class="code-function">String</span>,</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">repost</span>(post: &amp;<span class="code-function">Post</span>, new_author_id: <span class="code-function">u64</span>) -&gt; <span class="code-function">Post</span> {</span>
+<span class="code-line">    <span class="code-keyword">let mut</span> new_post = post.<span class="code-function">clone</span>();</span>
+<span class="code-line">    new_post.<span class="code-property">id</span> = new_author_id;  <span class="code-comment">// Oops!</span></span>
+<span class="code-line">    new_post</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Что тут происходит</span>
+          <div class="translation-lines">
+            <div class="tl">Структура Post: поля <code>id</code> и <code>user_id</code> — оба <code>u64</code>. Компилятор не видит разницы!</div>
+            <div class="tl">Поля <code>title</code> и <code>body</code> — оба <code>String</code>. Тоже легко перепутать.</div>
+            <div class="tl">Функция <code>repost</code> должна обновить <code>user_id</code>...</div>
+            <div class="tl">...но мы случайно записали <code>new_author_id</code> в поле <code>id</code>. Баг! И компилятор молчит.</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="animate-in">
+        Решение — паттерн Newtype. Обернём каждое значение в свой тип:
+      </p>
+
+      <!-- Newtype fix -->
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust — исправленная версия</span>
+<pre><code><span class="code-line"><span class="code-keyword">mod</span> <span class="code-function">post</span> {</span>
+<span class="code-line">    <span class="code-keyword">#[derive(Clone, Debug, PartialEq, Eq)]</span></span>
+<span class="code-line">    <span class="code-keyword">pub struct</span> <span class="code-function">Id</span>(<span class="code-function">u64</span>);</span>
+<span class="code-line"></span>
+<span class="code-line">    <span class="code-keyword">#[derive(Clone, Debug, PartialEq, Eq)]</span></span>
+<span class="code-line">    <span class="code-keyword">pub struct</span> <span class="code-function">Title</span>(<span class="code-function">String</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">mod</span> <span class="code-function">user</span> {</span>
+<span class="code-line">    <span class="code-keyword">#[derive(Clone, Debug, PartialEq, Eq)]</span></span>
+<span class="code-line">    <span class="code-keyword">pub struct</span> <span class="code-function">Id</span>(<span class="code-function">u64</span>);</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Что изменилось</span>
+          <div class="translation-lines">
+            <div class="tl">Создаём отдельные типы <code>post::Id</code> и <code>user::Id</code></div>
+            <div class="tl">Оба хранят <code>u64</code> внутри, но компилятор считает их разными типами</div>
+            <div class="tl">Теперь перепутать <code>post::Id</code> и <code>user::Id</code> — ошибка компиляции!</div>
+            <div class="tl">Zero-cost: в runtime никаких накладных расходов</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Typestates — машина состояний в типах ── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Typestates — машина состояний в типах</h2>
+
+      <p class="animate-in">
+        А что если нужно гарантировать порядок операций? Например, пост проходит модерацию: его нельзя удалить до публикации и нельзя опубликовать повторно. Паттерн Typestates кодирует эти правила прямо в системе типов.
+      </p>
+
+      <!-- State machine diagram as step-cards -->
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-info);">N</div>
+          <div class="step-body">
+            <strong>New — новый пост</strong>
+            <p>Только что создан. Единственное доступное действие — <code>publish()</code>, которое отправит пост на модерацию.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-actor-4);">U</div>
+          <div class="step-body">
+            <strong>Unmoderated — на модерации</strong>
+            <p>Ожидает решения модератора. Доступны два действия: <code>allow()</code> — одобрить, <code>deny()</code> — отклонить.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-success);">P</div>
+          <div class="step-body">
+            <strong>Published — опубликован</strong>
+            <p>Пост доступен читателям. Единственное доступное действие — <code>delete()</code>.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-error);">D</div>
+          <div class="step-body">
+            <strong>Deleted — удалён</strong>
+            <p>Финальное состояние. Никаких действий больше не доступно.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="animate-in">
+        Вот как это выглядит в коде:
+      </p>
+
+      <!-- Typestates code translation -->
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<pre><code><span class="code-line"><span class="code-keyword">impl</span> <span class="code-function">Post</span>&lt;<span class="code-function">New</span>&gt; {</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">publish</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Unmoderated</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">impl</span> <span class="code-function">Post</span>&lt;<span class="code-function">Unmoderated</span>&gt; {</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">allow</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Published</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">deny</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Deleted</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">impl</span> <span class="code-function">Post</span>&lt;<span class="code-function">Published</span>&gt; {</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">delete</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Deleted</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчный разбор</span>
+          <div class="translation-lines">
+            <div class="tl"><code>publish()</code> доступен ТОЛЬКО для <code>Post&lt;New&gt;</code>. Нельзя опубликовать уже опубликованный пост!</div>
+            <div class="tl"><code>allow()</code> и <code>deny()</code> — только для <code>Post&lt;Unmoderated&gt;</code></div>
+            <div class="tl">Каждый переход потребляет (<code>self</code>) старое состояние и создаёт новое</div>
+            <div class="tl">Невозможные переходы — ошибка компиляции. Не runtime, а на этапе сборки!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Callout ──────────────────────────────── -->
+    <div class="callout callout-accent animate-in">
+      <span class="callout-icon">&#128161;</span>
+      <div class="callout-content">
+        <span class="callout-title">Zero-cost абстракции в действии</span>
+        <p>Паттерн Newtype не стоит ничего в runtime — это чисто компиляторная абстракция. Но он предотвращает целый класс багов: перепутанные ID, невалидные email-адреса, неправильные единицы измерения. Чем больше семантики в типах — тем меньше багов в коде.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Практические задания из проекта ──────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Практические задания из проекта</h2>
+
+      <p class="animate-in">
+        В Rust Incubator на этапе идиом вас ждут два ключевых задания. Оба требуют применения изученных паттернов на практике.
+      </p>
+
+      <div class="icon-rows stagger-children animate-in">
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-accent-light); color: var(--color-accent);">
+            &#128279;
+          </div>
+          <div>
+            <strong>Задание 1: Потокобезопасный двусвязный список</strong>
+            <p>Реализуйте doubly linked list, который можно безопасно использовать из нескольких потоков. Это задание проверяет понимание ownership, interior mutability и Send/Sync — всех концепций из предыдущих модулей.</p>
+          </div>
+        </div>
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-info-light); color: var(--color-info);">
+            &#127854;
+          </div>
+          <div>
+            <strong>Задание 2: VendingMachine — автомат с продуктами</strong>
+            <p>Спроектируйте торговый автомат с применением typestates и newtype-паттернов. Это задание на проектирование API, где невозможные состояния становятся невозможными.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">&#128736;</span>
+        <div class="callout-content">
+          <span class="callout-title">Требования к VendingMachine</span>
+          <p>Каждый продукт (Product) имеет цену и название. Автомат имеет ограниченную ёмкость. Должен выдавать сдачу и отклонять покупку, если сдачу выдать невозможно. Номиналы монет: 1, 2, 5, 10, 20, 50.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Quiz ─────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Проверьте себя</h2>
+
+      <div class="quiz-container animate-in" id="quiz-module4">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="newtype-safety" data-explanation-right="Верно! Newtype превращает логическую ошибку программиста в ошибку компиляции." data-explanation-wrong="Не совсем. Newtype нужен именно для того, чтобы компилятор различал post::Id и user::Id и не позволял их перепутать.">
+          <div class="quiz-question">1. Зачем оборачивать u64 в newtype вроде post::Id?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="newtype-safety" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы компилятор различал post::Id и user::Id и не дал перепутать
+            </button>
+            <button class="quiz-option" data-value="performance" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы u64 работал быстрее
+            </button>
+            <button class="quiz-option" data-value="required" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Это обязательное требование Rust
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="compile-error" data-explanation-right="Точно! Typestates гарантируют: невозможные переходы — это ошибки компиляции, а не runtime-баги." data-explanation-wrong="Не совсем. Метод delete() не определён для Post&lt;New&gt;, поэтому код просто не скомпилируется.">
+          <div class="quiz-question">2. Что произойдёт, если вызвать delete() на Post&lt;New&gt;?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="deleted" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Пост будет удалён
+            </button>
+            <button class="quiz-option" data-value="compile-error" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Ошибка компиляции: delete() не определён для Post&lt;New&gt;
+            </button>
+            <button class="quiz-option" data-value="runtime-error" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Ошибка в runtime
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="zero-overhead" data-explanation-right="Верно! В скомпилированном коде newtype-обёртка полностью стирается. post::Id(42) занимает ровно столько же памяти, сколько и просто 42u64." data-explanation-wrong="Не совсем. Zero-cost означает, что в скомпилированном коде newtype занимает ровно столько же памяти и работает так же быстро, как оригинальный тип.">
+          <div class="quiz-question">3. Почему Newtype называют zero-cost abstraction?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="free-crate" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Потому что crate бесплатный
+            </button>
+            <button class="quiz-option" data-value="zero-overhead" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Потому что в скомпилированном коде newtype занимает ровно столько же памяти и работает так же быстро, как оригинальный тип
+            </button>
+            <button class="quiz-option" data-value="easy-write" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Потому что его легко написать
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Сбросить</button>
+      </div>
+    </div>
+
+  </div>
+</section>

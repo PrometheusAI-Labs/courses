@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Фактическая проверка
+HTML-документов, переходов и адаптивной вёрстки в браузере.">
+  <meta name="source-file" content="DOCUMENTS_SITE_QA.md">
+  <meta name="source-sha256" content="70003445198d1208f73e1f0334b8ec16b2585a4d78e94aca7cd100b7469d5864">
+  <title>Проверка встраивания
+документов — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#что-проверено">Что
+      проверено</a>
+      <ul>
+      <li><a href="#каталог-документов"
+     >Каталог документов</a></li>
+      <li><a href="#все-14-документов">Все 14
+      документов</a></li>
+      <li><a href="#длинный-документ-и-таблицы"
+     >Длинный документ и
+      таблицы</a></li>
+      <li><a href="#встраивание-в-существующий-сайт"
+     >Встраивание в
+      существующий сайт</a></li>
+      <li><a href="#работа-в-браузере">Работа
+      в браузере</a></li>
+      </ul></li>
+      <li><a href="#что-намеренно-не-заявлено"
+     >Что намеренно не
+      заявлено</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Контроль
+качества</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Проверка встраивания документов</h1>
+      <p class="doc-summary">Фактическая проверка HTML-документов,
+переходов и адаптивной вёрстки в браузере.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#что-проверено">Что
+        проверено</a>
+        <ul>
+        <li><a href="#каталог-документов"
+       >Каталог документов</a></li>
+        <li><a href="#все-14-документов">Все
+        14 документов</a></li>
+        <li><a href="#длинный-документ-и-таблицы"
+       >Длинный документ и
+        таблицы</a></li>
+        <li><a href="#встраивание-в-существующий-сайт"
+       >Встраивание в
+        существующий сайт</a></li>
+        <li><a href="#работа-в-браузере"
+       >Работа в браузере</a></li>
+        </ul></li>
+        <li><a href="#что-намеренно-не-заявлено"
+       >Что намеренно не
+        заявлено</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <p><strong>Дата:</strong> 2026-09-23<br />
+        <strong>Проверяемая сборка:</strong> текущий release candidate
+        после <code>python3 build_docs.py</code><br />
+        <strong>Браузер:</strong> Codex in-app browser<br />
+        <strong>Verdict:</strong> <strong>PASS для document integration
+        и responsive smoke test</strong></p>
+        <p>Этот verdict относится только к новым HTML-версиям документов
+        и их переходам из сайта. Он не заменяет полный
+        screen-reader/200%-zoom протокол из <a
+        href="browser-accessibility-qa.html"><code>BROWSER_ACCESSIBILITY_QA.md</code></a>.</p>
+        <h2 id="что-проверено">Что проверено</h2>
+        <h3 id="каталог-документов">Каталог документов</h3>
+        <ul>
+        <li><code>courses/docs/index.html</code> открывается как
+        самостоятельная страница сайта.</li>
+        <li>Присутствуют 14 карточек в четырёх группах: учебные
+        материалы, преподавателю, источники/лицензии и подготовка
+        публикации.</li>
+        <li>На desktop 1440×900 каталог использует три колонки и не
+        создаёт горизонтальный scroll страницы.</li>
+        <li>На mobile 390×844 каталог использует одну колонку;
+        <code>scrollWidth = innerWidth = 390</code>, page overflow
+        отсутствует.</li>
+        </ul>
+        <h3 id="все-14-документов">Все 14 документов</h3>
+        <p>Каждая карточка была открыта в браузере на viewport 390×844.
+        Для каждой страницы подтверждено:</p>
+        <ul>
+        <li>есть отдельный русский <code>h1</code>;</li>
+        <li>есть три навигационные ссылки: «Все документы», «Материалы»,
+        «Курсы»;</li>
+        <li>отсутствует горизонтальный scroll всей страницы;</li>
+        <li><code>scrollWidth = innerWidth = 390</code>;</li>
+        <li>исходный Markdown представлен как HTML, а не как raw
+        text.</li>
+        </ul>
+        <p>Проверенные страницы:</p>
+        <ol type="1">
+        <li>Программа и расписание.</li>
+        <li>Практикум: 12 лабораторных работ.</li>
+        <li>Рабочая тетрадь.</li>
+        <li>Итоговый проект.</li>
+        <li>Руководство преподавателя.</li>
+        <li>Ответы и правила оценивания.</li>
+        <li>Источники и решения по версии.</li>
+        <li>Сведения о сторонних материалах.</li>
+        <li>Лицензирование курса.</li>
+        <li>Полный текст GNU LGPL 3.0.</li>
+        <li>Статус release candidate.</li>
+        <li>Протокол пилотного хронометража.</li>
+        <li>Проверка в браузерах и доступность.</li>
+        <li>Исторический publish review.</li>
+        </ol>
+        <h3 id="длинный-документ-и-таблицы">Длинный документ и
+        таблицы</h3>
+        <p>Для <code>courses/docs/labs.html</code> дополнительно
+        проверено:</p>
+        <ul>
+        <li>desktop 1440×900: левое sticky-оглавление отображается,
+        mobile-оглавление скрыто, page overflow отсутствует;</li>
+        <li>mobile: sidebar скрыт, вместо него доступно раскрываемое
+        «Содержание»;</li>
+        <li>браузерное accessibility tree содержит заголовки, списки,
+        таблицы и ссылки на связанные HTML-документы;</li>
+        <li>ссылки <a
+        href="instructor-answer-key.html"><code>INSTRUCTOR_ANSWER_KEY.md</code></a>
+        и <a
+        href="learner-workbook.html"><code>LEARNER_WORKBOOK.md</code></a>
+        визуально сохраняют понятное имя, но ведут на соответствующие
+        HTML-страницы.</li>
+        </ul>
+        <h3 id="встраивание-в-существующий-сайт">Встраивание в
+        существующий сайт</h3>
+        <ul>
+        <li><code>courses/resources.html</code> ведёт к HTML-версиям
+        curriculum, guide, pilot QA, labs, workbook, answer key,
+        capstone, source notes и лицензий.</li>
+        <li><code>courses/index.html</code> содержит переход «Все
+        документы в HTML».</li>
+        <li>Footer каждого курса содержит переход «Документы HTML».</li>
+        <li>В опубликованных HTML-файлах не осталось ссылок
+        <code>href</code> на <code>.md</code> или
+        <code>.txt</code>.</li>
+        <li>Документы используют только локальный <code>docs.css</code>;
+        внешние шрифты и runtime-библиотеки не нужны.</li>
+        </ul>
+        <h3 id="работа-в-браузере">Работа в браузере</h3>
+        <ul>
+        <li>В консоли проверенных document pages нет <code>error</code>
+        или <code>warning</code> от кода сайта.</li>
+        <li><code>verify_courses.py</code> проверяет существование
+        документов, совпадение SHA256 с исходниками, целостность ссылок,
+        отсутствие duplicate IDs и release junk.</li>
+        <li><code>verify_source_snippets.py</code> продолжает проходить
+        независимо от document rendering.</li>
+        </ul>
+        <h2 id="что-намеренно-не-заявлено">Что намеренно не
+        заявлено</h2>
+        <ul>
+        <li>Screen reader не проходился человеком от начала до
+        конца.</li>
+        <li>Zoom 200% не проверялся для всех страниц.</li>
+        <li>Forced colors и Windows High Contrast не проверялись.</li>
+        <li>Пилотный хронометраж не проводился.</li>
+        </ul>
+        <p>Эти пункты остаются внешними release gates и не должны
+        считаться закрытыми данным smoke test.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>DOCUMENTS_SITE_QA.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

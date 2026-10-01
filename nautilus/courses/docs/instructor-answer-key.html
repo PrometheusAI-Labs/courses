@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ожидаемые наблюдения, минимальный
+проходной результат и правила оценивания.">
+  <meta name="source-file" content="INSTRUCTOR_ANSWER_KEY.md">
+  <meta name="source-sha256" content="d20e9b6338fae006004b1c4bfa492bf11f7558e153ee3cd4c962d1ee84cc4d17">
+  <title>Ответы и правила оценивания — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#правила-подтверждения-освоения"
+     >Правила подтверждения
+      освоения</a></li>
+      <li><a href="#пилотный-хронометраж"
+     >Пилотный хронометраж</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Преподаватель</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Ответы и правила оценивания</h1>
+      <p class="doc-summary">Ожидаемые наблюдения, минимальный проходной
+результат и правила оценивания.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#правила-подтверждения-освоения"
+       >Правила подтверждения
+        освоения</a></li>
+        <li><a href="#пилотный-хронометраж"
+       >Пилотный хронометраж</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <p>Этот файл предназначен для преподавателя. Он задаёт ожидаемые
+        наблюдения, но не заменяет обсуждение причинной цепочки.</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Lab</th>
+        <th>Ключевые наблюдения</th>
+        <th>Минимальный PASS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1.1</td>
+        <td>Первая потеря между DataEngine input и
+        Cache/store-publication path</td>
+        <td>Локализована граница, нет переписывания strategy</td>
+        </tr>
+        <tr>
+        <td>1.2</td>
+        <td>Data→DataEngine; validation→RiskEngine; venue
+        command→ExecutionEngine; state→Cache/Portfolio</td>
+        <td>10/12 primary owners верны, все спорные решения
+        обоснованы</td>
+        </tr>
+        <tr>
+        <td>1.3</td>
+        <td>A subscription; B warm-up; C state/branch</td>
+        <td>Три причины не смешаны</td>
+        </tr>
+        <tr>
+        <td>1.4</td>
+        <td>Пройдены Backtest и Sandbox; Live execution не доказан</td>
+        <td>Sandbox не назван testnet, Live не равен real money</td>
+        </tr>
+        <tr>
+        <td>2.1</td>
+        <td>row 4 order, row 5 duplicate, row 6 range + crossed
+        quote</td>
+        <td>Четыре проблемы с row IDs и audit disposition</td>
+        </tr>
+        <tr>
+        <td>2.2</td>
+        <td>fee, slippage и hash меняют evidence; B2 меняет ровно одно
+        поле</td>
+        <td>Нет скрытого multi-variable comparison</td>
+        </tr>
+        <tr>
+        <td>2.3</td>
+        <td>Один квартал и пять вариантов создают selection risk</td>
+        <td>Есть falsifier и untouched-forward plan</td>
+        </tr>
+        <tr>
+        <td>2.4</td>
+        <td>Build/replay supported; profitability not evaluable;
+        live/scale NO-GO</td>
+        <td>Следующий gate — forward</td>
+        </tr>
+        <tr>
+        <td>3.1</td>
+        <td>Core framework-owned; IDs/size/spread strategy-owned; quote
+        event-local</td>
+        <td>Rust canonical; lifecycle у каждого поля</td>
+        </tr>
+        <tr>
+        <td>3.2</td>
+        <td>RiskEngine дал DENIED, execution/venue не вызывались</td>
+        <td>Нет retry submit; owner и evidence названы</td>
+        </tr>
+        <tr>
+        <td>3.3</td>
+        <td>Один changed parameter; все прочие inputs invariant</td>
+        <td>Locked build и machine-readable canonical report</td>
+        </tr>
+        <tr>
+        <td>3.4</td>
+        <td>NO-GO: forward missing, reconciliation unresolved, kill
+        switch not drilled</td>
+        <td>Порядок remediation, abort, limits, rollback, owner</td>
+        </tr>
+        </tbody>
+        </table>
+        <h2 id="правила-подтверждения-освоения">Правила подтверждения
+        освоения</h2>
+        <ul>
+        <li>Module quiz: минимум 80% правильных ответов с округлением
+        требуемого количества вверх (<code>ceil(0,8 × N)</code>).
+        Поэтому для 3 или 4 вопросов порог равен всем правильным
+        ответам; интерфейс показывает счёт и итоговый verdict.</li>
+        <li>Lab: все обязательные acceptance criteria выполнены.</li>
+        <li>Повторная попытка разрешена после изучения объяснений.
+        Преподаватель проверяет перенос понимания на лабораторном
+        scenario, а не засчитывает один только запомненный quiz.</li>
+        <li>До следующего курса допускается максимум один
+        <code>REVISION_REQUIRED</code>, который закрывается до
+        capstone.</li>
+        <li>Capstone: минимум 75/100 и не менее 14/20 за Live
+        safety.</li>
+        </ul>
+        <h2 id="пилотный-хронометраж">Пилотный хронометраж</h2>
+        <p>До публичного релиза проведите минимум три наблюдаемых
+        прогона на представителях целевой аудитории. Фиксируйте медиану
+        и диапазон времени отдельно для объяснения, guided lab,
+        самостоятельной работы и quiz. Значения в manifest считаются
+        плановыми до появления этого evidence; после пилота обновите их
+        без искусственного растягивания.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>INSTRUCTOR_ANSWER_KEY.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<section class="module" id="module-3" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">03</span>
+      <h1 class="module-title">The Build Pipeline</h1>
+      <p class="module-subtitle">How plain text becomes a beautiful website</p>
+    </header>
+
+    <!-- ── SCREEN 1: From Text to Website ─────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">From Text to Website</h2>
+
+      <p>You have met the cast. Now let us watch them perform. When someone types <code>cargo xtask build</code>, a chain reaction begins.</p>
+
+      <p>Think of it like a printing press: raw manuscripts (Markdown files) go in, beautifully typeset books (HTML websites) come out. The press operator (<span class="term" data-definition="A custom build tool written in Rust that orchestrates the entire build process — compiling books, generating the landing page, and serving the site locally.">xtask</span>) feeds each manuscript through the press (<span class="term" data-definition="A tool that turns plain text files (written in Markdown) into beautiful, searchable websites. Think of it as a website builder specifically designed for documentation and books.">mdbook</span>) one by one, then arranges them all in a bookshop window (the landing page).</p>
+
+      <div class="flow-animation" data-steps='[{"highlight":"flow-actor-1","label":"Developer runs cargo xtask build"},{"highlight":"flow-actor-2","label":"xtask checks if mdbook is installed","packet":true,"from":"actor-1","to":"actor-2"},{"highlight":"flow-actor-2","label":"xtask loops through all 7 book directories"},{"highlight":"flow-actor-3","label":"mdbook converts Markdown to HTML for each book","packet":true,"from":"actor-2","to":"actor-3"},{"highlight":"flow-actor-3","label":"mdbook generates search index and syntax highlighting"},{"highlight":"flow-actor-2","label":"xtask generates the landing page with book cards","packet":true,"from":"actor-3","to":"actor-2"},{"highlight":"flow-actor-4","label":"All files are written to site/ directory","packet":true,"from":"actor-2","to":"actor-4"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">📝</div>
+            <span>Developer</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">🔧</div>
+            <span>xtask</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">📖</div>
+            <span>mdbook</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">🌐</div>
+            <span>Website</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Click "Next Step" to begin</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Next Step</button>
+          <button class="btn flow-reset-btn">Restart</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 2: The Book Registry ────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Book Registry</h2>
+
+      <p>How does xtask know which books to build? It uses a hardcoded constant called <code>BOOKS</code> — a list of every book in the project. Each entry stores four pieces of information: the folder name (<span class="term" data-definition="A URL-friendly name for something. Usually lowercase with hyphens instead of spaces: 'rust-for-python' instead of 'Rust for Python.'">slug</span>), the human-readable title, a short description, and a category.</p>
+
+      <p>Here is what the first entry looks like:</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">xtask/src/main.rs</span>
+<code><span class="code-line"><span class="code-keyword">const</span> BOOKS: &amp;[(&amp;str, &amp;str, &amp;str, &amp;str)] = &amp;[</span>
+<span class="code-line">    (</span>
+<span class="code-line">        <span class="code-string">"c-cpp-book"</span>,</span>
+<span class="code-line">        <span class="code-string">"Rust for C/C++ Programmers"</span>,</span>
+<span class="code-line">        <span class="code-string">"Move semantics, RAII, FFI, embedded, no_std"</span>,</span>
+<span class="code-line">        <span class="code-string">"bridge"</span>,</span>
+<span class="code-line">    ),</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Plain English</span>
+          <div class="translation-lines">
+            <div class="tl"><strong><span class="code-keyword">const</span> BOOKS: &amp;[(&amp;str, &amp;str, &amp;str, &amp;str)] = &amp;[</strong> — Create a permanent list called BOOKS. Each entry has 4 text fields: <span class="code-property">slug</span>, <span class="code-property">title</span>, <span class="code-property">description</span>, and <span class="code-property">category</span></div>
+            <div class="tl"><strong><span class="code-string">"c-cpp-book"</span>,</strong> — The folder name where this book lives on disk</div>
+            <div class="tl"><strong><span class="code-string">"Rust for C/C++ Programmers"</span>,</strong> — The human-readable title shown on the landing page</div>
+            <div class="tl"><strong><span class="code-string">"Move semantics, RAII, FFI, embedded, no_std"</span>,</strong> — A short description of what the book covers</div>
+            <div class="tl"><strong><span class="code-string">"bridge"</span>,</strong> — The category — this is a <em>bridge</em> book (teaches Rust from another language)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 3: The Build Loop ───────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Build Loop</h2>
+
+      <p>Once xtask knows about every book, it loops through them one by one. For each book, it runs <span class="term" data-definition="A tool that turns plain text files (written in Markdown) into beautiful, searchable websites. Think of it as a website builder specifically designed for documentation and books.">mdbook</span> as an external <span class="term" data-definition="In Rust, the Command type lets you run external programs — like typing a command in the terminal but from within your Rust code.">Command</span> — the same way you would type <code>mdbook build</code> in your terminal, but automated.</p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">xtask/src/main.rs</span>
+<code><span class="code-line"><span class="code-keyword">for</span> &amp;(<span class="code-property">slug</span>, _, _, _) <span class="code-keyword">in</span> BOOKS {</span>
+<span class="code-line">    <span class="code-keyword">let</span> book_dir = root.join(slug);</span>
+<span class="code-line">    <span class="code-keyword">let</span> dest = out.join(slug);</span>
+<span class="code-line">    <span class="code-keyword">let</span> status = Command::new(<span class="code-string">"mdbook"</span>)</span>
+<span class="code-line">        .args([<span class="code-string">"build"</span>, <span class="code-string">"--dest-dir"</span>])</span>
+<span class="code-line">        .arg(&amp;dest)</span>
+<span class="code-line">        .current_dir(&amp;book_dir)</span>
+<span class="code-line">        .status()</span>
+<span class="code-line">        .expect(<span class="code-string">"failed to run mdbook"</span>);</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Plain English</span>
+          <div class="translation-lines">
+            <div class="tl"><strong><span class="code-keyword">for</span> &amp;(slug, _, _, _) <span class="code-keyword">in</span> BOOKS {</strong> — Go through each book one by one. We only need the folder name (slug) — ignore the rest for now</div>
+            <div class="tl"><strong><span class="code-keyword">let</span> book_dir = root.join(slug);</strong> — Find the book folder on disk (e.g., /RustTraining/c-cpp-book/)</div>
+            <div class="tl"><strong><span class="code-keyword">let</span> dest = out.join(slug);</strong> — Decide where to put the finished website (e.g., site/c-cpp-book/)</div>
+            <div class="tl"><strong><span class="code-keyword">let</span> status = Command::new(<span class="code-string">"mdbook"</span>)</strong> — Run the mdbook program — like typing a command in the terminal</div>
+            <div class="tl"><strong>.args([<span class="code-string">"build"</span>, <span class="code-string">"--dest-dir"</span>])</strong> — Tell mdbook: build this book and put the output in a specific folder</div>
+            <div class="tl"><strong>.arg(&amp;dest)</strong> — Here is that specific folder</div>
+            <div class="tl"><strong>.current_dir(&amp;book_dir)</strong> — Run from inside the book folder so mdbook finds the right files</div>
+            <div class="tl"><strong>.expect(<span class="code-string">"failed to run mdbook"</span>);</strong> — If mdbook crashes, stop everything and show this error message</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 4: The Custom Web Server ────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Custom Web Server</h2>
+
+      <p>After building the books, you need a way to preview them locally. Most projects reach for an existing tool — but xtask includes its own built-in <span class="term" data-definition="A program that listens for web browser requests and sends back web pages. When you visit a URL, you are talking to an HTTP server.">HTTP server</span>.</p>
+
+      <div class="callout callout-info">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+          <span class="callout-title">Why build a custom server?</span>
+          <p>Most projects use existing tools like <code>python -m http.server</code>. But the xtask team built their own to add security features — like blocking hackers from reading files outside the website folder.</p>
+        </div>
+      </div>
+
+      <p>The custom server includes three layers of defense against <span class="term" data-definition="A hacking technique where an attacker uses '../' in a URL to navigate up the file system and access files they should not see.">path traversal</span> attacks:</p>
+
+      <div class="pattern-cards">
+        <div class="pattern-card">
+          <div class="pattern-icon">🛡️</div>
+          <div class="pattern-title">Path Traversal Protection</div>
+          <p class="pattern-desc">Blocks attempts to access files outside the site/ folder using tricks like <code>../../../etc/passwd</code></p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon">🚫</div>
+          <div class="pattern-title"><span class="term" data-definition="A special invisible character (value zero) that some programs interpret as 'end of text.' Attackers inject it to confuse programs about where a filename ends.">Null Byte</span> Rejection</div>
+          <p class="pattern-desc">Rejects requests containing <span class="term" data-definition="A special invisible character (value zero) that some programs interpret as 'end of text.' Attackers inject it to confuse programs about where a filename ends.">null bytes</span> — a classic hacking technique that tricks programs into misreading file paths</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon">🔒</div>
+          <div class="pattern-title"><span class="term" data-definition="A shortcut file that points to another file or folder. Like an alias on macOS or a shortcut on Windows.">Symlink</span> Escape Prevention</div>
+          <p class="pattern-desc">Verifies that the final file path is actually inside the site folder, even if <span class="term" data-definition="A shortcut file that points to another file or folder. Like an alias on macOS or a shortcut on Windows.">symlinks</span> try to redirect elsewhere</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 5: Quiz ─────────────────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">Check Your Understanding</h2>
+
+      <div class="quiz-container" id="quiz-module3">
+
+        <!-- Q1 -->
+        <div class="quiz-question-block" data-correct="option-c" data-explanation-right="Each book is built independently. If only one fails, the issue is in that specific book's content, not the build system." data-explanation-wrong="Think about what is different between one book failing and all books failing.">
+          <div class="quiz-question">1. The build process fails on the async-book but succeeds for all other books. What is the MOST likely cause?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The xtask code has a bug
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> mdbook is not installed
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Something is wrong with the Markdown files in async-book
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> The landing page generator crashed
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="The BOOKS constant is the registry. Add an entry there and create the book folder — xtask handles the rest automatically." data-explanation-wrong="Remember how xtask discovers books — it reads from a hardcoded list.">
+          <div class="quiz-question">2. You want to add an 8th book called "Rust for Go Programmers." What do you need to do?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Create a new Rust program
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Add a new entry to the BOOKS array in xtask and create a go-book/ directory with Markdown files
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Modify the Docker configuration
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Update the GitHub Actions workflow
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="Path traversal attacks trick servers into serving files they should not. The security checks ensure only files inside site/ are accessible." data-explanation-wrong="Think about what could go wrong if a web server blindly served any file path requested.">
+          <div class="quiz-question">3. Why does the built-in web server check file paths so carefully?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> To make the pages load faster
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> To prevent attackers from reading sensitive files on the developer's computer
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> To compress the HTML output
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> To validate the Markdown syntax
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Reset</button>
+      </div>
+    </section>
+
+  </div>
+</section>

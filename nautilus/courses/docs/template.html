@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="$description$">
+  <meta name="source-file" content="$source_file$">
+  <meta name="source-sha256" content="$source_sha256$">
+  <title>$title$ — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      $toc$
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>$audience$</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">$title$</h1>
+      <p class="doc-summary">$description$</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        $toc$
+      </details>
+      <article class="doc-content">
+        $body$
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>$source_file$</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

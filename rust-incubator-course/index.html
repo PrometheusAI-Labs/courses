@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust Incubator: Путь от основ к бэкенду</title>
+
+  <!-- Google Fonts: Bricolage Grotesque · DM Sans · JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    :root {
+      --color-accent:       #D94F30;
+      --color-accent-hover: #C4432A;
+      --color-accent-light: #FDEEE9;
+      --color-accent-muted: #E8836C;
+    }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="nav-inner">
+      <span class="nav-title">Rust Incubator</span>
+      <div class="nav-dots" id="nav-dots" role="tablist">
+        <button class="nav-dot" data-target="module-1" data-tooltip="Что такое Rust Incubator?" role="tab" aria-label="Module 1"></button>
+        <button class="nav-dot" data-target="module-2" data-tooltip="Владение и память" role="tab" aria-label="Module 2"></button>
+        <button class="nav-dot" data-target="module-3" data-tooltip="Ключевые концепции" role="tab" aria-label="Module 3"></button>
+        <button class="nav-dot" data-target="module-4" data-tooltip="Идиомы и паттерны" role="tab" aria-label="Module 4"></button>
+        <button class="nav-dot" data-target="module-5" data-tooltip="Экосистема Rust" role="tab" aria-label="Module 5"></button>
+        <button class="nav-dot" data-target="module-6" data-tooltip="Бэкенд на Rust" role="tab" aria-label="Module 6"></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+<!-- ═══════════════════════════════════════════════════════════
+     MODULE 1 — Что такое Rust Incubator?
+     ═══════════════════════════════════════════════════════════ -->
+<section class="module" id="module-1" style="background: var(--color-bg);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">Что такое Rust Incubator?</h1>
+      <p class="module-subtitle">Пошаговый путь изучения Rust — от основ языка до бэкенд-разработки</p>
+    </header>
+
+    <!-- ── Screen 1: Opening hook ──────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Зачем нужен Rust Incubator?</h2>
+
+      <p class="animate-in">
+        <span class="term" data-definition="Системный язык программирования от Mozilla. Гарантирует безопасность памяти без сборщика мусора благодаря системе владения (ownership).">Rust</span> — это язык, который даёт тебе мощь C++ без его ловушек. Rust Incubator — это жёсткий, но чёткий маршрут обучения от самых основ до <span class="term" data-definition="Серверная часть приложения: обработка запросов, работа с базами данных, бизнес-логика. В Rust для этого используют фреймворки вроде Actix-web и Axum.">бэкенд</span>-разработки.
+      </p>
+
+      <p class="animate-in">
+        Представьте инкубатор как парник для растений. Проект создаёт идеальные условия для роста ваших навыков Rust: структурированные шаги, практические задания и постепенное усложнение.
+      </p>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">&#128218;</span>
+        <div class="callout-content">
+          <span class="callout-title">Как это работает?</span>
+          <p>Каждый шаг содержит теорию, примеры кода и задание. <span class="term" data-definition="Программа, которая переводит исходный код в машинный. Компилятор Rust (rustc) известен строгими проверками, которые ловят ошибки ещё до запуска программы.">Компилятор</span> Rust — ваш строгий наставник: он не пропустит ни одной ошибки.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Структура курса — 5 этапов ────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Структура курса — 5 этапов</h2>
+
+      <p class="animate-in">
+        Rust Incubator разбит на пять последовательных шагов. Каждый этап опирается на предыдущий — от базового синтаксиса до реальных бэкенд-сервисов.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-accent-light); color: var(--color-accent);">0</div>
+          <div class="pattern-title">Шаг 0: Основы</div>
+          <p class="pattern-desc">Знакомство с синтаксисом, моделью памяти, системой типов. Три дня интенсивной работы с фундаментом языка.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-info);">1</div>
+          <div class="pattern-title">Шаг 1: Концепции</div>
+          <p class="pattern-desc">Default, Clone, Copy, Box, Pin, Rc, Cell, Send/Sync, Phantom — 9 подшагов по ключевым концепциям Rust.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-success);">2</div>
+          <div class="pattern-title">Шаг 2: Идиомы</div>
+          <p class="pattern-desc">Newtype, typestates, mem::replace, sealing — 6 подшагов. Учимся писать код так, как принято в Rust-сообществе.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(123,109,170,0.12); color: #7B6DAA;">3</div>
+          <div class="pattern-title">Шаг 3: Экосистема</div>
+          <p class="pattern-desc">Тестирование, макросы, serde, async, потоки — 11 подшагов по инструментам и библиотекам Rust.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(212,168,67,0.12); color: #D4A843;">4</div>
+          <div class="pattern-title">Шаг 4: Бэкенд</div>
+          <p class="pattern-desc">Базы данных, HTTP-серверы, GraphQL API — 3 подшага. Собираем всё вместе в реальный бэкенд-сервис.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Как устроен проект ────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Как устроен проект</h2>
+
+      <p class="animate-in">
+        Репозиторий организован как Cargo workspace. Каждая папка — отдельный этап обучения со своими подшагами.
+      </p>
+
+      <div class="file-tree animate-in">
+        <div class="ft-folder">
+          <span class="ft-name">rust-incubator/</span>
+          <div class="ft-children">
+            <div class="ft-folder">
+              <span class="ft-name">0_basics/</span>
+              <span class="ft-desc">— Основы: ownership, borrowing, абстракции</span>
+              <div class="ft-children">
+                <div class="ft-folder">
+                  <span class="ft-name">day01_ownership_borrowing/</span>
+                </div>
+                <div class="ft-folder">
+                  <span class="ft-name">day02_building_abstractions/</span>
+                </div>
+                <div class="ft-folder">
+                  <span class="ft-name">day03_memory_management/</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">1_concepts/</span>
+              <span class="ft-desc">— Ключевые концепции Rust</span>
+              <div class="ft-children">
+                <div class="ft-folder">
+                  <span class="ft-name">1_1_default_clone_copy/</span>
+                </div>
+                <div class="ft-folder">
+                  <span class="ft-name">1_2_box_pin/</span>
+                </div>
+                <div class="ft-file">
+                  <span class="ft-name">... (9 подшагов)</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">2_idioms/</span>
+              <span class="ft-desc">— Идиоматичный Rust</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">3_ecosystem/</span>
+              <span class="ft-desc">— Экосистема и библиотеки</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">4_backend/</span>
+              <span class="ft-desc">— Бэкенд-разработка</span>
+            </div>
+            <div class="ft-file">
+              <span class="ft-name">Cargo.toml</span>
+              <span class="ft-desc">— Конфигурация workspace</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Практика на каждом шаге ────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Практика на каждом шаге</h2>
+
+      <p class="animate-in">
+        Каждый шаг в Rust Incubator — это не просто текст для чтения. Это полноценный учебный блок с теорией, кодом и заданием.
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>README с теорией и ссылками</strong>
+            <p>Каждый подшаг начинается с README-файла, где изложена теория и даны ссылки на официальную документацию и дополнительные материалы.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Исходный код с примерами</strong>
+            <p>В папке examples/ находятся готовые примеры, которые можно запустить и изучить. Они демонстрируют концепцию в действии.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Задание для самостоятельной реализации</strong>
+            <p>В каждом шаге есть Task — задание, которое нужно выполнить самостоятельно. Это ключевая часть обучения.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Тесты для проверки</strong>
+            <p>Написанные заранее тесты проверяют вашу реализацию. Запустите cargo test и убедитесь, что всё работает правильно.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Callout ──────────────────────────────────────────── -->
+    <div class="callout callout-accent animate-in">
+      <span class="callout-icon">&#9888;&#65039;</span>
+      <div class="callout-content">
+        <span class="callout-title">Важно</span>
+        <p>Rust Incubator — не просто набор упражнений. Это целый маршрут, где каждый шаг опирается на предыдущий. Пропускать этапы — значит строить дом без фундамента.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Quiz ──────────────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Проверьте себя</h2>
+
+      <div class="quiz-container animate-in" id="quiz-module1">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="5" data-explanation-right="Верно! Этапы пронумерованы от 0 до 4: Основы, Концепции, Идиомы, Экосистема и Бэкенд." data-explanation-wrong="Не совсем. Этапов пять, и они пронумерованы от 0 до 4: Основы, Концепции, Идиомы, Экосистема и Бэкенд.">
+          <div class="quiz-question">1. Сколько основных этапов в Rust Incubator?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="3" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 3 — основы, концепции, бэкенд
+            </button>
+            <button class="quiz-option" data-value="5" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 5 — от 0 до 4
+            </button>
+            <button class="quiz-option" data-value="7" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 7 — семь модулей
+            </button>
+            <button class="quiz-option" data-value="4" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 4 — от 1 до 4
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="readme-code-task" data-explanation-right="Именно так! Каждый шаг — это теория в README, примеры кода и практическое задание с тестами." data-explanation-wrong="Не совсем. Каждый шаг содержит README с теорией, код-примеры в examples/ и задание (Task) для самостоятельной реализации.">
+          <div class="quiz-question">2. Что делает каждый шаг в проекте?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="only-theory" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Содержит только теоретические статьи
+            </button>
+            <button class="quiz-option" data-value="readme-code-task" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Содержит README, код-примеры и задание для самостоятельной реализации
+            </button>
+            <button class="quiz-option" data-value="video-lectures" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Включает видеолекции и тесты
+            </button>
+            <button class="quiz-option" data-value="only-code" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Содержит только исходный код без пояснений
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="idiomatic" data-explanation-right="Точно! Этап «Идиомы» учит писать код так, как это принято в Rust-сообществе: newtype, typestates, sealing и другие паттерны." data-explanation-wrong="Не совсем. Этап «Идиомы» нужен, чтобы научиться писать код так, как это принято в Rust-сообществе, используя паттерны вроде newtype и typestates.">
+          <div class="quiz-question">3. Для чего нужен этап «Идиомы»?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="performance" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы оптимизировать производительность программ
+            </button>
+            <button class="quiz-option" data-value="idiomatic" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы научиться писать код так, как это принято в Rust-сообществе
+            </button>
+            <button class="quiz-option" data-value="syntax" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы выучить синтаксис языка
+            </button>
+            <button class="quiz-option" data-value="testing" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы научиться писать тесты
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Сбросить</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ════════════════════════════════════════════════════════════
+     MODULE 2 — Владение и память
+     ════════════════════════════════════════════════════════════ -->
+<section class="module" id="module-2" style="background: var(--color-bg-warm);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <div class="module-header animate-in">
+      <span class="module-number">02</span>
+      <h2 class="module-title">Владение и память</h2>
+      <p class="module-subtitle">Как Rust управляет памятью без сборщика мусора</p>
+    </div>
+
+    <!-- ── Metaphor callout ────────────────────────────────────── -->
+    <div class="callout callout-info animate-in">
+      <div class="callout-icon">&#128218;</div>
+      <div class="callout-content">
+        <span class="callout-title">Метафора: библиотечная карточка</span>
+        <p>Каждая книга имеет ровно одного держателя. Хочешь прочитать — возьми на время (borrow). Хочешь передать — верни и отдай карточку другому (move).</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: Почему это важно ──────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Почему это важно</h3>
+      <p>
+        Rust не имеет <span class="term" data-definition="Garbage Collector (GC) — автоматическая система, которая периодически сканирует память и удаляет объекты, на которые больше нет ссылок. Используется в Java, Go, C#, Python и других языках.">сборщика мусора</span> (GC).
+        Вместо этого он использует систему <span class="term" data-definition="Ownership — центральная концепция Rust: у каждого значения есть ровно один владелец. Когда владелец выходит из области видимости, значение уничтожается.">ownership</span>, проверяемую на этапе
+        <span class="term" data-definition="Компиляция — процесс преобразования исходного кода в машинный код. Rust проверяет правила владения именно на этом этапе, а не во время выполнения программы.">компиляции</span>.
+        Это означает: никаких утечек памяти, никаких <span class="term" data-definition="Гонка данных (data race) — ситуация, когда два потока одновременно обращаются к одним и тем же данным, и хотя бы один из них пишет. Приводит к непредсказуемому поведению программы.">гонок данных</span> — и всё это без
+        <span class="term" data-definition="Runtime — код, который выполняется вместе с вашей программой для обеспечения работы языковых механизмов (например, GC). У Rust минимальный runtime, что делает его пригодным для системного программирования.">runtime</span>-затрат.
+      </p>
+    </div>
+
+    <!-- ── Screen 2: Три правила владения ──────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Три правила владения</h3>
+      <div class="step-cards stagger-children">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Один владелец</strong>
+            <p>У каждого значения в Rust есть ровно один владелец (owner).</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Автоматическое уничтожение</strong>
+            <p>Когда владелец выходит из области видимости — значение уничтожается (Drop).</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Move или Borrow</strong>
+            <p>Значение можно передать (move) или одолжить (borrow) — но не одновременно изменяемо из двух мест.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Move vs Borrow ────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Move vs Borrow — код из проекта</h3>
+
+      <!-- Move example -->
+      <div class="translation-block">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<code><span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">let</span> s1 = <span class="code-function">String::from</span>(<span class="code-string">"hi"</span>);</span>
+<span class="code-line">    <span class="code-keyword">let</span> s2 = s1;</span>
+<span class="code-line">    <span class="code-function">println!</span>(<span class="code-string">"{}"</span>, s2);</span>
+<span class="code-line">}</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчно по-русски</span>
+          <div class="translation-lines">
+            <div class="tl">Создаём строку "hi" и кладём в переменную s1</div>
+            <div class="tl">Передаём владение строкой из s1 в s2 (move). Теперь s1 больше недоступна!</div>
+            <div class="tl">Печатаем s2 — это работает, потому что s2 теперь владелец</div>
+            <div class="tl">(после этой строки s2 выходит из области видимости, память освобождается)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Borrow example -->
+      <div class="translation-block">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<code><span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">let</span> s1 = <span class="code-function">String::from</span>(<span class="code-string">"hi"</span>);</span>
+<span class="code-line">    <span class="code-function">print_str</span>(<span class="code-operator">&amp;</span>s1);</span>
+<span class="code-line">    <span class="code-function">println!</span>(<span class="code-string">"{}"</span>, s1);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">print_str</span>(s: <span class="code-operator">&amp;</span><span class="code-keyword">String</span>) {</span>
+<span class="code-line">    <span class="code-function">println!</span>(<span class="code-string">"{}"</span>, s);</span>
+<span class="code-line">}</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчно по-русски</span>
+          <div class="translation-lines">
+            <div class="tl">Создаём строку "hi"</div>
+            <div class="tl">Передаём ссылку (&amp;s1) — одалживаем, не отдаём владение</div>
+            <div class="tl">s1 всё ещё жива! Можно использовать дальше</div>
+            <div class="tl">Функция принимает ссылку (&amp;String) — читает, но не владеет</div>
+            <div class="tl">Печатает строку через ссылку</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Group Chat ────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Компилятор как строгий библиотекарь</h3>
+
+      <div class="chat-window" id="chat-module2">
+        <div class="chat-messages">
+
+          <div class="chat-message" data-msg="1" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Создаю строку и кладу в s1</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="2" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>Ок, s1 — владелец. Записал.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="3" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Теперь присваиваю s1 в s2</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="4" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>Move! s1 больше не валидна. Владелец теперь s2.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="5" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Хочу использовать s1...</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="6" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>ОШИБКА! s1 уже перемещена. Используй s2 или клонируй.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="7" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Ладно, беру ссылку &amp;s2</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="8" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>Borrow! s2 остаётся владельцем, ты только читаешь.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="9" data-sender="Память" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-3);">M</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-3);">Память</span>
+              <p>Когда s2 выйдет из области видимости, я освобожусь автоматически. Никакого GC!</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="chat-typing" style="display:none;">
+          <div class="chat-avatar" id="chat-module2-typing-avatar" style="background: var(--color-actor-1); width:28px; height:28px; font-size: var(--text-xs);">R</div>
+          <div class="chat-typing-dots">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+
+        <div class="chat-controls">
+          <button class="btn chat-next-btn">Следующее сообщение</button>
+          <button class="btn chat-all-btn">Показать все</button>
+          <button class="btn chat-reset-btn">Сначала</button>
+          <span class="chat-progress">0 / 9 messages</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Callout ───────────────────────────────────── -->
+    <div class="screen animate-in">
+      <div class="callout callout-accent">
+        <div class="callout-icon">&#128274;</div>
+        <div class="callout-content">
+          <span class="callout-title">Fearless concurrency</span>
+          <p>В C++ можно случайно обратиться к освобождённой памяти (use-after-free). В Rust компилятор просто не даст скомпилировать такой код. Это и есть fearless concurrency — бесстрашная многопоточность.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Quiz ──────────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Проверьте себя</h3>
+
+      <div class="quiz-container" id="quiz-module2">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Именно! Компилятор отследит move и не даст использовать перемещённую переменную."
+             data-explanation-wrong="Move-семантика означает, что s1 больше не валидна после передачи владения в s2.">
+          <p class="quiz-question">1. Что произойдёт, если после <code>let s2 = s1;</code> попробовать использовать s1?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Программа скомпилируется и напечатает значение s1
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Ошибка компиляции: значение перемещено
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Программа скомпилируется, но упадёт в runtime
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="a"
+             data-explanation-right="Верно! Rust гарантирует: либо много читателей, либо один писатель. Никогда оба одновременно."
+             data-explanation-wrong="Разница принципиальна: &amp;T позволяет только читать, &amp;mut T — изменять. И одновременно может существовать только одна &amp;mut T ссылка.">
+          <p class="quiz-question">2. Чем <code>&amp;T</code> отличается от <code>&amp;mut T</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              &amp;T — неизменяемая ссылка (можно много), &amp;mut T — изменяемая (только одна)
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Нет разницы, просто разный синтаксис
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              &amp;mut T быстрее, потому что не проверяет borrow checker
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Это даёт предсказуемую производительность — критично для системного программирования."
+             data-explanation-wrong="Ownership — это осознанный выбор дизайна языка для достижения нулевых runtime-затрат и детерминированного управления памятью.">
+          <p class="quiz-question">3. Зачем Rust использует ownership вместо GC?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Чтобы усложнить жизнь разработчикам
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Чтобы освобождать память детерминированно, без пауз GC и runtime-затрат
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что GC ещё не реализовали
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Начать заново</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ═══════════════════════════════════════════════════════════
+     MODULE 3 — Ключевые концепции
+     ═══════════════════════════════════════════════════════════ -->
+<section class="module" id="module-3" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">03</span>
+      <h1 class="module-title">Ключевые концепции</h1>
+      <p class="module-subtitle">Default, Clone, Copy, Box, Rc, Cell — инструменты для управления данными</p>
+    </header>
+
+    <!-- ── Screen 1: Зачем нужны эти концепции ─────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Зачем нужны эти концепции</h2>
+
+      <p class="animate-in">
+        В модуле 2 мы узнали, что у каждого значения один владелец. Но что, если нужно скопировать данные? Или иметь несколько владельцев? Или менять данные через неизменяемую ссылку? Для этого в Rust есть набор <span class="term" data-definition="Трейт (trait) — это набор методов, который можно реализовать для любого типа. Как интерфейс в Java или протокол в Swift. Трейты определяют поведение: например, трейт Clone говорит, что тип умеет клонировать себя.">трейтов</span> и <span class="term" data-definition="Умный указатель (smart pointer) — это структура, которая ведёт себя как ссылка, но при этом владеет данными и управляет их временем жизни. Примеры: Box, Rc, Arc. В отличие от обычных ссылок, умные указатели сами решают, когда освободить память.">умных указателей</span>.
+      </p>
+
+      <p class="animate-in">
+        Представьте набор инструментов электрика. Каждый инструмент решает конкретную задачу: отвёрткой закручивают шурупы, мультиметром измеряют напряжение, кусачками режут провода. Нельзя закрутить шуруп молотком — нужно знать, когда какой инструмент брать. Точно так же каждый трейт и умный указатель в Rust предназначен для своей задачи.
+      </p>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">&#128218;</span>
+        <div class="callout-content">
+          <span class="callout-title">Зачем столько инструментов?</span>
+          <p>Rust не использует сборщик мусора. Вместо этого он даёт вам точные инструменты для управления памятью. Каждый трейт — это договор между вами и компилятором: &laquo;Я обещаю, что мой тип умеет делать вот это&raquo;.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Copy vs Clone — код из проекта ────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Copy vs Clone — код из проекта</h2>
+
+      <p class="animate-in">
+        Посмотрим на реальный код из проекта Rust Incubator. Две структуры — <code>Point</code> и <code>Polyline</code> — демонстрируют разницу между Copy и Clone.
+      </p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">1_concepts/1_1_default_clone_copy/src/main.rs</span>
+<pre><code><span class="code-line"><span class="code-comment">// Определяем структуру Point</span></span>
+<span class="code-line"><span class="code-keyword">#[derive(Debug, Copy, Clone, Default, PartialEq)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Point</span> {</span>
+<span class="code-line">    <span class="code-property">x</span>: <span class="code-keyword">f64</span>,</span>
+<span class="code-line">    <span class="code-property">y</span>: <span class="code-keyword">f64</span>,</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">// Определяем структуру Polyline</span></span>
+<span class="code-line"><span class="code-keyword">#[derive(Debug, Clone)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Polyline</span> {</span>
+<span class="code-line">    <span class="code-property">points</span>: <span class="code-keyword">Vec</span>&lt;<span class="code-function">Point</span>&gt;,</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">НА РУССКОМ</span>
+          <div class="translation-lines">
+            <p class="tl">Определяем структуру <strong>Point</strong> с двумя координатами</p>
+            <p class="tl"><strong><span class="code-keyword">#[derive(...)]</span></strong> — автоматически реализует трейты: <strong>Copy</strong> (побитовое копирование), <strong>Clone</strong> (глубокое копирование), <strong>Default</strong> (значение по умолчанию: x = 0.0, y = 0.0)</p>
+            <p class="tl"><strong>x</strong> и <strong>y</strong> — числа с плавающей точкой (<span class="code-keyword">f64</span>). Простые типы фиксированного размера — значит Copy возможен</p>
+            <p class="tl"><strong>Polyline</strong> — набор точек, образующих ломаную линию</p>
+            <p class="tl"><strong>Vec&lt;Point&gt;</strong> хранится в <span class="term" data-definition="Куча (heap) — область динамической памяти. Данные в куче живут, пока их не освободят. Vec, String, Box хранят свои данные в куче. В отличие от стека, размер данных в куче может быть неизвестен заранее.">куче</span> (heap) — значит Copy невозможен, только Clone. Копирование Vec означает выделение новой памяти и копирование всех элементов</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Pattern Cards — умные указатели ────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Семейство умных указателей</h2>
+
+      <p class="animate-in">
+        Когда обычного владения недостаточно, Rust предлагает умные указатели. Каждый решает свою задачу — как инструмент в наборе электрика.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in">
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">&#128230;</div>
+          <div class="pattern-title">Box&lt;T&gt;</div>
+          <p class="pattern-desc">Кладёт данные в кучу (heap). Один владелец, как обычно. Нужен для <span class="term" data-definition="Рекурсивный тип — это тип, который содержит себя. Например, узел связного списка содержит ссылку на следующий узел того же типа. Без Box компилятор не может вычислить размер такого типа.">рекурсивных типов</span> или больших данных, которые дорого копировать на стеке.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">&#128279;</div>
+          <div class="pattern-title">Rc&lt;T&gt;</div>
+          <p class="pattern-desc">Счётчик ссылок. Несколько владельцев одних данных. Только для одного потока! Когда счётчик достигает нуля, данные уничтожаются.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">&#9889;</div>
+          <div class="pattern-title">Arc&lt;T&gt;</div>
+          <p class="pattern-desc">Атомарный Rc. Как Rc, но безопасен для <span class="term" data-definition="Многопоточность — выполнение нескольких задач одновременно в разных потоках (threads). Rust гарантирует безопасность многопоточного кода на этапе компиляции через трейты Send и Sync.">многопоточности</span>. Дороже по производительности из-за атомарных операций.</p>
+        </div>
+        <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-4)">
+          <div class="pattern-icon" style="background: var(--color-actor-4)">&#128275;</div>
+          <div class="pattern-title">Cell&lt;T&gt; / RefCell&lt;T&gt;</div>
+          <p class="pattern-desc">Внутренняя мутабельность. Позволяют менять данные через <code>&amp;T</code> (неизменяемую ссылку). Проверка заимствований — в runtime, не в compile time.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Data Flow — Rc и общее владение ────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Rc и общее владение</h2>
+
+      <p class="animate-in">
+        Как работает <code>Rc&lt;T&gt;</code> — счётчик ссылок? Проследим шаг за шагом, как две переменные делят одни данные.
+      </p>
+
+      <div class="flow-animation animate-in" data-steps='[{"highlight":"flow-actor-1","label":"Переменная A создаёт Rc::new(данные)"},{"highlight":"flow-actor-2","label":"Rc оборачивает данные и считает ссылки: count = 1"},{"highlight":"flow-actor-3","label":"Переменная B = Rc::clone(&a) — это НЕ клонирование данных!","packet":true,"from":"actor-1","to":"actor-3"},{"highlight":"flow-actor-2","label":"Счётчик увеличивается: count = 2. Данные — одни и те же"},{"highlight":"flow-actor-1","label":"Переменная A выходит из области видимости. count = 1"},{"highlight":"flow-actor-4","label":"Переменная B выходит из области видимости. count = 0. Данные уничтожаются"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">A</div>
+            <span>Переменная A</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">&#128279;</div>
+            <span>Rc&lt;T&gt;</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">B</div>
+            <span>Переменная B</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">&#128451;</div>
+            <span>Данные</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите &laquo;Следующий шаг&raquo; для начала</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Send и Sync ───────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Send и Sync — безопасность потоков</h2>
+
+      <p class="animate-in">
+        Rust проверяет безопасность многопоточного кода на этапе компиляции. Два маркерных трейта — <span class="term" data-definition="Send — маркерный трейт. Тип реализует Send, если его можно безопасно передать из одного потока в другой. Большинство типов — Send, но не Rc (его счётчик не атомарный).">Send</span> и <span class="term" data-definition="Sync — маркерный трейт. Тип реализует Sync, если на него можно безопасно ссылаться из нескольких потоков одновременно. Тип T является Sync, если &T является Send.">Sync</span> — определяют, какие типы можно использовать в многопоточном контексте.
+      </p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">1_concepts/1_8_thread_safety/src/main.rs</span>
+<pre><code><span class="code-line"><span class="code-keyword">pub struct</span> <span class="code-function">SyncAndSend</span>&lt;<span class="code-property">T</span>&gt; {</span>
+<span class="code-line">    <span class="code-property">data</span>: <span class="code-function">Arc</span>&lt;<span class="code-function">Mutex</span>&lt;<span class="code-property">T</span>&gt;&gt;,</span>
+<span class="code-line">    <span class="code-property">_phantom</span>: <span class="code-function">PhantomData</span>&lt;<span class="code-property">T</span>&gt;,</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">НА РУССКОМ</span>
+          <div class="translation-lines">
+            <p class="tl"><strong>SyncAndSend&lt;T&gt;</strong> — тип, безопасный для передачи (Send) и разделения (Sync) между потоками</p>
+            <p class="tl"><strong>Arc&lt;<span class="term" data-definition="Mutex (mutual exclusion) — примитив синхронизации. Гарантирует, что только один поток в каждый момент времени имеет доступ к данным. Как ключ от комнаты: пока один поток внутри, остальные ждут.">Mutex</span>&lt;T&gt;&gt;</strong> — атомарный счётчик ссылок + блокировка для эксклюзивного доступа к данным. Arc даёт общее владение между потоками, Mutex даёт безопасную мутабельность</p>
+            <p class="tl"><strong><span class="term" data-definition="PhantomData — тип нулевого размера, который сообщает компилятору дополнительную информацию о связи типа с параметром T. Не занимает памяти, но влияет на проверки владения и времени жизни.">PhantomData</span>&lt;T&gt;</strong> — фантомный тип, сообщает компилятору дополнительную информацию о T. Не занимает памяти, но важен для корректности проверок</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Callout ──────────────────────────────────────────── -->
+    <div class="callout callout-accent animate-in">
+      <span class="callout-icon">&#128161;</span>
+      <div class="callout-content">
+        <span class="callout-title">Правило большого пальца</span>
+        <p>Если данные живут в одном потоке — используйте <code>Rc&lt;RefCell&lt;T&gt;&gt;</code>. Если данные делятся между потоками — используйте <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>. Это два главных паттерна общего владения в Rust.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 7: Quiz ──────────────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Проверьте себя</h2>
+
+      <div class="quiz-container animate-in" id="quiz-module3">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="option-a" data-explanation-right="Верно! Copy — это побитовое копирование, которое происходит неявно и дёшево. Clone — это явный вызов .clone(), который может выполнять глубокое копирование и быть дорогим." data-explanation-wrong="Не совсем. Copy — побитовое копирование (неявное, дешёвое). Clone — глубокое копирование (явное, может быть дорогим). Copy всегда подразумевает Clone, но не наоборот.">
+          <div class="quiz-question">1. В чём разница между Copy и Clone?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Copy — побитовое копирование (неявное, дешёвое), Clone — глубокое копирование (явное, может быть дорогим)
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Clone быстрее Copy
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Copy работает только с числами
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="Именно так! Rc позволяет нескольким владельцам разделять данные, когда время жизни заранее неизвестно. Обычные ссылки требуют, чтобы время жизни было известно компилятору." data-explanation-wrong="Не совсем. Rc нужен, когда несколько частей программы должны владеть одними данными, а время жизни этих данных заранее неизвестно.">
+          <div class="quiz-question">2. Зачем нужен Rc&lt;T&gt;, если есть обычные ссылки?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rc быстрее обычных ссылок
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rc позволяет иметь несколько владельцев одних данных, когда время жизни неизвестно заранее
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rc нужен только для многопоточности
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="Верно! Компилятор защитит вас от гонок данных на этапе компиляции. Rc не реализует Send, поэтому его невозможно отправить в другой поток." data-explanation-wrong="Не совсем. Rc не реализует трейт Send, поэтому компилятор не позволит отправить его в другой поток. Это ошибка компиляции, а не runtime-ошибка.">
+          <div class="quiz-question">3. Что произойдёт, если попытаться отправить Rc&lt;T&gt; в другой поток?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Всё будет работать
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Ошибка компиляции: Rc не реализует Send
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Программа упадёт в runtime
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Сбросить</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ═══════════════════════════════════════════════════════════
+     MODULE 4 — Идиомы и паттерны
+     ═══════════════════════════════════════════════════════════ -->
+<section class="module" id="module-4" style="background: var(--color-bg-warm);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">04</span>
+      <h1 class="module-title">Идиомы и паттерны</h1>
+      <p class="module-subtitle">Как писать код, который Rust-сообщество назовёт идиоматичным</p>
+    </header>
+
+    <!-- ── Screen 1: Зачем нужны идиомы ──────────────────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Зачем нужны идиомы</h2>
+
+      <p class="animate-in">
+        Представьте правила дорожного движения. Технически машина может ехать по встречке — но так никто не делает. <span class="term" data-definition="Устоявшийся способ решения типичной задачи в конкретном языке программирования. В Rust идиомы часто опираются на систему типов для предотвращения ошибок на этапе компиляции.">Идиомы</span> — это правила, по которым пишут код профессионалы.
+      </p>
+
+      <p class="animate-in">
+        Компилятор Rust гарантирует безопасность памяти, но не гарантирует качество дизайна. Идиомы — это проверенные <span class="term" data-definition="Повторяемое решение часто встречающейся проблемы в проектировании программного обеспечения. Паттерны описывают не конкретный код, а подход к решению задачи.">паттерны</span>, которые делают код надёжнее, читаемее и удобнее в использовании.
+      </p>
+
+      <p class="animate-in">
+        Хороший <span class="term" data-definition="Application Programming Interface — интерфейс, через который одна часть программы взаимодействует с другой. Качественный API трудно использовать неправильно.">API</span> трудно использовать неправильно. Идиоматичный Rust-код превращает потенциальные ошибки программиста в ошибки компиляции — задолго до того, как код попадёт в продакшн.
+      </p>
+    </div>
+
+    <!-- ── Screen 2: Newtype — типы вместо ошибок ─────────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Newtype — типы вместо ошибок</h2>
+
+      <p class="animate-in">
+        Начнём с реального бага. Посмотрите на структуру <code>Post</code> и функцию <code>repost</code> — видите проблему?
+      </p>
+
+      <!-- Bug version -->
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust — версия с багом</span>
+<pre><code><span class="code-line"><span class="code-keyword">#[derive(Clone)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Post</span> {</span>
+<span class="code-line">    <span class="code-property">id</span>: <span class="code-function">u64</span>,</span>
+<span class="code-line">    <span class="code-property">user_id</span>: <span class="code-function">u64</span>,</span>
+<span class="code-line">    <span class="code-property">title</span>: <span class="code-function">String</span>,</span>
+<span class="code-line">    <span class="code-property">body</span>: <span class="code-function">String</span>,</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">repost</span>(post: &amp;<span class="code-function">Post</span>, new_author_id: <span class="code-function">u64</span>) -&gt; <span class="code-function">Post</span> {</span>
+<span class="code-line">    <span class="code-keyword">let mut</span> new_post = post.<span class="code-function">clone</span>();</span>
+<span class="code-line">    new_post.<span class="code-property">id</span> = new_author_id;  <span class="code-comment">// Oops!</span></span>
+<span class="code-line">    new_post</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Что тут происходит</span>
+          <div class="translation-lines">
+            <div class="tl">Структура Post: поля <code>id</code> и <code>user_id</code> — оба <code>u64</code>. Компилятор не видит разницы!</div>
+            <div class="tl">Поля <code>title</code> и <code>body</code> — оба <code>String</code>. Тоже легко перепутать.</div>
+            <div class="tl">Функция <code>repost</code> должна обновить <code>user_id</code>...</div>
+            <div class="tl">...но мы случайно записали <code>new_author_id</code> в поле <code>id</code>. Баг! И компилятор молчит.</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="animate-in">
+        Решение — паттерн Newtype. Обернём каждое значение в свой тип:
+      </p>
+
+      <!-- Newtype fix -->
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust — исправленная версия</span>
+<pre><code><span class="code-line"><span class="code-keyword">mod</span> <span class="code-function">post</span> {</span>
+<span class="code-line">    <span class="code-keyword">#[derive(Clone, Debug, PartialEq, Eq)]</span></span>
+<span class="code-line">    <span class="code-keyword">pub struct</span> <span class="code-function">Id</span>(<span class="code-function">u64</span>);</span>
+<span class="code-line"></span>
+<span class="code-line">    <span class="code-keyword">#[derive(Clone, Debug, PartialEq, Eq)]</span></span>
+<span class="code-line">    <span class="code-keyword">pub struct</span> <span class="code-function">Title</span>(<span class="code-function">String</span>);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">mod</span> <span class="code-function">user</span> {</span>
+<span class="code-line">    <span class="code-keyword">#[derive(Clone, Debug, PartialEq, Eq)]</span></span>
+<span class="code-line">    <span class="code-keyword">pub struct</span> <span class="code-function">Id</span>(<span class="code-function">u64</span>);</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Что изменилось</span>
+          <div class="translation-lines">
+            <div class="tl">Создаём отдельные типы <code>post::Id</code> и <code>user::Id</code></div>
+            <div class="tl">Оба хранят <code>u64</code> внутри, но компилятор считает их разными типами</div>
+            <div class="tl">Теперь перепутать <code>post::Id</code> и <code>user::Id</code> — ошибка компиляции!</div>
+            <div class="tl">Zero-cost: в runtime никаких накладных расходов</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Typestates — машина состояний в типах ── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Typestates — машина состояний в типах</h2>
+
+      <p class="animate-in">
+        А что если нужно гарантировать порядок операций? Например, пост проходит модерацию: его нельзя удалить до публикации и нельзя опубликовать повторно. Паттерн Typestates кодирует эти правила прямо в системе типов.
+      </p>
+
+      <!-- State machine diagram as step-cards -->
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-info);">N</div>
+          <div class="step-body">
+            <strong>New — новый пост</strong>
+            <p>Только что создан. Единственное доступное действие — <code>publish()</code>, которое отправит пост на модерацию.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-actor-4);">U</div>
+          <div class="step-body">
+            <strong>Unmoderated — на модерации</strong>
+            <p>Ожидает решения модератора. Доступны два действия: <code>allow()</code> — одобрить, <code>deny()</code> — отклонить.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-success);">P</div>
+          <div class="step-body">
+            <strong>Published — опубликован</strong>
+            <p>Пост доступен читателям. Единственное доступное действие — <code>delete()</code>.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num" style="background: var(--color-error);">D</div>
+          <div class="step-body">
+            <strong>Deleted — удалён</strong>
+            <p>Финальное состояние. Никаких действий больше не доступно.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="animate-in">
+        Вот как это выглядит в коде:
+      </p>
+
+      <!-- Typestates code translation -->
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<pre><code><span class="code-line"><span class="code-keyword">impl</span> <span class="code-function">Post</span>&lt;<span class="code-function">New</span>&gt; {</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">publish</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Unmoderated</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">impl</span> <span class="code-function">Post</span>&lt;<span class="code-function">Unmoderated</span>&gt; {</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">allow</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Published</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">deny</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Deleted</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">impl</span> <span class="code-function">Post</span>&lt;<span class="code-function">Published</span>&gt; {</span>
+<span class="code-line">    <span class="code-keyword">pub fn</span> <span class="code-function">delete</span>(<span class="code-keyword">self</span>) -&gt; <span class="code-function">Post</span>&lt;<span class="code-function">Deleted</span>&gt; {</span>
+<span class="code-line">        <span class="code-comment">// ...</span></span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчный разбор</span>
+          <div class="translation-lines">
+            <div class="tl"><code>publish()</code> доступен ТОЛЬКО для <code>Post&lt;New&gt;</code>. Нельзя опубликовать уже опубликованный пост!</div>
+            <div class="tl"><code>allow()</code> и <code>deny()</code> — только для <code>Post&lt;Unmoderated&gt;</code></div>
+            <div class="tl">Каждый переход потребляет (<code>self</code>) старое состояние и создаёт новое</div>
+            <div class="tl">Невозможные переходы — ошибка компиляции. Не runtime, а на этапе сборки!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Callout ──────────────────────────────── -->
+    <div class="callout callout-accent animate-in">
+      <span class="callout-icon">&#128161;</span>
+      <div class="callout-content">
+        <span class="callout-title">Zero-cost абстракции в действии</span>
+        <p>Паттерн Newtype не стоит ничего в runtime — это чисто компиляторная абстракция. Но он предотвращает целый класс багов: перепутанные ID, невалидные email-адреса, неправильные единицы измерения. Чем больше семантики в типах — тем меньше багов в коде.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Практические задания из проекта ──────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Практические задания из проекта</h2>
+
+      <p class="animate-in">
+        В Rust Incubator на этапе идиом вас ждут два ключевых задания. Оба требуют применения изученных паттернов на практике.
+      </p>
+
+      <div class="icon-rows stagger-children animate-in">
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-accent-light); color: var(--color-accent);">
+            &#128279;
+          </div>
+          <div>
+            <strong>Задание 1: Потокобезопасный двусвязный список</strong>
+            <p>Реализуйте doubly linked list, который можно безопасно использовать из нескольких потоков. Это задание проверяет понимание ownership, interior mutability и Send/Sync — всех концепций из предыдущих модулей.</p>
+          </div>
+        </div>
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-info-light); color: var(--color-info);">
+            &#127854;
+          </div>
+          <div>
+            <strong>Задание 2: VendingMachine — автомат с продуктами</strong>
+            <p>Спроектируйте торговый автомат с применением typestates и newtype-паттернов. Это задание на проектирование API, где невозможные состояния становятся невозможными.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">&#128736;</span>
+        <div class="callout-content">
+          <span class="callout-title">Требования к VendingMachine</span>
+          <p>Каждый продукт (Product) имеет цену и название. Автомат имеет ограниченную ёмкость. Должен выдавать сдачу и отклонять покупку, если сдачу выдать невозможно. Номиналы монет: 1, 2, 5, 10, 20, 50.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Quiz ─────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h2 class="screen-heading animate-in">Проверьте себя</h2>
+
+      <div class="quiz-container animate-in" id="quiz-module4">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="newtype-safety" data-explanation-right="Верно! Newtype превращает логическую ошибку программиста в ошибку компиляции." data-explanation-wrong="Не совсем. Newtype нужен именно для того, чтобы компилятор различал post::Id и user::Id и не позволял их перепутать.">
+          <div class="quiz-question">1. Зачем оборачивать u64 в newtype вроде post::Id?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="newtype-safety" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы компилятор различал post::Id и user::Id и не дал перепутать
+            </button>
+            <button class="quiz-option" data-value="performance" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы u64 работал быстрее
+            </button>
+            <button class="quiz-option" data-value="required" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Это обязательное требование Rust
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="compile-error" data-explanation-right="Точно! Typestates гарантируют: невозможные переходы — это ошибки компиляции, а не runtime-баги." data-explanation-wrong="Не совсем. Метод delete() не определён для Post&lt;New&gt;, поэтому код просто не скомпилируется.">
+          <div class="quiz-question">2. Что произойдёт, если вызвать delete() на Post&lt;New&gt;?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="deleted" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Пост будет удалён
+            </button>
+            <button class="quiz-option" data-value="compile-error" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Ошибка компиляции: delete() не определён для Post&lt;New&gt;
+            </button>
+            <button class="quiz-option" data-value="runtime-error" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Ошибка в runtime
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="zero-overhead" data-explanation-right="Верно! В скомпилированном коде newtype-обёртка полностью стирается. post::Id(42) занимает ровно столько же памяти, сколько и просто 42u64." data-explanation-wrong="Не совсем. Zero-cost означает, что в скомпилированном коде newtype занимает ровно столько же памяти и работает так же быстро, как оригинальный тип.">
+          <div class="quiz-question">3. Почему Newtype называют zero-cost abstraction?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="free-crate" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Потому что crate бесплатный
+            </button>
+            <button class="quiz-option" data-value="zero-overhead" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Потому что в скомпилированном коде newtype занимает ровно столько же памяти и работает так же быстро, как оригинальный тип
+            </button>
+            <button class="quiz-option" data-value="easy-write" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Потому что его легко написать
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Сбросить</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ════════════════════════════════════════════════════════════
+     MODULE 5 — Экосистема Rust
+     ════════════════════════════════════════════════════════════ -->
+<section class="module" id="module-5" style="background: var(--color-bg);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">05</span>
+      <h1 class="module-title">Экосистема Rust</h1>
+      <p class="module-subtitle">Тестирование, макросы, сериализация, async и все, что нужно для реальных проектов</p>
+    </header>
+
+    <!-- ── Metaphor callout ────────────────────────────────────── -->
+    <div class="callout callout-info animate-in">
+      <div class="callout-icon">&#128218;</div>
+      <div class="callout-content">
+        <span class="callout-title">Метафора: швейцарский армейский нож</span>
+        <p>Сам по себе Rust — это лезвие. Но экосистема библиотек (<span class="term" data-definition="Crate — единица компиляции и распространения кода в Rust. Аналог пакета (package) в других языках. Публикуются на crates.io.">crates</span>) — это все остальные инструменты: ножницы, отвертка, штопор. Без них далеко не уедешь.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: 11 подшагов экосистемы ────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">11 подшагов экосистемы</h3>
+
+      <p class="animate-in">
+        Rust Incubator посвящает экосистеме целых 11 подшагов — больше, чем любому другому разделу. Потому что знать язык мало: нужно знать инструменты.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-accent-light); color: var(--color-accent);">3.1</div>
+          <div class="pattern-title">Тестирование</div>
+          <p class="pattern-desc"><code>#[test]</code>, mockall, proptest. <span class="term" data-definition="Behavior-Driven Development — стиль написания тестов, в котором тесты описывают поведение системы на естественном языке: given (дано), when (когда), then (тогда).">BDD</span>-стиль тестов для описания поведения системы.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-info);">3.2</div>
+          <div class="pattern-title">Макросы</div>
+          <p class="pattern-desc"><code>macro_rules!</code> и <code>proc_macro</code>. Генерация кода на этапе компиляции для устранения boilerplate.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-success);">3.6</div>
+          <div class="pattern-title">Serde</div>
+          <p class="pattern-desc"><span class="term" data-definition="Сериализация — процесс преобразования структуры данных в последовательность байтов (JSON, TOML, бинарный формат) для хранения или передачи. Десериализация — обратный процесс.">Сериализация</span>/десериализация: JSON, TOML, YAML и любой другой формат данных.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(123,109,170,0.12); color: #7B6DAA;">3.8</div>
+          <div class="pattern-title">Логирование</div>
+          <p class="pattern-desc">tracing, structured logging. Переменная RUST_LOG для управления уровнями логирования.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(212,168,67,0.12); color: #D4A843;">3.10</div>
+          <div class="pattern-title">Потоки</div>
+          <p class="pattern-desc"><code>std::thread</code>, rayon для параллелизма. <code>Mutex</code>, <code>RwLock</code> для синхронизации доступа к данным.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(72,166,167,0.12); color: #48A6A7;">3.11</div>
+          <div class="pattern-title">Async</div>
+          <p class="pattern-desc">tokio, futures, <span class="term" data-definition="async/await — синтаксис для написания асинхронного кода, который выглядит как синхронный. async-функция возвращает Future, а await приостанавливает выполнение до получения результата.">async/await</span>. Тысячи задач на одном потоке без блокировки.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Serde — король сериализации ───────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Serde — король сериализации</h3>
+
+      <p class="animate-in">
+        Serde — самая скачиваемая библиотека Rust. Одна аннотация <code>#[derive(Serialize, Deserialize)]</code> — и ваша структура умеет превращаться в JSON, TOML, YAML, MessagePack и десятки других форматов.
+      </p>
+
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<code><span class="code-line"><span class="code-keyword">use</span> serde::{Serialize, Deserialize};</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-comment">#[derive(Debug, Serialize, Deserialize)]</span></span>
+<span class="code-line"><span class="code-keyword">struct</span> <span class="code-function">Config</span> {</span>
+<span class="code-line">    host: <span class="code-keyword">String</span>,</span>
+<span class="code-line">    port: <span class="code-keyword">u16</span>,</span>
+<span class="code-line">    debug: <span class="code-keyword">bool</span>,</span>
+<span class="code-line">}</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчно по-русски</span>
+          <div class="translation-lines">
+            <div class="tl">Подключаем трейты Serialize и Deserialize из библиотеки serde</div>
+            <div class="tl">derive автоматически генерирует код для сериализации на этапе компиляции</div>
+            <div class="tl">Структура Config с тремя полями: host (строка), port (число), debug (флаг)</div>
+            <div class="tl">Теперь Config умеет превращаться в JSON: {"host":"...", "port":8080, "debug":true}</div>
+            <div class="tl">И обратно: из строки JSON можно восстановить структуру Config</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Async — тысячи задач на одном потоке ───────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Async — тысячи задач на одном потоке</h3>
+
+      <p class="animate-in">
+        Асинхронность в Rust основана на <span class="term" data-definition="Future — это обещание результата, который будет доступен в будущем. Future не выполняется, пока его не опросит runtime через метод poll(). Это ленивая модель вычислений.">Future</span> и кооперативной многозадачности. Вместо того чтобы создавать тысячи потоков ОС, runtime (tokio) управляет тысячами легковесных задач на нескольких потоках.
+      </p>
+
+      <div class="flow-animation animate-in" data-steps='[{"highlight":"flow-actor-1","label":"Пользователь вызывает async-функцию"},{"highlight":"flow-actor-2","label":"Tokio создает Future — это обещание результата","packet":true,"from":"actor-1","to":"actor-2"},{"highlight":"flow-actor-3","label":"Runtime вызывает poll() у Future","packet":true,"from":"actor-2","to":"actor-3"},{"highlight":"flow-actor-4","label":"Future запрашивает данные у ОС (сеть, файл)","packet":true,"from":"actor-3","to":"actor-4"},{"highlight":"flow-actor-4","label":"ОС: данные не готовы. Future возвращает Pending"},{"highlight":"flow-actor-2","label":"Runtime переключается на другую задачу. Ни один поток не простаивает!"},{"highlight":"flow-actor-3","label":"ОС: данные готовы! Runtime снова вызывает poll()","packet":true,"from":"actor-4","to":"actor-3"},{"highlight":"flow-actor-3","label":"Future возвращает Ready(результат). Задача завершена!"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">&#128100;</div>
+            <span>Пользователь</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">&#9881;&#65039;</div>
+            <span>Tokio Runtime</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">&#128230;</div>
+            <span>Future (задача)</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">&#128187;</div>
+            <span>Операционная система</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите &laquo;Следующий шаг&raquo;</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Финальный проект Step 3 — CLI-утилита ──────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Финальный проект Step 3 — CLI-утилита</h3>
+
+      <p class="animate-in">
+        Итоговый проект этапа экосистемы — настоящая CLI-утилита для обработки JPEG-изображений: удаление метаданных и минимизация размера файла. Здесь сходятся все изученные темы: CLI-парсинг, конфигурация, параллелизм, логирование.
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Ввод из разных источников</strong>
+            <p>Принимает файлы и URL через CLI-аргументы, stdin или файл-список. Используются библиотеки clap и reqwest.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Параллельная обработка</strong>
+            <p>Несколько изображений обрабатываются одновременно с помощью rayon или tokio — без блокировки основного потока.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Настраиваемое качество</strong>
+            <p>Параметр качества JPEG на выходе задается пользователем. Баланс между размером файла и визуальным качеством.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Каскадная конфигурация</strong>
+            <p>Настройки загружаются из файла конфигурации, переменных окружения и CLI-аргументов — с приоритетом в этом порядке.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Управляемое логирование</strong>
+            <p>Поддержка RUST_LOG для управления уровнями логирования: от тихого режима до подробной отладки через tracing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Callout ───────────────────────────────────── -->
+    <div class="screen animate-in">
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">&#9889;</div>
+        <div class="callout-content">
+          <span class="callout-title">Async — это не магия</span>
+          <p>Async в Rust — это кооперативная многозадачность: каждая задача сама решает, когда уступить управление. В отличие от потоков ОС, переключение между Future практически бесплатно. Поэтому Tokio может обрабатывать сотни тысяч соединений на одном сервере.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Quiz ──────────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Проверьте себя</h3>
+
+      <div class="quiz-container animate-in" id="quiz-module5">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="a"
+             data-explanation-right="Serde использует макросы для генерации кода сериализации на этапе компиляции — без runtime-рефлексии."
+             data-explanation-wrong="derive(Serialize, Deserialize) генерирует код для автоматического преобразования структуры в различные форматы данных и обратно.">
+          <p class="quiz-question">1. Что делает <code>#[derive(Serialize, Deserialize)]</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Автоматически генерирует код для преобразования структуры в JSON/TOML/etc. и обратно
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Сжимает данные для экономии памяти
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Добавляет шифрование к полям структуры
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Верно! Async-задачи управляются runtime-ом и значительно легче потоков ОС, что позволяет масштабироваться до тысяч одновременных задач."
+             data-explanation-wrong="Async лучше для I/O-bound задач. Для CPU-bound задач обычные потоки (rayon) могут быть эффективнее. Async-задачи не выполняются последовательно — они переключаются кооперативно.">
+          <p class="quiz-question">2. Чем async/await отличается от обычных потоков?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Async-задачи выполняются последовательно
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Async-задачи легче потоков ОС и управляются runtime-ом (tokio), что позволяет обрабатывать тысячи задач на нескольких потоках
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Async быстрее потоков во всех случаях
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Именно! Язык без экосистемы — как нож без остальных инструментов швейцарского ножа. В реальных проектах библиотеки решают большую часть задач."
+             data-explanation-wrong="Дело не в сложности и не в незавершённости: экосистема занимает больше шагов, потому что знание библиотек критично для продуктивной работы.">
+          <p class="quiz-question">3. Почему экосистема в Rust Incubator занимает больше всего шагов?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что это самая сложная часть
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что знание библиотек и инструментов критично для реальных проектов — язык без экосистемы бесполезен
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Авторы не успели дописать другие разделы
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Начать заново</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ════════════════════════════════════════════════════════════
+     MODULE 6 — Бэкенд на Rust
+     ════════════════════════════════════════════════════════════ -->
+<section class="module" id="module-6" style="background: var(--color-bg-warm);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <div class="module-header animate-in">
+      <span class="module-number">06</span>
+      <h2 class="module-title">Бэкенд на Rust</h2>
+      <p class="module-subtitle">Базы данных, HTTP-серверы и GraphQL API — финальный рубеж</p>
+    </div>
+
+    <!-- ── Metaphor callout ────────────────────────────────────── -->
+    <div class="callout callout-info animate-in">
+      <div class="callout-icon">&#128218;</div>
+      <div class="callout-content">
+        <span class="callout-title">Метафора: диспетчерская башня аэропорта</span>
+        <p>Бэкенд — это центр управления: принимает запросы (самолёты), проверяет их, направляет к нужным данным (терминалам) и отправляет ответы обратно. Каждый компонент системы — HTTP-сервер, GraphQL-резолвер, база данных — это отдельная служба аэропорта, работающая слаженно.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: Три столпа бэкенда ────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Три столпа бэкенда</h3>
+
+      <p class="animate-in">
+        Rust Incubator завершается тремя шагами, которые покрывают весь стек бэкенд-разработки.
+      </p>
+
+      <div class="icon-rows stagger-children animate-in">
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-accent-light); color: var(--color-accent);">
+            &#128451;
+          </div>
+          <div>
+            <strong>4.1 Базы данных</strong>
+            <p><span class="term" data-definition="diesel, sqlx, sea-orm — популярные Rust-библиотеки для работы с базами данных. diesel — типобезопасный ORM, sqlx — асинхронные запросы с проверкой на этапе компиляции, sea-orm — асинхронный ORM.">diesel, sqlx, sea-orm</span>. <span class="term" data-definition="Пул соединений (connection pool) — набор заранее открытых соединений с базой данных, которые переиспользуются запросами. Это экономит ресурсы, потому что открытие нового соединения — дорогая операция.">Пулы соединений</span>, <span class="term" data-definition="Миграция — скрипт, который изменяет структуру базы данных (создаёт таблицы, добавляет столбцы и т.д.). Миграции применяются последовательно и позволяют версионировать схему базы.">миграции</span>, <span class="term" data-definition="ORM (Object-Relational Mapping) — технология, которая связывает таблицы базы данных со структурами в коде. Вместо написания SQL-запросов вы работаете с обычными Rust-структурами.">ORM</span></p>
+          </div>
+        </div>
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-info-light); color: var(--color-info);">
+            &#127760;
+          </div>
+          <div>
+            <strong>4.2 HTTP</strong>
+            <p>actix-web, axum, hyper. Серверы и клиенты, <span class="term" data-definition="WebSocket — протокол, который позволяет серверу и клиенту обмениваться сообщениями в реальном времени через постоянное соединение. В отличие от HTTP, где клиент всегда инициирует запрос, WebSocket позволяет серверу отправлять данные клиенту в любой момент.">WebSocket</span></p>
+          </div>
+        </div>
+        <div class="icon-row animate-in">
+          <div class="icon-circle" style="background: var(--color-success-light); color: var(--color-success);">
+            &#128640;
+          </div>
+          <div>
+            <strong>4.3 API</strong>
+            <p><span class="term" data-definition="GraphQL — язык запросов для API, разработанный Facebook. Клиент сам описывает, какие поля ему нужны. Сервер возвращает ровно то, что запрошено — ни больше, ни меньше.">GraphQL</span> (async-graphql), <span class="term" data-definition="REST (Representational State Transfer) — архитектурный стиль API, где каждый ресурс имеет свой URL. GET /users/1 возвращает пользователя, POST /users создаёт нового. Простой, но может возвращать лишние данные (over-fetching).">REST</span>, <span class="term" data-definition="gRPC — высокопроизводительный RPC-фреймворк от Google. Использует Protocol Buffers для сериализации и HTTP/2 для транспорта. Быстрее REST, но сложнее в настройке.">gRPC</span>. Проектирование API</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Финальный проект — GraphQL API сервер ──────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Финальный проект — GraphQL API сервер</h3>
+
+      <p class="animate-in">
+        Кульминация всего курса. Финальный проект объединяет всё, что вы изучили: систему типов, async/await, работу с базой данных и HTTP. Вот требования:
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Модель данных</strong>
+            <p>User с полями id, name и список friends (другие User). Рекурсивная структура — друзья тоже имеют друзей.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Аутентификация по паролю</strong>
+            <p>Пользователь вводит логин и пароль, сервер возвращает токен авторизации. Пароли хранятся в хешированном виде.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Регистрация пользователей</strong>
+            <p>Мутация для создания нового пользователя с именем и паролем. Валидация входных данных.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Получение пользователя с друзьями</strong>
+            <p>Запрос пользователя со всеми друзьями (и друзьями друзей) — требует авторизации. Поддержка вложенных запросов.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Добавление и удаление друзей</strong>
+            <p>Мутации для управления списком друзей — требуют авторизации. Только авторизованный пользователь может изменять свой список.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Стек технологий — Data Flow ───────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Стек технологий</h3>
+
+      <p class="animate-in">
+        Как все компоненты работают вместе? Проследим путь GraphQL-запроса от клиента до базы данных и обратно.
+      </p>
+
+      <div class="flow-animation animate-in" data-steps='[{"highlight":"flow-actor-1","label":"Клиент отправляет GraphQL-запрос: query { user(id: 1) { name, friends { name } } }"},{"highlight":"flow-actor-2","label":"HTTP-сервер (axum) принимает запрос и проверяет токен авторизации","packet":true,"from":"actor-1","to":"actor-2"},{"highlight":"flow-actor-3","label":"Запрос передаётся GraphQL-резолверу (async-graphql)","packet":true,"from":"actor-2","to":"actor-3"},{"highlight":"flow-actor-3","label":"Резолвер разбирает запрос: какие поля нужны? Нужны ли вложенные данные?"},{"highlight":"flow-actor-4","label":"Резолвер запрашивает данные у базы через sqlx/diesel","packet":true,"from":"actor-3","to":"actor-4"},{"highlight":"flow-actor-4","label":"База возвращает пользователя и его друзей","packet":true,"from":"actor-4","to":"actor-3"},{"highlight":"flow-actor-3","label":"Резолвер формирует JSON-ответ строго по запрошенным полям"},{"highlight":"flow-actor-1","label":"Ответ отправляется клиенту. Только запрошенные данные — ничего лишнего!","packet":true,"from":"actor-3","to":"actor-1"}]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1">
+            <div class="flow-actor-icon">&#9992;</div>
+            <span>Клиент</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-2">
+            <div class="flow-actor-icon">&#127760;</div>
+            <span>axum/actix</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-3">
+            <div class="flow-actor-icon">&#128270;</div>
+            <span>GraphQL Resolver</span>
+          </div>
+          <div class="flow-actor" id="flow-actor-4">
+            <div class="flow-actor-icon">&#128451;</div>
+            <span>База данных</span>
+          </div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label" id="flow-label">Нажмите &laquo;Следующий шаг&raquo; для начала</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Почему Rust для бэкенда ───────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Почему Rust для бэкенда</h3>
+
+      <p class="animate-in">
+        Rust сочетает три качества, которые редко встречаются вместе в одном языке.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-accent-light); color: var(--color-accent);">&#9889;</div>
+          <div class="pattern-title">Производительность</div>
+          <p class="pattern-desc">Скорость C/C++ без сборщика мусора. Предсказуемая латентность, нет пауз GC. Серверы на Rust обрабатывают миллионы запросов с минимальным потреблением памяти.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-success);">&#128274;</div>
+          <div class="pattern-title">Безопасность</div>
+          <p class="pattern-desc">Никаких data races, null pointer dereference или buffer overflow. Компилятор гарантирует корректность на этапе сборки, а не в продакшене.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-info);">&#128171;</div>
+          <div class="pattern-title">Надёжность</div>
+          <p class="pattern-desc">Если скомпилировалось — с высокой вероятностью работает корректно. Паттерн Result&lt;T, E&gt; вместо исключений. Ошибки обрабатываются явно, а не прячутся в стеке вызовов.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Callout — depth limiting ──────────────────── -->
+    <div class="screen animate-in">
+      <div class="callout callout-accent">
+        <div class="callout-icon">&#9888;&#65039;</div>
+        <div class="callout-content">
+          <span class="callout-title">Важно: depth limiting</span>
+          <p>GraphQL решает проблему REST — over-fetching и under-fetching. Клиент сам описывает, какие именно данные ему нужны. Но это создаёт новую проблему: вложенные запросы могут убить базу данных. Запрос <code>friends { friends { friends { ... } } }</code> генерирует экспоненциальное количество SQL-запросов. Поэтому в задании предлагают реализовать depth limiting — ограничение глубины вложенности запросов.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Итоги курса ───────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Итоги курса</h3>
+
+      <p class="animate-in">
+        Пройдём весь путь Rust Incubator от начала до конца — от первых строк кода до production-ready бэкенда.
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Основы</strong>
+            <p>Владение, заимствование, система типов — фундамент, на котором строится всё остальное.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Концепции</strong>
+            <p>Умные указатели, потокобезопасность, фантомные типы — глубокое понимание механизмов Rust.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Идиомы</strong>
+            <p>Newtype, typestates, zero-cost абстракции — как писать код так, как принято в Rust-сообществе.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Экосистема</strong>
+            <p>Тестирование, serde, async, CLI-инструменты — библиотеки и инструменты для реальных проектов.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Бэкенд</strong>
+            <p>HTTP, базы данных, GraphQL API — всё вместе в финальном проекте.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">&#127942;</div>
+        <div class="callout-content">
+          <span class="callout-title">Финальное слово</span>
+          <p>Rust Incubator — это не просто учебник. Это маршрут трансформации: от человека, который слышал про Rust, до разработчика, способного создать production-ready бэкенд. Каждый шаг имеет значение.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 7: Quiz ──────────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Проверьте себя</h3>
+
+      <div class="quiz-container" id="quiz-module6">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="REST возвращает фиксированные структуры. GraphQL — ровно то, что запросил клиент."
+             data-explanation-wrong="GraphQL выбран не ради моды. Его главное преимущество — клиент сам определяет структуру ответа, избегая over-fetching (получения лишних данных) и under-fetching (нехватки данных).">
+          <p class="quiz-question">1. Почему GraphQL используется вместо REST в финальном проекте?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              GraphQL модный
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              GraphQL позволяет клиенту запрашивать только нужные данные, избегая over-fetching
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              REST не поддерживается в Rust
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Без depth limiting запрос friends { friends { friends { ... } } } может сгенерировать экспоненциальное количество SQL-запросов."
+             data-explanation-wrong="Depth limiting — это именно ограничение глубины вложенных запросов. Без него рекурсивный запрос friends { friends { friends { ... } } } создаст экспоненциальную нагрузку на базу данных.">
+          <p class="quiz-question">2. Что такое depth limiting в GraphQL?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Ограничение на количество полей в ответе
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Ограничение глубины вложенных запросов, чтобы предотвратить чрезмерную нагрузку на базу данных
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Максимальный размер ответа в байтах
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Именно это сочетание делает Rust уникальным: производительность системного языка с гарантиями безопасности на уровне компилятора."
+             data-explanation-wrong="Rust подходит для бэкенда не из-за синтаксиса или устаревания других языков, а благодаря сочетанию производительности, безопасности памяти и compile-time гарантий.">
+          <p class="quiz-question">3. Почему Rust подходит для бэкенд-разработки?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что у Rust красивый синтаксис
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что Rust сочетает производительность C с безопасностью памяти, предсказуемую латентность без GC и compile-time гарантии отсутствия data races
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что все остальные языки устарели
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module6')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module6')">Начать заново</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+  </main>
+
+</body>
+</html>

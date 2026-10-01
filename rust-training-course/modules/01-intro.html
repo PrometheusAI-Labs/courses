@@ -1,0 +1,238 @@
+<section class="module" id="module-1" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <!-- ── MODULE HEADER ──────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">What Is This Thing?</h1>
+      <p class="module-subtitle">A quick tour of Microsoft's open-source Rust training — seven books, seven on-ramps, one language.</p>
+    </header>
+
+    <!-- ── SCREEN 1: The Big Picture ──────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Big Picture</h2>
+
+      <p>Imagine you want to learn <span class="term" data-definition="A programming language focused on speed, safety, and reliability. It prevents common bugs like crashes and data corruption at compile time — before the program even runs.">Rust</span> — a programming language that companies like Microsoft, Google, and Amazon use for their most demanding software. Where do you start?</p>
+
+      <p>If you search online, you will find hundreds of tutorials. Most of them assume you are starting from zero. But what if you already know Python, or C#, or C++? You do not need someone to explain what a variable is — you need someone to explain how Rust thinks differently from the language you already know.</p>
+
+      <p>That is exactly what Microsoft built. The <a href="https://github.com/microsoft/RustTraining" target="_blank" rel="noopener">RustTraining</a> project is a collection of seven free training books, each designed for people coming from different programming backgrounds. Think of it like a music school with different departments: every department teaches the same instrument, but a guitarist learns differently from a pianist, even though they are both learning drums.</p>
+
+      <p>Three of the books are called <span class="term" data-definition="Training materials designed to teach a new language by connecting its concepts to one you already know. Like learning Spanish by comparing it to French.">Bridge books</span> — they connect what you already know to Rust:</p>
+
+      <div class="pattern-cards">
+        <div class="pattern-card">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-actor-5);">C</div>
+          <div class="pattern-title">Rust for C/C++ Programmers</div>
+          <p class="pattern-desc">Ownership as an upgrade from manual memory management. If you think in pointers and malloc, this book speaks your language.</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon" style="background: #EDE8F5; color: var(--color-actor-3);">C#</div>
+          <div class="pattern-title">Rust for C# Programmers</div>
+          <p class="pattern-desc">From garbage collection to ownership. Maps familiar .NET patterns — LINQ, async/await, generics — to their Rust equivalents.</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon" style="background: #FFF8E1; color: var(--color-actor-4);">Py</div>
+          <div class="pattern-title">Rust for Python Programmers</div>
+          <p class="pattern-desc">From dynamic typing to static guarantees. Shows how Rust replaces duck typing with traits, and why that is a feature, not a limitation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 2: The Learning Paths ───────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">The Learning Paths</h2>
+
+      <p>Beyond the three Bridge books, the project offers four more books that go deeper into specific areas of Rust. Here is the full lineup:</p>
+
+      <div class="icon-rows">
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-success-light); color: var(--color-actor-5);">C</div>
+          <div>
+            <strong>Rust for C/C++ Programmers</strong>
+            <p>Bridge — 16 chapters mapping systems-level concepts to Rust's ownership model.</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: #EDE8F5; color: var(--color-actor-5);">C#</div>
+          <div>
+            <strong>Rust for C# Programmers</strong>
+            <p>Bridge — 15 chapters connecting .NET patterns to Rust idioms.</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: #FFF8E1; color: var(--color-actor-5);">Py</div>
+          <div>
+            <strong>Rust for Python Programmers</strong>
+            <p>Bridge — 15 chapters translating dynamic Python thinking into static Rust thinking.</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-info-light); color: var(--color-actor-2);">~</div>
+          <div>
+            <strong>Async Rust</strong>
+            <p>Deep Dive — futures, Tokio, streams, and cancellation safety in 15 chapters.</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: #FFF5E0; color: var(--color-actor-4);">P</div>
+          <div>
+            <strong>Rust Patterns</strong>
+            <p>Advanced — design patterns, idiomatic APIs, and architectural best practices.</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: #F0EBF8; color: var(--color-actor-3);">T</div>
+          <div>
+            <strong>Type-Driven Correctness</strong>
+            <p>Expert — encoding business rules in the type system so invalid states are unrepresentable.</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-circle" style="background: var(--color-accent-light); color: var(--color-actor-1);">E</div>
+          <div>
+            <strong>Rust Engineering Practices</strong>
+            <p>Practices — CI/CD, testing strategies, project structure, and team workflows.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-accent">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+          <span class="callout-title">Key Insight</span>
+          <p>This project inverts traditional education. Instead of "learn everything, then build," it meets you where you are. Each Bridge book assumes you are already a competent programmer — it just shows you how Rust does things differently from the language you already think in.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 3: What Makes These Books Special ───────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">What Makes These Books Special</h2>
+
+      <p>These are not ordinary PDFs or blog posts. Every book is built with <span class="term" data-definition="A tool that turns plain text files (written in Markdown) into beautiful, searchable websites. Think of it as a website builder specifically designed for documentation and books.">mdbook</span>, a tool that turns plain Markdown files into interactive websites. Here are the four features that make them stand out:</p>
+
+      <div class="step-cards">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong><span class="term" data-definition="Diagrams created from simple text descriptions. Instead of drawing boxes and arrows by hand, you describe what you want ('A connects to B') and the tool draws it for you.">Mermaid diagrams</span> that visualize complex concepts</strong>
+            <p>Ownership graphs, async state machines, type hierarchies — all rendered as clean diagrams right inside the chapter, generated from simple text descriptions.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Editable Rust <span class="term" data-definition="An interactive code editor embedded in a web page. You can type code, click 'Run,' and see the result — no setup required.">playgrounds</span> (run code in the browser)</strong>
+            <p>Every code example is editable. Change a line, click Run, and see the output instantly — no local Rust installation needed.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Exercises at the end of each chapter</strong>
+            <p>Each chapter ends with hands-on exercises that reinforce the concepts you just learned, giving you a chance to practice before moving on.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Full-text search across all chapters</strong>
+            <p>Need to find where traits are discussed? The built-in search indexes every chapter, so you can jump directly to the concept you need.</p>
+          </div>
+        </div>
+      </div>
+
+      <p>Here is how the playground feature is configured. This snippet comes from the <code>book.toml</code> file — the configuration file that controls how each book is built:</p>
+
+      <div class="translation-block">
+        <div class="translation-code">
+          <span class="translation-label">book.toml</span>
+<code><span class="code-line"><span class="code-property">[output.html.playground]</span></span>
+<span class="code-line"><span class="code-property">editable</span> <span class="code-operator">=</span> <span class="code-value">true</span></span>
+<span class="code-line"><span class="code-property">line-numbers</span> <span class="code-operator">=</span> <span class="code-value">true</span></span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Plain English</span>
+          <div class="translation-lines">
+            <div class="tl"><strong>[output.html.playground]</strong> — This section controls the code examples on the website</div>
+            <div class="tl"><strong>editable = true</strong> — Let readers change the code and run it — like a mini coding sandbox</div>
+            <div class="tl"><strong>line-numbers = true</strong> — Show line numbers next to code so readers can follow along easily</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SCREEN 4: Quiz ─────────────────────────────────────── -->
+    <section class="screen animate-in">
+      <h2 class="screen-heading">Check Your Understanding</h2>
+
+      <div class="quiz-container" id="quiz-module1">
+
+        <!-- Q1 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="The 'Bridge' books are designed to connect what you already know to Rust concepts." data-explanation-wrong="Think about which book matches their existing language background.">
+          <div class="quiz-question">1. A colleague who writes Python wants to learn Rust. Which book would you recommend they start with?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rust Patterns
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rust for Python Programmers
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Async Rust
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Type-Driven Correctness
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-question-block" data-correct="option-c" data-explanation-right="Async Rust is the dedicated 'Deep Dive' into futures, Tokio, streams, and cancellation safety." data-explanation-wrong="Look for the book specifically categorized as a 'Deep Dive' into a major subsystem.">
+          <div class="quiz-question">2. Your team wants to evaluate Rust's async programming model. Which book focuses on that?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rust Engineering Practices
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rust for C# Programmers
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Async Rust
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Rust for C/C++ Programmers
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-question-block" data-correct="option-b" data-explanation-right="The 'Bridge' approach means each book connects Rust concepts to a language you already understand." data-explanation-wrong="Think about the 'Bridge' concept — what does it bridge?">
+          <div class="quiz-question">3. What makes these training books different from a typical programming tutorial?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> They're written in Rust
+            </button>
+            <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> They start from what you already know
+            </button>
+            <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> They only cover advanced topics
+            </button>
+            <button class="quiz-option" data-value="option-d" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> They require a Microsoft account
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Check Answers</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Reset</button>
+      </div>
+    </section>
+
+  </div>
+</section>

@@ -1,0 +1,303 @@
+<!-- ════════════════════════════════════════════════════════════
+     MODULE 2 — Владение и память
+     ════════════════════════════════════════════════════════════ -->
+<section class="module" id="module-2" style="background: var(--color-bg-warm);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <div class="module-header animate-in">
+      <span class="module-number">02</span>
+      <h2 class="module-title">Владение и память</h2>
+      <p class="module-subtitle">Как Rust управляет памятью без сборщика мусора</p>
+    </div>
+
+    <!-- ── Metaphor callout ────────────────────────────────────── -->
+    <div class="callout callout-info animate-in">
+      <div class="callout-icon">&#128218;</div>
+      <div class="callout-content">
+        <span class="callout-title">Метафора: библиотечная карточка</span>
+        <p>Каждая книга имеет ровно одного держателя. Хочешь прочитать — возьми на время (borrow). Хочешь передать — верни и отдай карточку другому (move).</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 1: Почему это важно ──────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Почему это важно</h3>
+      <p>
+        Rust не имеет <span class="term" data-definition="Garbage Collector (GC) — автоматическая система, которая периодически сканирует память и удаляет объекты, на которые больше нет ссылок. Используется в Java, Go, C#, Python и других языках.">сборщика мусора</span> (GC).
+        Вместо этого он использует систему <span class="term" data-definition="Ownership — центральная концепция Rust: у каждого значения есть ровно один владелец. Когда владелец выходит из области видимости, значение уничтожается.">ownership</span>, проверяемую на этапе
+        <span class="term" data-definition="Компиляция — процесс преобразования исходного кода в машинный код. Rust проверяет правила владения именно на этом этапе, а не во время выполнения программы.">компиляции</span>.
+        Это означает: никаких утечек памяти, никаких <span class="term" data-definition="Гонка данных (data race) — ситуация, когда два потока одновременно обращаются к одним и тем же данным, и хотя бы один из них пишет. Приводит к непредсказуемому поведению программы.">гонок данных</span> — и всё это без
+        <span class="term" data-definition="Runtime — код, который выполняется вместе с вашей программой для обеспечения работы языковых механизмов (например, GC). У Rust минимальный runtime, что делает его пригодным для системного программирования.">runtime</span>-затрат.
+      </p>
+    </div>
+
+    <!-- ── Screen 2: Три правила владения ──────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Три правила владения</h3>
+      <div class="step-cards stagger-children">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Один владелец</strong>
+            <p>У каждого значения в Rust есть ровно один владелец (owner).</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Автоматическое уничтожение</strong>
+            <p>Когда владелец выходит из области видимости — значение уничтожается (Drop).</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Move или Borrow</strong>
+            <p>Значение можно передать (move) или одолжить (borrow) — но не одновременно изменяемо из двух мест.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Move vs Borrow ────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Move vs Borrow — код из проекта</h3>
+
+      <!-- Move example -->
+      <div class="translation-block">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<code><span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">let</span> s1 = <span class="code-function">String::from</span>(<span class="code-string">"hi"</span>);</span>
+<span class="code-line">    <span class="code-keyword">let</span> s2 = s1;</span>
+<span class="code-line">    <span class="code-function">println!</span>(<span class="code-string">"{}"</span>, s2);</span>
+<span class="code-line">}</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчно по-русски</span>
+          <div class="translation-lines">
+            <div class="tl">Создаём строку "hi" и кладём в переменную s1</div>
+            <div class="tl">Передаём владение строкой из s1 в s2 (move). Теперь s1 больше недоступна!</div>
+            <div class="tl">Печатаем s2 — это работает, потому что s2 теперь владелец</div>
+            <div class="tl">(после этой строки s2 выходит из области видимости, память освобождается)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Borrow example -->
+      <div class="translation-block">
+        <div class="translation-code">
+          <span class="translation-label">Rust</span>
+<code><span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">main</span>() {</span>
+<span class="code-line">    <span class="code-keyword">let</span> s1 = <span class="code-function">String::from</span>(<span class="code-string">"hi"</span>);</span>
+<span class="code-line">    <span class="code-function">print_str</span>(<span class="code-operator">&amp;</span>s1);</span>
+<span class="code-line">    <span class="code-function">println!</span>(<span class="code-string">"{}"</span>, s1);</span>
+<span class="code-line">}</span>
+<span class="code-line"></span>
+<span class="code-line"><span class="code-keyword">fn</span> <span class="code-function">print_str</span>(s: <span class="code-operator">&amp;</span><span class="code-keyword">String</span>) {</span>
+<span class="code-line">    <span class="code-function">println!</span>(<span class="code-string">"{}"</span>, s);</span>
+<span class="code-line">}</span></code>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">Построчно по-русски</span>
+          <div class="translation-lines">
+            <div class="tl">Создаём строку "hi"</div>
+            <div class="tl">Передаём ссылку (&amp;s1) — одалживаем, не отдаём владение</div>
+            <div class="tl">s1 всё ещё жива! Можно использовать дальше</div>
+            <div class="tl">Функция принимает ссылку (&amp;String) — читает, но не владеет</div>
+            <div class="tl">Печатает строку через ссылку</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Group Chat ────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Компилятор как строгий библиотекарь</h3>
+
+      <div class="chat-window" id="chat-module2">
+        <div class="chat-messages">
+
+          <div class="chat-message" data-msg="1" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Создаю строку и кладу в s1</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="2" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>Ок, s1 — владелец. Записал.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="3" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Теперь присваиваю s1 в s2</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="4" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>Move! s1 больше не валидна. Владелец теперь s2.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="5" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Хочу использовать s1...</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="6" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>ОШИБКА! s1 уже перемещена. Используй s2 или клонируй.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="7" data-sender="Разработчик" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-1);">R</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-1);">Разработчик</span>
+              <p>Ладно, беру ссылку &amp;s2</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="8" data-sender="Компилятор" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-2);">K</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-2);">Компилятор Rust</span>
+              <p>Borrow! s2 остаётся владельцем, ты только читаешь.</p>
+            </div>
+          </div>
+
+          <div class="chat-message" data-msg="9" data-sender="Память" style="display:none;">
+            <div class="chat-avatar" style="background: var(--color-actor-3);">M</div>
+            <div class="chat-bubble">
+              <span class="chat-sender" style="color: var(--color-actor-3);">Память</span>
+              <p>Когда s2 выйдет из области видимости, я освобожусь автоматически. Никакого GC!</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="chat-typing" style="display:none;">
+          <div class="chat-avatar" id="chat-module2-typing-avatar" style="background: var(--color-actor-1); width:28px; height:28px; font-size: var(--text-xs);">R</div>
+          <div class="chat-typing-dots">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+
+        <div class="chat-controls">
+          <button class="btn chat-next-btn">Следующее сообщение</button>
+          <button class="btn chat-all-btn">Показать все</button>
+          <button class="btn chat-reset-btn">Сначала</button>
+          <span class="chat-progress">0 / 9 messages</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Callout ───────────────────────────────────── -->
+    <div class="screen animate-in">
+      <div class="callout callout-accent">
+        <div class="callout-icon">&#128274;</div>
+        <div class="callout-content">
+          <span class="callout-title">Fearless concurrency</span>
+          <p>В C++ можно случайно обратиться к освобождённой памяти (use-after-free). В Rust компилятор просто не даст скомпилировать такой код. Это и есть fearless concurrency — бесстрашная многопоточность.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: Quiz ──────────────────────────────────────── -->
+    <div class="screen animate-in">
+      <h3 class="screen-heading">Проверьте себя</h3>
+
+      <div class="quiz-container" id="quiz-module2">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Именно! Компилятор отследит move и не даст использовать перемещённую переменную."
+             data-explanation-wrong="Move-семантика означает, что s1 больше не валидна после передачи владения в s2.">
+          <p class="quiz-question">1. Что произойдёт, если после <code>let s2 = s1;</code> попробовать использовать s1?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Программа скомпилируется и напечатает значение s1
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Ошибка компиляции: значение перемещено
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Программа скомпилируется, но упадёт в runtime
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="a"
+             data-explanation-right="Верно! Rust гарантирует: либо много читателей, либо один писатель. Никогда оба одновременно."
+             data-explanation-wrong="Разница принципиальна: &amp;T позволяет только читать, &amp;mut T — изменять. И одновременно может существовать только одна &amp;mut T ссылка.">
+          <p class="quiz-question">2. Чем <code>&amp;T</code> отличается от <code>&amp;mut T</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              &amp;T — неизменяемая ссылка (можно много), &amp;mut T — изменяемая (только одна)
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Нет разницы, просто разный синтаксис
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              &amp;mut T быстрее, потому что не проверяет borrow checker
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="b"
+             data-explanation-right="Это даёт предсказуемую производительность — критично для системного программирования."
+             data-explanation-wrong="Ownership — это осознанный выбор дизайна языка для достижения нулевых runtime-затрат и детерминированного управления памятью.">
+          <p class="quiz-question">3. Зачем Rust использует ownership вместо GC?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Чтобы усложнить жизнь разработчикам
+            </button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Чтобы освобождать память детерминированно, без пауз GC и runtime-затрат
+            </button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span>
+              Потому что GC ещё не реализовали
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Начать заново</button>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,106 @@
+<section class="module" id="module-4">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 4 · 110 минут</span>
+      <h1 class="module-title">Что результат доказывает — и чего не доказывает</h1>
+      <p class="module-subtitle"><span class="term" data-definition="Бэктест — симуляция торговых правил на исторических данных и заданной модели исполнения. Он показывает модельный результат, но не гарантирует live-поведение.">Бэктест</span> — ценный краш-тест модели. Он показывает поведение в заданных условиях, а не гарантирует реальные дороги.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Краш-тест полезен именно своими границами</h2>
+      <p><span class="term" data-definition="Детерминированный запуск — эксперимент, который при одинаковых входах и конфигурации воспроизводит согласованное поведение. Детерминизм не доказывает реалистичность модели.">Детерминированность</span> помогает повторить наблюдение. Но реальная площадка может отличаться ликвидностью, задержкой, очередью и отказами.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-5)">✓</div><h3 class="pattern-title">Доказывает</h3><p class="pattern-desc">При этих входах, коде и модели получился этот результат.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">↻</div><h3 class="pattern-title">Позволяет</h3><p class="pattern-desc">Повторить эксперимент и проверить влияние одного изменения.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">?</div><h3 class="pattern-title">Не знает</h3><p class="pattern-desc">Как venue исполнит заявки при реальной очереди и задержке.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">×</div><h3 class="pattern-title">Не гарантирует</h3><p class="pattern-desc">Будущую прибыль, безопасность капитала или production readiness.</p></div>
+      </div>
+      <div class="callout callout-info"><div class="callout-icon">🧭</div><div class="callout-content"><strong class="callout-title">Evidence-bounded формулировка</strong><p>«Результат воспроизведён на указанном catalog и конфигурации» сильнее и честнее, чем «стратегия работает».</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Трасса: построить, добавить, запустить</h2>
+      <p><span class="term" data-definition="Trace — прослеживаемая последовательность шагов и артефактов от конфигурации до результата. Trace помогает аудитору проверить, откуда взялся вывод.">Trace</span> связывает конфигурацию, стратегию и результат, но не добавляет отсутствующие live-доказательства.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">CODE</span><pre><code>node = BacktestNode(configs=[config])
+node.build()
+
+node.add_builtin_strategy(
+    config.id,
+    "EmaCross",
+    EmaCrossConfig(
+        instrument_id=instrument.id,
+        trade_size=Quantity.from_int(1_000_000),
+        fast_period=10,
+        slow_period=20,
+    ),
+)
+</code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-РУССКИ</span><div class="translation-lines">
+          <p class="tl">Создать узел с зафиксированным рецептом запуска.</p>
+          <p class="tl">Построить компоненты эксперимента по конфигурации.</p>
+          <p class="tl">Добавить встроенную стратегию EmaCross к этому config ID.</p>
+          <p class="tl">Указать инструмент и размер торгового намерения.</p>
+          <p class="tl">Зафиксировать быстрый и медленный периоды EMA.</p>
+          <p class="tl">Фрагмент заканчивается регистрацией стратегии; запуск находится ниже в upstream-файле и не смешивается с этой точной выдержкой.</p>
+        </div></div>
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Config</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Build</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Strategy</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Run</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><p>Results</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лестница доказательств: каждый шаг — новая проверка</h2>
+      <p><span class="term" data-definition="Gate — заранее определённая проверка, которую нужно пройти перед переходом на следующий уровень риска. Gate должен иметь критерии GO, NO-GO и stop condition.">Gate</span> не выдаёт сертификат навсегда; он отвечает только на вопрос о следующем ограниченном этапе.</p>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Backtest</strong><p>Исторические данные + модель. Артефакты: catalog, config, code, results.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Forward</strong><p>Правила фиксированы до новых наблюдений; нет подбора по уже увиденному периоду.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Shadow</strong><p>Система получает живые события, но не отправляет реальные заявки.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Canary</strong><p>Минимально ограниченный реальный риск со stop conditions.</p></div></div>
+        <div class="step-card"><div class="step-num">5</div><div class="step-body"><strong>Live scope</strong><p>Только подтверждённые лимиты, мониторинг и <span class="term" data-definition="Reconciliation — сверка внутренних orders, fills и positions с execution reports площадки, включая проверки open и in-flight orders. Баланс и маржа относятся к отдельному account-state/risk gate.">reconciliation</span>; не безусловная готовность.</p></div></div>
+      </div>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">BACKTEST</code><span class="badge-desc">GO только к следующей проверке, не к капиталу.</span></div>
+        <div class="badge-item"><code class="badge-code">MISSING</code><span class="badge-desc">Нет forward/shadow/reconciliation — это пробел, а не «почти готово».</span></div>
+        <div class="badge-item"><code class="badge-code">NO-GO</code><span class="badge-desc">Корректное решение, когда gate не подтверждён.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: соберите пакет доказательств</h2>
+      <p>Есть catalog manifest, run config, код, один result и нет reconciliation report. Разложите артефакты по уровням и выберите только следующий безопасный gate.</p>
+      <div class="pattern-cards">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">C</div><h3 class="pattern-title">Утверждение</h3><p class="pattern-desc">Один узкий вывод, который вы хотите защитить.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">E</div><h3 class="pattern-title">Доказательства</h3><p class="pattern-desc">Конкретные артефакты и история их происхождения.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">G</div><h3 class="pattern-title">Пробел</h3><p class="pattern-desc">Что отсутствует и какой вывод поэтому делать нельзя.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-5)">N</div><h3 class="pattern-title">Следующая проверка</h3><p class="pattern-desc">Ограничение времени и риска, а также чёткое условие остановки.</p></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · итоговое решение</h3>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">Артефакт</code><span class="badge-desc">Evidence matrix + одностраничное GO/NO-GO решение.</span></div>
+        <div class="badge-item"><code class="badge-code">Приёмка</code><span class="badge-desc">Каждый claim имеет ссылку на evidence или метку «не подтверждено».</span></div>
+        <div class="badge-item"><code class="badge-code">Scope</code><span class="badge-desc">GO относится только к следующему ограниченному gate.</span></div>
+        <div class="badge-item"><code class="badge-code">Stop</code><span class="badge-desc">Указано наблюдение, при котором работа прекращается или откатывается.</span></div>
+      </div>
+      <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-content"><strong class="callout-title">Текущий кейс</strong><p>Без reconciliation и последующих уровней доказательств production-ready claim получает NO-GO. Допустим следующий контролируемый forward/shadow gate после отдельной проверки.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Итоговая проверка: GO, NO-GO или следующий этап?</h2>
+      <div class="quiz-container" id="quiz-module4">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Backtest поддерживает вывод о поведении внутри модели и может открыть только следующий ограниченный gate." data-explanation-wrong="Одна историческая симуляция не покрывает live execution, reconciliation и операционные риски."><h3 class="quiz-question">Бэктест воспроизводим и положителен. Какой вывод допустим?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Стратегия доказанно прибыльна в будущем</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>В заданной модели результат воспроизведён; можно оценить следующий gate</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Можно сразу выделить полный капитал</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Расхождение требует объяснения и блокирует повышение риска до восстановления trace." data-explanation-wrong="Игнорировать несовпадение нельзя: оно опровергает текущую связку модели и наблюдаемого поведения."><h3 class="quiz-question">Shadow-сигналы расходятся с повторным backtest. Решение?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Перейти к canary ради проверки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Выбрать более красивый отчёт</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>NO-GO и диагностика данных, конфигурации и событий</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Ограниченный пробный запуск должен сдерживать ущерб и иметь заранее определённую остановку; иначе это не контролируемый этап проверки." data-explanation-wrong="Малый капитал без временного лимита, мониторинга и условия остановки всё равно оставляет неограниченный процессный риск."><h3 class="quiz-question">Как выглядит корректный ограниченный пробный запуск?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Малый лимит риска, срок, мониторинг, сверка состояния и условие остановки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Любой Live-запуск с небольшим депозитом</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запуск без сверки, если бэктест хороший</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="NO-GO точно фиксирует пробел и защищает от вывода, который evidence pack не поддерживает." data-explanation-wrong="Отсутствие evidence нельзя заменить уверенностью, повтором формулировки или обещанием добавить отчёт позже."><h3 class="quiz-question">Reconciliation report отсутствует. Как записать production readiness?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>GO, если команда уверена</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>NO-GO для production claim; указать недостающий артефакт</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>GO с пометкой «проверим потом»</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить решение</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Пройти ещё раз</button>
+      </div>
+      <div class="callout callout-accent"><div class="callout-icon">→</div><div class="callout-content"><strong class="callout-title">Следующий курс</strong><p>Rust/live path продолжит лестницу через адаптеры, события исполнения и reconciliation. Этот курс не выдал production authority — он научил требовать её доказательства.</p></div></div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

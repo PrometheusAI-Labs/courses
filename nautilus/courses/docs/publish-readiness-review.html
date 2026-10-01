@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Снимок первой проверки с
+зачёркнутыми исправлениями и текущими открытыми условиями.">
+  <meta name="source-file" content="PUBLISH_READINESS_REVIEW.md">
+  <meta name="source-sha256" content="523ea48c26715eef73db7ad37b9e5b0a766620b68ae2c7e1bdcbf244fc1c797d">
+  <title>Архивная проверка готовности к
+публикации — NautilusTrader Academy</title>
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#document">К документу</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="NautilusTrader Academy — каталог курсов">NautilusTrader Academy</a>
+    <nav aria-label="Навигация по материалам">
+      <a href="index.html">Все документы</a>
+      <a href="../resources.html">Материалы</a>
+      <a href="../index.html">Курсы</a>
+    </nav>
+  </header>
+  <div class="doc-shell">
+    <aside class="toc-panel" aria-label="Содержание документа">
+      <p class="toc-title">На этой странице</p>
+      <ul>
+      <li><a href="#что-подтверждено">Что
+      подтверждено</a></li>
+      <li><a href="#критические-блокеры"
+     >Критические блокеры</a>
+      <ul>
+      <li><a
+      href="#1-неверно-объяснены-nautilustrader-sandbox-и-live--исправлено"
+     ><del>1.
+      Неверно объяснены NautilusTrader Sandbox и Live</del> —
+      ИСПРАВЛЕНО</a></li>
+      <li><a href="#2-provenance-сниппетов-заявлен-неверно--исправлено"
+     ><del>2.
+      Provenance сниппетов заявлен неверно</del> — ИСПРАВЛЕНО</a></li>
+      <li><a
+      href="#3-заявленные-20-часов-не-подтверждены-пилотным-хронометражем--частично"
+     >3.
+      Заявленные 20 часов не подтверждены пилотным хронометражем —
+      ЧАСТИЧНО</a></li>
+      <li><a
+      href="#4-для-ключевых-labs-отсутствуют-исходные-кейсы--исправлено"
+     ><del>4.
+      Для ключевых labs отсутствуют исходные кейсы</del> —
+      ИСПРАВЛЕНО</a></li>
+      <li><a
+      href="#5-workbook-не-покрывает-12-обязательных-артефактов--исправлено"
+     ><del>5.
+      Workbook не покрывает 12 обязательных артефактов</del> —
+      ИСПРАВЛЕНО</a></li>
+      <li><a href="#6-learner-ui-не-полностью-локализован--исправлено"
+     ><del>6.
+      Learner UI не полностью локализован</del> — ИСПРАВЛЕНО</a></li>
+      <li><a
+      href="#7-workbook-и-capstone-отсутствуют-в-публикуемом-html-маршруте--исправлено"
+     ><del>7.
+      Workbook и capstone отсутствуют в публикуемом HTML-маршруте</del>
+      — ИСПРАВЛЕНО</a></li>
+      <li><a
+      href="#8-licensethird-party-notice-добавлены-ответственная-проверка-не-зафиксирована--частично"
+     >8.
+      License/third-party notice добавлены, ответственная проверка не
+      зафиксирована — ЧАСТИЧНО</a></li>
+      <li><a
+      href="#9-интерактивы-недоступны-с-клавиатуры-и-screen-reader--исправлено-в-коде"
+     ><del>9.
+      Интерактивы недоступны с клавиатуры и screen reader</del> —
+      ИСПРАВЛЕНО В КОДЕ</a></li>
+      <li><a
+      href="#10-mobile-reflow-исправлен-в-css-полный-200-прогон-не-выполнен--частично"
+     >10.
+      Mobile reflow исправлен в CSS, полный 200% прогон не выполнен —
+      ЧАСТИЧНО</a></li>
+      <li><a href="#11-контраст-основных-controls-ниже-wcag-aa--открыт"
+     >11.
+      Контраст основных controls ниже WCAG AA — ОТКРЫТ</a></li>
+      <li><a href="#12-не-определён-publish-root--исправлено"
+     ><del>12. Не
+      определён publish root</del> — ИСПРАВЛЕНО</a></li>
+      </ul></li>
+      <li><a href="#medium-обязательные-до-release-candidate"
+     >MEDIUM,
+      обязательные до release candidate</a></li>
+      <li><a href="#согласие-и-расхождения-reviewer-ов"
+     >Согласие и расхождения
+      reviewer-ов</a></li>
+      <li><a href="#условия-повторного-go-review"
+     >Условия повторного
+      GO-review</a></li>
+      </ul>
+    </aside>
+    <main class="document" id="document">
+      <div class="doc-kicker"><span>Редактор
+курса</span><span>HTML-версия</span></div>
+      <h1 class="doc-title">Архивная проверка готовности к
+публикации</h1>
+      <p class="doc-summary">Снимок первой проверки с зачёркнутыми
+исправлениями и текущими открытыми условиями.</p>
+      <details class="mobile-toc">
+        <summary>Содержание</summary>
+        <ul>
+        <li><a href="#что-подтверждено">Что
+        подтверждено</a></li>
+        <li><a href="#критические-блокеры"
+       >Критические блокеры</a>
+        <ul>
+        <li><a
+        href="#1-неверно-объяснены-nautilustrader-sandbox-и-live--исправлено"
+       ><del>1.
+        Неверно объяснены NautilusTrader Sandbox и Live</del> —
+        ИСПРАВЛЕНО</a></li>
+        <li><a
+        href="#2-provenance-сниппетов-заявлен-неверно--исправлено"
+       ><del>2.
+        Provenance сниппетов заявлен неверно</del> — ИСПРАВЛЕНО</a></li>
+        <li><a
+        href="#3-заявленные-20-часов-не-подтверждены-пилотным-хронометражем--частично"
+       >3.
+        Заявленные 20 часов не подтверждены пилотным хронометражем —
+        ЧАСТИЧНО</a></li>
+        <li><a
+        href="#4-для-ключевых-labs-отсутствуют-исходные-кейсы--исправлено"
+       ><del>4.
+        Для ключевых labs отсутствуют исходные кейсы</del> —
+        ИСПРАВЛЕНО</a></li>
+        <li><a
+        href="#5-workbook-не-покрывает-12-обязательных-артефактов--исправлено"
+       ><del>5.
+        Workbook не покрывает 12 обязательных артефактов</del> —
+        ИСПРАВЛЕНО</a></li>
+        <li><a href="#6-learner-ui-не-полностью-локализован--исправлено"
+       ><del>6.
+        Learner UI не полностью локализован</del> — ИСПРАВЛЕНО</a></li>
+        <li><a
+        href="#7-workbook-и-capstone-отсутствуют-в-публикуемом-html-маршруте--исправлено"
+       ><del>7.
+        Workbook и capstone отсутствуют в публикуемом
+        HTML-маршруте</del> — ИСПРАВЛЕНО</a></li>
+        <li><a
+        href="#8-licensethird-party-notice-добавлены-ответственная-проверка-не-зафиксирована--частично"
+       >8.
+        License/third-party notice добавлены, ответственная проверка не
+        зафиксирована — ЧАСТИЧНО</a></li>
+        <li><a
+        href="#9-интерактивы-недоступны-с-клавиатуры-и-screen-reader--исправлено-в-коде"
+       ><del>9.
+        Интерактивы недоступны с клавиатуры и screen reader</del> —
+        ИСПРАВЛЕНО В КОДЕ</a></li>
+        <li><a
+        href="#10-mobile-reflow-исправлен-в-css-полный-200-прогон-не-выполнен--частично"
+       >10.
+        Mobile reflow исправлен в CSS, полный 200% прогон не выполнен —
+        ЧАСТИЧНО</a></li>
+        <li><a
+        href="#11-контраст-основных-controls-ниже-wcag-aa--открыт"
+       >11.
+        Контраст основных controls ниже WCAG AA — ОТКРЫТ</a></li>
+        <li><a href="#12-не-определён-publish-root--исправлено"
+       ><del>12. Не
+        определён publish root</del> — ИСПРАВЛЕНО</a></li>
+        </ul></li>
+        <li><a href="#medium-обязательные-до-release-candidate"
+       >MEDIUM,
+        обязательные до release candidate</a></li>
+        <li><a href="#согласие-и-расхождения-reviewer-ов"
+       >Согласие и
+        расхождения reviewer-ов</a></li>
+        <li><a href="#условия-повторного-go-review"
+       >Условия повторного
+        GO-review</a></li>
+        </ul>
+      </details>
+      <article class="doc-content">
+        <blockquote>
+        <p><strong>Исторический снимок первой проверки с повторной
+        сверкой от 2026-09-23.</strong> Исходные reviewer findings
+        сохранены ниже. Полностью исправленные пункты зачёркнуты; у
+        частично исправленных зачёркнута только доказанно закрытая
+        часть. Публичный релиз всё ещё заблокирован до заполненного
+        пилотного хронометража и фактической
+        browser/keyboard/screen-reader проверки. Исходный
+        <code>NO-GO</code> остаётся исторически верным.</p>
+        </blockquote>
+        <p><strong>Повторная сверка:</strong> 8 из 12 HIGH исправлены
+        полностью, 3 исправлены частично, 1 остаётся открытым. Из 8
+        MEDIUM полностью исправлены 5, частично — 2, открыт — 1.
+        Автоматические проверки <code>verify_courses.py</code> и
+        <code>verify_source_snippets.py</code> прошли; пустые ручные
+        протоколы не засчитывались как <code>PASS</code>.</p>
+        <p><strong>Дата:</strong> 2026-09-22<br />
+        <strong>Объект:</strong> NautilusTrader Academy, 3 курса / 12
+        модулей / заявленные 1200 минут<br />
+        <strong>Итоговый вердикт:</strong> <strong>NO-GO TO
+        PUBLISH</strong></p>
+        <p>Проверку независимо и без редактирования учебных материалов
+        провели три reviewer-а с разными линзами: педагогическая
+        состоятельность, техническая/source-grounded корректность и
+        release/accessibility readiness. Все три независимо вынесли
+        <code>NO-GO TO PUBLISH</code>.</p>
+        <h2 id="что-подтверждено">Что подтверждено</h2>
+        <ul>
+        <li><code>verify_courses.py</code> проходит: 3 курса, 12
+        модулей, 1200 минут.</li>
+        <li>Все три курса собираются воспроизводимо из
+        <code>_base.html + modules/*.html + _footer.html</code>.</li>
+        <li>Локальные <code>href</code>/<code>src</code>, quiz keys,
+        chat sequences и flow JSON статически корректны.</li>
+        <li>Обязательные интерактивы присутствуют: code-to-English,
+        quizzes, glossary terms, group chat и data flow.</li>
+        <li>Секретов, private keys, <code>.env</code>, cache/compiled
+        junk и обещаний доходности не найдено.</li>
+        <li>Rust-first направление, различение submit/fill и
+        safety-гейты в целом выдержаны.</li>
+        </ul>
+        <p>Эти результаты доказывают структурную целостность сборки, но
+        не педагогическую, техническую и публикационную готовность.</p>
+        <h2 id="критические-блокеры">Критические блокеры</h2>
+        <h3
+        id="1-неверно-объяснены-nautilustrader-sandbox-и-live--исправлено"><del>1.
+        Неверно объяснены NautilusTrader Sandbox и Live</del> —
+        ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong>
+        <code>courses/01-engine-foundations/modules/04-three-environments.html:6,19-25,51-64</code>.</del></li>
+        <li><del><strong>Проблема:</strong> Sandbox представлен как
+        testnet-площадка с reconnect/reconciliation, Live — как
+        обязательно реальные деньги. Upstream
+        <code>docs/concepts/architecture.md:150-154</code> задаёт
+        <code>Sandbox = real-time data + simulated execution</code>, а
+        <code>Live = real-time data + live venue connections</code>,
+        включая paper и real accounts.</del></li>
+        <li><del><strong>До GO:</strong> переписать экран, brief и quiz
+        по канонической семантике; явно отделить Nautilus Sandbox от
+        exchange testnet.</del></li>
+        <li><strong>Повторная проверка:</strong> module, brief,
+        assembled index и quiz теперь определяют Sandbox как real-time
+        data + simulated execution, Live — как live venue connections
+        для paper или real account; exchange testnet явно отделён от
+        Sandbox.</li>
+        </ul>
+        <h3
+        id="2-provenance-сниппетов-заявлен-неверно--исправлено"><del>2.
+        Provenance сниппетов заявлен неверно</del> — ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong> <code>README.md:18-20</code>
+        и 12 code sections в <code>courses/*/briefs/</code>.</del></li>
+        <li><del><strong>Проблема:</strong> README заявляет дословный
+        перенос и точные строки, но независимое сравнение с commit
+        <code>84a98f7f3cc786085496976320c3cb320024217f</code> показало
+        буквальное совпадение только для 3 из 12 диапазонов. Остальные
+        дедентированы, сокращены или не соответствуют заявленному
+        непрерывному диапазону.</del></li>
+        <li><del><strong>До GO:</strong> либо восстановить точные
+        непрерывные фрагменты и строки, либо честно маркировать
+        адаптацию/сокращение; синхронизировать briefs, modules и
+        собранные indexes.</del></li>
+        <li><strong>Повторная проверка:</strong>
+        <code>python3 verify_source_snippets.py --source /tmp/nautilus_trader-course-source</code>
+        подтвердил 12 точных непрерывных excerpts на pinned commit.</li>
+        </ul>
+        <h3
+        id="3-заявленные-20-часов-не-подтверждены-пилотным-хронометражем--частично">3.
+        Заявленные 20 часов не подтверждены пилотным хронометражем —
+        ЧАСТИЧНО</h3>
+        <ul>
+        <li><strong>Evidence:</strong>
+        <code>INSTRUCTOR_GUIDE.md:5,35</code>,
+        <code>courses/03-rust-live/briefs/01-rust-anatomy.md:40-42</code>,
+        <code>courses/03-rust-live/modules/01-rust-anatomy.html:101-114</code>,
+        <code>verify_courses.py:108-109</code>.</li>
+        <li><strong>Проблема:</strong> validator суммирует заявленные
+        числа, но не доказывает реальный seat time. <del>Часть
+        HTML-практик значительно короче таймбоксов и не содержит
+        обещанных разборов, материалов и checkpoint-ов.</del></li>
+        <li><strong>До GO:</strong> <del>дать 12 исполнимых сценариев с
+        входами, промежуточными проверками, ожидаемыми артефактами и
+        answer keys;</del> провести пилотный хронометраж минимум на трёх
+        представителях аудитории.</li>
+        <li><strong>Повторная проверка:</strong> <a
+        href="labs.html"><code>LABS.md</code></a>, <a
+        href="learner-workbook.html"><code>LEARNER_WORKBOOK.md</code></a>
+        и <a
+        href="instructor-answer-key.html"><code>INSTRUCTOR_ANSWER_KEY.md</code></a>
+        закрывают контентную часть. <a
+        href="pilot-timing-record.html"><code>PILOT_TIMING_RECORD.md</code></a>
+        остаётся пустым, поэтому фактические 20 часов не доказаны.</li>
+        </ul>
+        <h3
+        id="4-для-ключевых-labs-отсутствуют-исходные-кейсы--исправлено"><del>4.
+        Для ключевых labs отсутствуют исходные кейсы</del> —
+        ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong>
+        <code>courses/02-backtest-research/modules/01-data-evidence.html:104-117</code>,
+        <code>modules/02-reproducible-run.html:73-85</code> и
+        соответствующие briefs.</del></li>
+        <li><del><strong>Проблема:</strong> заявлены набор из шести
+        тиков и паспорта A/B, но сами значения и дефекты не
+        предоставлены.</del></li>
+        <li><del><strong>До GO:</strong> добавить
+        копируемые/downloadable datasets, manifests/passports, карточки
+        инцидентов, ожидаемые наблюдения и instructor answer
+        key.</del></li>
+        <li><strong>Повторная проверка:</strong> <a
+        href="labs.html"><code>LABS.md</code></a> содержит все 12
+        входных кейсов, включая шесть тиков, manifest A/B, checkpoints,
+        ожидаемые результаты и связь с answer key.</li>
+        </ul>
+        <h3
+        id="5-workbook-не-покрывает-12-обязательных-артефактов--исправлено"><del>5.
+        Workbook не покрывает 12 обязательных артефактов</del> —
+        ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong>
+        <code>CURRICULUM.md:42-47</code>,
+        <code>LEARNER_WORKBOOK.md:5-85</code>, module briefs.</del></li>
+        <li><del><strong>Проблема:</strong> curriculum обещает один
+        проверяемый артефакт на модуль, но workbook содержит 7 общих
+        шаблонов и не даёт формы для ряда обязательных
+        результатов.</del></li>
+        <li><del><strong>До GO:</strong> создать 12 пронумерованных
+        workbook-секций с input case, полями, acceptance checklist и
+        связью с capstone.</del></li>
+        <li><strong>Повторная проверка:</strong> <a
+        href="learner-workbook.html"><code>LEARNER_WORKBOOK.md</code></a>
+        содержит 12 секций <code>Артефакт 1.1</code>–<code>3.4</code>,
+        checklist для каждой и отдельную mapping-таблицу к
+        capstone.</li>
+        </ul>
+        <h3
+        id="6-learner-ui-не-полностью-локализован--исправлено"><del>6.
+        Learner UI не полностью локализован</del> — ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong>
+        <code>courses/01-engine-foundations/main.js:184-200,335-336,397-399</code>;
+        тот же JS используется во всех курсах.</del></li>
+        <li><del><strong>Проблема:</strong> quiz/chat/flow показывают
+        английские <code>Pick an answer first!</code>,
+        <code>Exactly!</code>, <code>Not quite.</code>,
+        <code>messages</code>, <code>Step</code> в заявленном
+        русскоязычном курсе.</del></li>
+        <li><del><strong>До GO:</strong> добавить поддерживаемый слой
+        русской локализации и проверить все UI-состояния.</del></li>
+        <li><strong>Повторная проверка:</strong> learner-facing runtime
+        русифицирован; verifier запрещает прежние английские фразы, а
+        shared <code>main.js</code> идентичен во всех трёх курсах.</li>
+        </ul>
+        <h3
+        id="7-workbook-и-capstone-отсутствуют-в-публикуемом-html-маршруте--исправлено"><del>7.
+        Workbook и capstone отсутствуют в публикуемом
+        HTML-маршруте</del> — ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong>
+        <code>courses/index.html:38-65</code>,
+        <code>CAPSTONE.md:7-30</code>.</del></li>
+        <li><del><strong>Проблема:</strong> каталог обещает
+        workbook/capstone, но ссылается только на три курса; внутри
+        курсов нет переходов к материалам и назад к каталогу.</del></li>
+        <li><del><strong>До GO:</strong> опубликовать материалы в
+        доступном формате и связать catalog → courses →
+        workbook/capstone → back/next navigation.</del></li>
+        <li><strong>Повторная проверка:</strong>
+        <code>courses/resources.html</code>,
+        <code>courses/docs/index.html</code> и footer каждого курса
+        связывают каталог, labs, workbook, capstone, документы и
+        межкурсовую навигацию; document integration QA имеет
+        <code>PASS</code>.</li>
+        </ul>
+        <h3
+        id="8-licensethird-party-notice-добавлены-ответственная-проверка-не-зафиксирована--частично">8.
+        License/third-party notice добавлены, ответственная проверка не
+        зафиксирована — ЧАСТИЧНО</h3>
+        <ul>
+        <li><strong>Evidence:</strong> <code>README.md:18-20</code>; в
+        дереве отсутствуют <code>LICENSE</code> и
+        <code>THIRD_PARTY_NOTICES</code>.</li>
+        <li><strong>Проблема:</strong> пакет повторно распространяет
+        точные/адаптированные фрагменты проекта LGPL-3.0-only <del>без
+        лицензионного текста, copyright notice и маркировки
+        адаптаций</del>.</li>
+        <li><strong>До GO:</strong> <del>добавить полный LGPL-3.0 text,
+        third-party notice с точным commit и copyright, обозначить
+        адаптации;</del> получить и зафиксировать ответственную
+        лицензионную проверку формата распространения.</li>
+        <li><strong>Повторная проверка:</strong> <a
+        href="nautilus-trader-lgpl-3.0.html"><code>LICENSES/nautilus-trader-LGPL-3.0.txt</code></a>,
+        <a
+        href="third-party-notices.html"><code>THIRD_PARTY_NOTICES.md</code></a>
+        и <a href="license.html"><code>LICENSE.md</code></a> существуют
+        и опубликованы в HTML. Отдельный подписанный/названный legal
+        review в evidence не найден.</li>
+        </ul>
+        <h3
+        id="9-интерактивы-недоступны-с-клавиатуры-и-screen-reader--исправлено-в-коде"><del>9.
+        Интерактивы недоступны с клавиатуры и screen reader</del> —
+        ИСПРАВЛЕНО В КОДЕ</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong>
+        <code>courses/01-engine-foundations/modules/02-engine-team.html:42</code>,
+        <code>courses/03-rust-live/modules/01-rust-anatomy.html:74</code>,
+        <code>courses/01-engine-foundations/main.js:150,457</code>.</del></li>
+        <li><del><strong>Проблема:</strong> кликабельные
+        <code>div</code> и <code>span</code> не имеют keyboard
+        semantics, focus, roles и связей с обновляемым
+        описанием.</del></li>
+        <li><del><strong>До GO:</strong> заменить управления на buttons
+        либо добавить Enter/Space, focus,
+        <code>aria-expanded</code>/<code>aria-selected</code>,
+        <code>aria-controls</code> и live announcement.</del></li>
+        <li><strong>Повторная проверка:</strong> runtime добавляет
+        keyboard handlers, focus semantics,
+        <code>aria-pressed</code>/<code>aria-selected</code>/<code>aria-controls</code>
+        и live announcements; verifier проверяет обязательные markers.
+        Полный ручной keyboard/screen-reader протокол всё ещё является
+        отдельным release gate.</li>
+        </ul>
+        <h3
+        id="10-mobile-reflow-исправлен-в-css-полный-200-прогон-не-выполнен--частично">10.
+        Mobile reflow исправлен в CSS, полный 200% прогон не выполнен —
+        ЧАСТИЧНО</h3>
+        <ul>
+        <li><strong>Evidence:</strong>
+        <code>courses/01-engine-foundations/styles.css:798,1166-1172</code>,
+        <code>courses/03-rust-live/modules/04-live-safety.html:57</code>.</li>
+        <li><strong>Проблема:</strong> <del>mobile override стирает
+        верхний отступ под fixed nav; четыре <code>.layer-tabs</code> не
+        переносятся на узком viewport.</del></li>
+        <li><strong>До GO:</strong> <del>сохранить mobile nav offset,
+        сделать tabs wrap/scroll-safe</del> и пройти Chrome
+        desktop/mobile/200% без overlap и двумерного скролла.</li>
+        <li><strong>Повторная проверка:</strong> mobile
+        <code>.module</code> сохраняет nav offset,
+        <code>.layer-tabs</code> использует <code>flex-wrap</code>. <a
+        href="browser-accessibility-qa.html"><code>BROWSER_ACCESSIBILITY_QA.md</code></a>
+        не заполнен; document-only smoke test не заменяет полный 200%
+        прогон курсов.</li>
+        </ul>
+        <h3 id="11-контраст-основных-controls-ниже-wcag-aa--открыт">11.
+        Контраст основных controls ниже WCAG AA — ОТКРЫТ</h3>
+        <ul>
+        <li><strong>Evidence:</strong>
+        <code>courses/02-backtest-research/_base.html:26</code>,
+        <code>courses/03-rust-live/_base.html:26</code>,
+        <code>styles.css:456,803</code>.</li>
+        <li><strong>Проблема:</strong> белый 14 px текст на vermillion и
+        forest accents имеет около 4.11:1 и 4.25:1 при требовании
+        4.5:1.</li>
+        <li><strong>До GO:</strong> скорректировать colors/text и
+        повторить contrast audit для всех control states.</li>
+        <li><strong>Повторная проверка:</strong> пункт не закрыт.
+        Текущий <code>--color-accent: #D94F30</code>; контраст белого
+        текста составляет примерно <code>4.11:1</code>. Этот цвет
+        по-прежнему используется для 14 px quiz buttons и активных layer
+        tabs, поэтому требование <code>4.5:1</code> не выполнено. Полный
+        contrast/forced-colors протокол также пуст.</li>
+        </ul>
+        <h3 id="12-не-определён-publish-root--исправлено"><del>12. Не
+        определён publish root</del> — ИСПРАВЛЕНО</h3>
+        <ul>
+        <li><del><strong>Evidence:</strong> <code>README.md:14</code>,
+        <code>courses/index.html:44</code>; корневой
+        <code>index.html</code> и hosting config отсутствуют.</del></li>
+        <li><del><strong>Проблема:</strong> публикация корня стандартным
+        static host не открывает каталог.</del></li>
+        <li><del><strong>До GO:</strong> добавить root entrypoint либо
+        зафиксировать <code>courses/</code> как publish directory и
+        проверить конечные URLs.</del></li>
+        <li><strong>Повторная проверка:</strong> корневой
+        <code>index.html</code> существует, ведёт к трём курсам и
+        ресурсам; локальные маршруты и конечные HTML-документы
+        проверяются verifier-ом.</li>
+        </ul>
+        <h2 id="medium-обязательные-до-release-candidate">MEDIUM,
+        обязательные до release candidate</h2>
+        <ul>
+        <li><del><code>lang="en"</code> в трёх русскоязычных
+        <code>_base.html</code> и собранных indexes.</del>
+        <strong>ИСПРАВЛЕНО:</strong> все learner pages используют
+        <code>lang="ru"</code>, это проверяет verifier.</li>
+        <li>Glossary tooltips не покрывают каждый технический термин при
+        первом употреблении. <strong>ОТКРЫТ:</strong> наличие glossary
+        terms в каждом модуле проверяется, но полнота покрытия всех
+        терминов и именно первого употребления — нет.</li>
+        <li><del>Evidence ladder противоречива: часть файлов включает
+        <code>forward</code>, часть объявляет полную лестницу без
+        него.</del> <strong>ИСПРАВЛЕНО:</strong> зафиксирована лестница
+        <code>build → replay/backtest → untouched forward → shadow → bounded canary → live expansion</code>.</li>
+        <li>Distractors в quiz часто карикатурны; <del>нет mastery
+        threshold</del> и повторного эквивалентного сценария.
+        <strong>ЧАСТИЧНО:</strong> порог 80% и retry реализованы;
+        эквивалентный, но новый повторный сценарий отсутствует, часть
+        distractors остаётся заведомо неправдоподобной.</li>
+        <li><del>Capstone rubric не описывает уровни частичного
+        выполнения.</del> <strong>ИСПРАВЛЕНО:</strong> <a
+        href="capstone.html"><code>CAPSTONE.md</code></a> задаёт четыре
+        уровня по каждому критерию и правила промежуточного балла.</li>
+        <li><del>Google Fonts создаёт внешний privacy/network
+        dependency;</del> CSP/referrer policy отсутствуют.
+        <strong>ЧАСТИЧНО:</strong> внешние font/runtime requests удалены
+        и запрещены verifier-ом; CSP/referrer policy не добавлены.</li>
+        <li><del>Verifier жёстко зависит от абсолютного
+        <code>~/.codex/skills/...</code> и не покрывает
+        release gates.</del> <strong>ИСПРАВЛЕНО:</strong> verifier
+        использует только пути относительно <code>__file__</code> и
+        проверяет release files, links, docs hashes, localization,
+        accessibility markers и release junk.</li>
+        <li><del>Нет <code>prefers-reduced-motion</code>; глобальные
+        arrow-key handlers могут конфликтовать с controls.</del>
+        <strong>ИСПРАВЛЕНО:</strong> reduced-motion CSS добавлен;
+        глобальная навигация игнорирует form controls, links, buttons и
+        ARIA controls.</li>
+        </ul>
+        <h2 id="согласие-и-расхождения-reviewer-ов">Согласие и
+        расхождения reviewer-ов</h2>
+        <ul>
+        <li><strong>Согласие:</strong> зелёный structural validator
+        недостаточен для GO; итог — NO-GO.</li>
+        <li><strong>Согласие:</strong> <del>provenance wording и
+        <code>lang</code> требуют исправления.</del> Оба пункта
+        исправлены и проверяются автоматически.</li>
+        <li><strong>Согласие:</strong> нужен реальный
+        desktop/mobile/200% и accessibility прогон.</li>
+        <li><strong>Уточнение:</strong> release-review счёл общие
+        financial/live boundaries ответственными; technical-review
+        обнаружил локальную, но существенную ошибку именно в
+        определениях Sandbox/Live. <del>Это не противоречие: safety-tone
+        в целом хороший, конкретная модель среды — неверна.</del>
+        Каноническая модель среды восстановлена.</li>
+        <li><strong>Уникальная педагогическая находка:</strong>
+        <del>самостоятельная исполнимость не доказана;</del> реальные 20
+        часов всё ещё не доказаны пилотом.</li>
+        <li><strong>Уникальная release-находка:</strong> <del>license
+        files, статическая keyboard accessibility и publish-root
+        исправлены;</del> контраст остаётся дефектом, а ответственная
+        license review и полный ручной accessibility/reflow QA не
+        зафиксированы.</li>
+        </ul>
+        <h2 id="условия-повторного-go-review">Условия повторного
+        GO-review</h2>
+        <ol type="1">
+        <li>Закрыты все 12 HIGH с привязкой к commit/diff.</li>
+        <li>Все 12 labs имеют входы, checkpoints, expected outputs и
+        answer keys.</li>
+        <li>Workbook содержит 12 модульных артефактов и capstone
+        mapping.</li>
+        <li>Source snippets/provenance проверены автоматически
+        относительно pinned commit.</li>
+        <li>Добавлены license и third-party notice.</li>
+        <li>Пройдены keyboard-only, screen-reader, WCAG contrast,
+        desktop, mobile и 200% zoom проверки.</li>
+        <li>Проверен release artifact из чистой распакованной копии и
+        конечный publish URL.</li>
+        <li>Два новых независимых reviewer-а не находят
+        blocker/HIGH.</li>
+        </ol>
+        <p>До выполнения этих условий публикация курса не
+        рекомендуется.</p>
+      </article>
+      <footer class="doc-footer">
+        <p>Источник этой страницы: <code>PUBLISH_READINESS_REVIEW.md</code>. HTML собирается автоматически; редактировать нужно исходный Markdown.</p>
+        <p><a href="index.html">← Ко всем документам</a></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

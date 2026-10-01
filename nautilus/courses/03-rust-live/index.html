@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NautilusTrader: стратегия на Rust — от бэктеста к Live</title>
+
+  <meta name="description" content="Интерактивный курс о стратегии NautilusTrader на Rust: от нативного бэктеста к безопасному переходу в Live.">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!--
+    CUSTOMIZE PER COURSE — change only the three accent variables below.
+    Options:
+      vermillion  #D94F30 / #C4432A / #FDEEE9 / #E8836C  (default)
+      coral       #E06B56 / #C85A47 / #FDECEA / #E89585
+      teal        #2A7B9B / #1F6280 / #E4F2F7 / #5A9DB8
+      amber       #D4A843 / #BF9530 / #FDF5E0 / #E0C070
+      forest      #2D8B55 / #226B41 / #E8F5EE / #5AAD7A
+  -->
+  <style>
+    :root {
+      --color-accent:       #1F6B41;
+      --color-accent-hover: #185735;
+      --color-accent-light: #E8F5EE;
+      --color-accent-muted: #5AAD7A;
+    }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="nav-inner">
+      <a class="nav-home" href="../index.html">Все курсы</a>
+      <span class="nav-title">NautilusTrader: стратегия на Rust — от бэктеста к Live</span>
+      <div class="nav-dots" id="nav-dots" aria-label="Навигация по модулям">
+        <button class="nav-dot" data-target="module-1" data-tooltip="Анатомия Rust-стратегии" aria-label="Модуль 1: Анатомия Rust-стратегии"></button>
+<button class="nav-dot" data-target="module-2" data-tooltip="События и заявки" aria-label="Модуль 2: События и заявки"></button>
+<button class="nav-dot" data-target="module-3" data-tooltip="Нативный бэктест" aria-label="Модуль 3: Нативный бэктест"></button>
+<button class="nav-dot" data-target="module-4" data-tooltip="Переход к Live без самообмана" aria-label="Модуль 4: Переход к Live без самообмана"></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- modules/*.html content is assembled here by build.sh -->
+<section class="module" id="module-1">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 1 · 105 минут</span>
+      <h1 class="module-title">Анатомия Rust-стратегии</h1>
+      <p class="module-subtitle">Разбираем кабину управления: где заканчивается инфраструктура фреймворка и начинается ваша торговая логика.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">1. Кабина, а не чемодан со всем подряд</h2>
+      <p>Представьте сертифицированную кабину пилота: часть органов управления уже встроена, а маршрут и параметры миссии задаёт экипаж. В коде роль встроенной кабины играет <span class="term" data-definition="StrategyCore — предоставляемая NautilusTrader внутренняя часть стратегии: она связывает объект стратегии с сервисами торгового runtime. Это инфраструктура, а не место для ваших торговых параметров.">StrategyCore</span>, а параметры миссии хранит структура стратегии.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">⚙️</div>
+          <h3 class="pattern-title">Инфраструктура фреймворка</h3>
+          <p class="pattern-desc">Связь с <span class="term" data-definition="Runtime — работающая среда, которая запускает стратегию, доставляет события и принимает её команды. В этом курсе авторитетным runtime является нативная Rust-система.">runtime</span>: сервисы, часы, кэш и отправка команд. Не дублируйте это в своих полях.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">🎯</div>
+          <h3 class="pattern-title">Состояние стратегии</h3>
+          <p class="pattern-desc">Какой <span class="term" data-definition="Instrument — конкретный торгуемый рынок, например BTC-USDT perpetual. InstrumentId — его однозначный идентификатор внутри системы.">инструмент</span> торгуем и каким размером — это решение самой стратегии.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">📨</div>
+          <h3 class="pattern-title">Данные текущего события</h3>
+          <p class="pattern-desc">Данные одного события живут внутри обработчика, если их не нужно помнить между следующими событиями.</p>
+        </div>
+      </div>
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content"><strong class="callout-title">Главный вопрос владения</strong><p>«Кто обязан помнить это значение между событиями?» Ответ почти всегда показывает правильную границу.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">2. Настоящий код: три поля, три ответственности</h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">RUST · ДОСЛОВНО</span>
+          <pre><code><span class="code-line">use nautilus_model::{</span>
+<span class="code-line">    data::QuoteTick,</span>
+<span class="code-line">    enums::OrderSide,</span>
+<span class="code-line">    identifiers::{InstrumentId, StrategyId},</span>
+<span class="code-line">    types::Quantity,</span>
+<span class="code-line">};</span>
+<span class="code-line">use nautilus_trading::{nautilus_strategy, strategy::{Strategy, StrategyConfig, StrategyCore}};</span>
+
+<span class="code-line">pub struct MyStrategy {</span>
+<span class="code-line">    core: StrategyCore,</span>
+<span class="code-line">    instrument_id: InstrumentId,</span>
+<span class="code-line">    trade_size: Quantity,</span>
+<span class="code-line">}</span></code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">ПО-ЧЕЛОВЕЧЕСКИ</span>
+          <div class="translation-lines">
+            <p class="tl">Подключаем готовые типы: котировку, сторону заявки, идентификаторы и количество.</p>
+            <p class="tl">Подключаем контракт стратегии и её встроенное ядро.</p>
+            <p class="tl">Создаём собственный тип <code>MyStrategy</code>.</p>
+            <p class="tl"><code>core</code> — инфраструктурный пульт NautilusTrader.</p>
+            <p class="tl"><code>instrument_id</code> — рынок, выбранный этой стратегией.</p>
+            <p class="tl"><code>trade_size</code> — объём, выбранный этой стратегией.</p>
+          </div>
+        </div>
+      </div>
+      <p><span class="term" data-definition="Struct — составной тип данных в Rust: именованный контейнер с полями. Удобно представлять его как паспорт объекта с заранее определёнными графами.">Структура</span> делает владение явным: AI-агенту можно точно сказать, куда добавить новое состояние и чего не касаться.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">3. Карта ответственности</h2>
+      <div class="arch-diagram animate-in">
+        <div class="arch-zone">
+          <h3 class="arch-zone-label">Предоставляет фреймворк</h3>
+          <div class="arch-component" data-desc="StrategyCore — единственная точка доступа к инфраструктуре runtime. Не переносите сюда параметры торговой идеи.">
+            <div class="arch-icon">🧭</div><span>StrategyCore</span>
+          </div>
+        </div>
+        <div class="arch-zone">
+          <h3 class="arch-zone-label">Владеет стратегия</h3>
+          <div class="arch-component" data-desc="InstrumentId фиксирует, какой рынок обслуживает экземпляр стратегии.">
+            <div class="arch-icon">🏷️</div><span>InstrumentId</span>
+          </div>
+          <div class="arch-component" data-desc="Quantity хранит выбранный объём заявки и должна проходить вашу валидацию риска.">
+            <div class="arch-icon">📏</div><span>Quantity</span>
+          </div>
+        </div>
+        <div class="arch-zone">
+          <h3 class="arch-zone-label">Живёт в событии</h3>
+          <div class="arch-component" data-desc="QuoteTick приходит в обработчик. Хранить его в поле стоит лишь при явной необходимости помнить последнюю котировку.">
+            <div class="arch-icon">⚡</div><span>QuoteTick</span>
+          </div>
+        </div>
+        <div class="arch-description">Нажмите на компонент и прочитайте границу ответственности.</div>
+      </div>
+      <div class="callout callout-info animate-in">
+        <div class="callout-icon">🧠</div>
+        <div class="callout-content"><strong class="callout-title">Rust-first означает больше, чем язык</strong><p>Сборка, запуск и состояние стратегии принадлежат нативному Rust-runtime. Python не становится скрытым каноническим процессом.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">4. Лабораторная работа: паспорт состояния</h2>
+      <p>Сначала пройдите с преподавателем три примера, затем спроектируйте состояние двухинструментной spread-стратегии самостоятельно.</p>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Назовите значение</strong><p>Например: последний spread, порог входа или лимит риска.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Определите владельца</strong><p>Core, состояние стратегии или локальные данные одного события.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Зафиксируйте жизненный цикл</strong><p>Когда значение создаётся, обновляется, проверяется и очищается.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Сформулируйте инструкцию AI</strong><p>Назовите границу и отдельно запретите дублировать обязанности <code>StrategyCore</code>.</p></div></div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">Артефакт</code><span class="badge-desc">1 страница, 3 зоны владения, ≥5 полей, 2 AI-промпта.</span></div>
+        <div class="badge-item"><code class="badge-code">Приёмка</code><span class="badge-desc">У каждого поля один владелец и понятный жизненный цикл.</span></div>
+        <div class="badge-item"><code class="badge-code">Ограничение</code><span class="badge-desc">Rust — канонический runtime; исполняемый код пока не требуется.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">5. Проверка понимания: сможете ли вы направить ИИ?</h2>
+      <div class="quiz-container" id="quiz-module1">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Точно: параметр торговой идеи должен принадлежать стратегии и иметь один явный жизненный цикл." data-explanation-wrong="Подумайте, кто должен помнить порог между событиями и является ли он инфраструктурой фреймворка.">
+          <h3 class="quiz-question">1. Для spread-стратегии нужен изменяемый порог входа. Куда его поместить?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Внутрь <code>StrategyCore</code></span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>В поле структуры стратегии</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Только в локальную переменную одного события</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Верно: сначала выясняем, нужно ли помнить данные между событиями; только затем добавляем состояние." data-explanation-wrong="Не начинайте с синтаксиса или удобства. Начните с жизненного цикла данных.">
+          <h3 class="quiz-question">2. AI предлагает хранить каждую котировку в поле стратегии. Какой первый вопрос задать?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Как назвать поле короче?</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Можно ли переписать это на Python?</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Нужно ли значение после завершения обработчика?</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Именно: такой запрос называет границу, владельца и запрещает опасное дублирование инфраструктуры." data-explanation-wrong="Хорошая инструкция задаёт владельца состояния и ограничения, а не просит AI выбрать архитектуру вслепую.">
+          <h3 class="quiz-question">3. Какой промпт лучше удерживает архитектурную границу?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>«Добавь <code>risk_limit</code> в структуру стратегии; не дублируй сервисы <code>StrategyCore</code>»</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>«Добавь лимит куда удобнее»</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>«Сделай всё глобальными переменными»</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+<section class="module" id="module-2">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 2 · 110 минут</span>
+      <h1 class="module-title">От события к заявке</h1>
+      <p class="module-subtitle">Котировка запускает цепочку решений, но ни один ранний шаг ещё не доказывает сделку на бирже.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">1. Пять служб, одна цепочка</h2>
+      <p>Это похоже на аварийную службу: канал надо зарегистрировать, вызов принять, заявку оформить, проверить допуск и только затем передать исполнителю. <span class="term" data-definition="Subscription — регистрация интереса к определённому потоку данных. Без подписки runtime не знает, какие котировки доставлять стратегии.">Подписка</span> и <span class="term" data-definition="Callback, или обработчик события, — функция, которую runtime вызывает при появлении новых данных. Это не прямой звонок от биржи, а управляемая доставка внутри системы.">обработчик</span> — уже две разные границы.</p>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Adapter получает quote</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Strategy вызывает handler</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Factory создаёт order</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Risk выносит verdict</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><p>Execution отправляет venue</p></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">⚠️</div><div class="callout-content"><strong class="callout-title">Команда — не сделка</strong><p><code>submit_order</code> означает «передай намерение дальше». Она не доказывает ни принятие площадкой, ни <span class="term" data-definition="Fill — факт полного или частичного исполнения заявки на торговой площадке. Создание и отправка заявки ещё не являются fill.">исполнение</span>.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">2. Где код разделяет границы</h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">RUST · ДОСЛОВНО</span><pre><code><span class="code-line">impl DataActor for MyStrategy {</span>
+<span class="code-line">    fn on_start(&amp;mut self) -&gt; anyhow::Result&lt;()&gt; {</span>
+<span class="code-line">        self.subscribe_quotes(self.instrument_id, None, None);</span>
+<span class="code-line">        Ok(())</span>
+<span class="code-line">    }</span>
+
+<span class="code-line">    fn on_quote(&amp;mut self, quote: &amp;QuoteTick) -&gt; anyhow::Result&lt;()&gt; {</span>
+<span class="code-line">        let order = self.order().market(</span>
+<span class="code-line">            self.instrument_id,</span>
+<span class="code-line">            OrderSide::Buy,</span>
+<span class="code-line">            self.trade_size,</span>
+<span class="code-line">            None, None, None, None, None, None, None,</span>
+<span class="code-line">        );</span>
+<span class="code-line">        self.submit_order(order, None, None, None)?;</span>
+<span class="code-line">        Ok(())</span>
+<span class="code-line">    }</span>
+<span class="code-line">}</span></code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-ЧЕЛОВЕЧЕСКИ</span><div class="translation-lines">
+          <p class="tl">Стратегия обещает работать как получатель данных.</p>
+          <p class="tl">При запуске просит поток котировок выбранного инструмента.</p>
+          <p class="tl">Когда runtime доставит котировку, запускается отдельный обработчик.</p>
+          <p class="tl">Фабрика создаёт рыночную заявку на покупку заданного размера.</p>
+          <p class="tl">Стратегия отправляет команду в торговый конвейер и передаёт ошибку наверх.</p>
+          <p class="tl">Код завершился успешно — но подтверждение площадки всё ещё впереди.</p>
+        </div></div>
+      </div>
+      <p>Пример специально прост: покупка на каждой котировке не является безопасной production-логикой. Его задача — показать <span class="term" data-definition="Boundary — явная граница ответственности между компонентами. Наблюдаемая граница помогает понять, где именно пропали данные или команда.">границы</span>.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">3. Послушайте разговор компонентов</h2>
+      <div class="chat-window animate-in" id="chat-module2">
+        <div class="chat-messages">
+          <div class="chat-message" data-msg="0" data-sender="adapter" style="display:none"><div class="chat-avatar" style="background:var(--color-actor-1)">A</div><div class="chat-bubble"><span class="chat-sender" style="color:var(--color-actor-1)">Adapter</span><p>Получил новую котировку BTC-USDT и передал её runtime.</p></div></div>
+          <div class="chat-message" data-msg="1" data-sender="strategy" style="display:none"><div class="chat-avatar" style="background:var(--color-actor-2)">S</div><div class="chat-bubble"><span class="chat-sender" style="color:var(--color-actor-2)">Strategy</span><p>Обработчик сработал. Формирую намерение купить заданный объём.</p></div></div>
+          <div class="chat-message" data-msg="2" data-sender="risk" style="display:none"><div class="chat-avatar" style="background:var(--color-actor-3)">R</div><div class="chat-bubble"><span class="chat-sender" style="color:var(--color-actor-3)">RiskEngine</span><p>Проверяю лимиты. Решение: разрешить или отклонить.</p></div></div>
+          <div class="chat-message" data-msg="3" data-sender="execution" style="display:none"><div class="chat-avatar" style="background:var(--color-actor-4)">E</div><div class="chat-bubble"><span class="chat-sender" style="color:var(--color-actor-4)">ExecutionEngine</span><p>После разрешения кодирую команду для конкретного адаптера площадки.</p></div></div>
+          <div class="chat-message" data-msg="4" data-sender="venue" style="display:none"><div class="chat-avatar" style="background:var(--color-actor-5)">V</div><div class="chat-bubble"><span class="chat-sender" style="color:var(--color-actor-5)">Venue</span><p>Подтверждаю приём, отклоняю или сообщаю об исполнении отдельными событиями.</p></div></div>
+        </div>
+        <div class="chat-typing" id="chat-module2-typing" style="display:none"><div class="chat-avatar" id="chat-module2-typing-avatar">?</div><div class="chat-typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>
+        <div class="chat-controls"><button class="btn chat-next-btn">Следующее сообщение</button><button class="btn chat-all-btn">Показать всё</button><button class="btn chat-reset-btn">Сначала</button><span class="chat-progress"></span></div>
+      </div>
+      <div class="callout callout-accent animate-in"><div class="callout-icon">🔎</div><div class="callout-content"><strong class="callout-title">Диагностика начинается с последнего доказанного шага</strong><p>Не спрашивайте «почему нет сделки?» целиком. Сначала найдите последний компонент, оставивший проверяемый след.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">4. Проследите пакет шаг за шагом</h2>
+      <div class="flow-animation animate-in" data-steps='[
+        {"highlight":"flow-actor-1","label":"Adapter зарегистрировал новую котировку"},
+        {"highlight":"flow-actor-2","label":"Runtime доставляет QuoteTick обработчику","packet":true,"from":"actor-1","to":"actor-2"},
+        {"highlight":"flow-actor-3","label":"Стратегия создаёт команду заявки","packet":true,"from":"actor-2","to":"actor-3"},
+        {"highlight":"flow-actor-4","label":"RiskEngine принимает независимое решение","packet":true,"from":"actor-3","to":"actor-4"},
+        {"highlight":"flow-actor-5","label":"ExecutionEngine отправляет разрешённую команду площадке","packet":true,"from":"actor-4","to":"actor-5"}
+      ]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1"><div class="flow-actor-icon">📡</div><span>Adapter</span></div>
+          <div class="flow-actor" id="flow-actor-2"><div class="flow-actor-icon">⚙️</div><span>Runtime</span></div>
+          <div class="flow-actor" id="flow-actor-3"><div class="flow-actor-icon">🧠</div><span>Strategy</span></div>
+          <div class="flow-actor" id="flow-actor-4"><div class="flow-actor-icon">🛡️</div><span>Risk</span></div>
+          <div class="flow-actor" id="flow-actor-5"><div class="flow-actor-icon">🚀</div><span>Execution</span></div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div><div class="flow-step-label" id="flow-label">Нажмите «Следующий шаг»</div>
+        <div class="flow-controls"><button class="btn flow-next-btn">Следующий шаг</button><button class="btn flow-reset-btn">Сначала</button><span class="flow-progress"></span></div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">evidence</code><span class="badge-desc">event time, instrument, correlation ID</span></div>
+        <div class="badge-item"><code class="badge-code">order</code><span class="badge-desc">client order ID, risk verdict, dispatch time</span></div>
+        <div class="badge-item"><code class="badge-code">venue</code><span class="badge-desc">acknowledgement, rejection or fill event</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">5. Лабораторная работа: «Котировка есть, сделки нет»</h2>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Докажите подписку</strong><p>Есть ли подтверждение регистрации потока и свежие входящие данные?</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Докажите callback</strong><p>Увеличивается ли счётчик обработчика для нужного инструмента?</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Проверьте risk verdict</strong><p>Создана ли заявка и разрешил ли её независимый контур риска?</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Проверьте transport</strong><p>Есть ли отправка, acknowledgement и последующее событие площадки?</p></div></div>
+      </div>
+      <p>Артефакт: дерево решений с пятью контрольными точками. Приёмка: ни одна ветка не приравнивает создание заявки к fill, а исправление начинается только после наблюдаемого доказательства.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">6. Проверка понимания: где оборвалась цепочка?</h2>
+      <div class="quiz-container" id="quiz-module2">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Верно: входящие данные в адаптере ещё не доказывают подписку именно этой стратегии и доставку callback." data-explanation-wrong="Не перепрыгивайте к бирже. Сначала проверьте ближайшую следующую границу после адаптера."><h3 class="quiz-question">1. Adapter видит quotes, но счётчик <code>on_quote</code> равен нулю. Что проверять первым?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Fill history площадки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Подписку и маршрутизацию события стратегии</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Размер комиссии</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Точно: создание заявки доказано, но risk verdict — следующая независимая граница." data-explanation-wrong="Успешный handler не означает, что заявка прошла риск и была отправлена."><h3 class="quiz-question">2. Handler завершился успешно, но dispatch отсутствует. Какое доказательство нужно дальше?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Ещё одна котировка</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Доходность стратегии</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Решение RiskEngine и причина отказа</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Да: acknowledgement подтверждает приём команды, а fill приходит отдельным событием." data-explanation-wrong="Не смешивайте приём заявки площадкой с её исполнением."><h3 class="quiz-question">3. Venue прислал acknowledgement. Как сформулировать статус?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Заявка принята, fill ещё не доказан</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Сделка полностью исполнена</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Стратегия прибыльна</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Именно: такой запрос создаёт наблюдаемость без преждевременной смены поведения стратегии." data-explanation-wrong="Сначала соберите трассу по границам; изменение логики до диагноза может скрыть исходную проблему."><h3 class="quiz-question">4. Какой запрос AI безопаснее для диагностики?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>«Перепиши стратегию, чтобы точно торговала»</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>«Добавь correlation ID и логи на subscription, callback, risk, dispatch и venue event; поведение не меняй»</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>«Игнорируй risk rejection»</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Проверить ответы</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+<section class="module" id="module-3">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 3 · 110 минут</span>
+      <h1 class="module-title">Нативный Rust-бэктест</h1>
+      <p class="module-subtitle">Собираем испытательный стенд, где стратегия реальна, а площадка и прошлый рынок — контролируемая модель.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">1. Что на стенде настоящее, а что моделируется</h2>
+      <p><span class="term" data-definition="Backtest — воспроизведение торговой стратегии на исторических данных. Он проверяет поведение в заданной модели прошлого, но не гарантирует будущий результат.">Бэктест</span> полезен только тогда, когда вы точно знаете природу каждого слоя. Как на стенде двигателя: контроллер настоящий, нагрузка смоделирована, измерения обязаны быть воспроизводимыми.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-1)"><div class="pattern-icon" style="background:var(--color-actor-1)">🦀</div><h3 class="pattern-title">Реальная стратегия</h3><p class="pattern-desc">Тот же Rust-тип, параметры и обработчики, которые вы проверяете перед дальнейшим продвижением.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-2)"><div class="pattern-icon" style="background:var(--color-actor-2)">🏛️</div><h3 class="pattern-title">Симулированная площадка</h3><p class="pattern-desc">Модель исполнения, комиссий и <span class="term" data-definition="Проскальзывание — разница между ожидаемой и фактической ценой исполнения. В бэктесте это допущение модели, которое нужно задавать явно.">проскальзывания</span>, а не настоящая биржа.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-3)"><div class="pattern-icon" style="background:var(--color-actor-3)">🧾</div><h3 class="pattern-title">Историческое воспроизведение</h3><p class="pattern-desc">Упорядоченный поток прошлых событий с известным источником и диапазоном времени.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-5)"><div class="pattern-icon" style="background:var(--color-actor-5)">📊</div><h3 class="pattern-title">Нативный отчёт</h3><p class="pattern-desc">Результаты производит тот же Rust-контур; внешний Python-скрипт не становится канонической истиной.</p></div>
+      </div>
+      <div class="callout callout-accent animate-in"><div class="callout-icon">💡</div><div class="callout-content"><strong class="callout-title">Модель — часть результата</strong><p>Доходность без описания данных, комиссий и исполнения — не доказательство, а число без условий.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">2. Стратегия подключается явно</h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">RUST · ДОСЛОВНО</span><pre><code><span class="code-line">use nautilus_model::types::Quantity;</span>
+<span class="code-line">use nautilus_trading::examples::strategies::EmaCross;</span>
+
+<span class="code-line">let strategy = EmaCross::new(</span>
+<span class="code-line">    instrument_id,</span>
+<span class="code-line">    Quantity::from("100000"),</span>
+<span class="code-line">    10, // fast EMA period</span>
+<span class="code-line">    20, // slow EMA period</span>
+<span class="code-line">);</span>
+
+<span class="code-line">engine.add_strategy(strategy)?;</span>
+<span class="code-line">engine.run(None, None, None, false)?;</span></code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-ЧЕЛОВЕЧЕСКИ</span><div class="translation-lines">
+          <p class="tl">Подключаем тип количества и пример стратегии пересечения средних.</p>
+          <p class="tl">Создаём стратегию для выбранного инструмента и размера.</p>
+          <p class="tl">Задаём две <span class="term" data-definition="EMA, exponential moving average, — средняя цена с большим весом свежих наблюдений. Здесь две EMA используют разные периоды.">EMA</span>: быструю с периодом 10 и медленную с периодом 20.</p>
+          <p class="tl">Передаём готовую стратегию движку.</p>
+          <p class="tl">Запускаем нативный прогон с уже собранными окружением и данными.</p>
+        </div></div>
+      </div>
+      <p>Эти строки — только финал сборки. До них движок должен получить venue, инструмент и хронологически корректные данные.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">3. Полная сборка эксперимента</h2>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Engine + config</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Venue model</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Instrument</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Ordered data</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><p>Strategy</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">6</div><p>Run</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">7</div><p>Reports</p></div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">provenance</code><span class="badge-desc">Источник, диапазон и версия данных записаны.</span></div>
+        <div class="badge-item"><code class="badge-code">chronology</code><span class="badge-desc">События отсортированы; будущее не просачивается в прошлое.</span></div>
+        <div class="badge-item"><code class="badge-code">costs</code><span class="badge-desc">Комиссии, slippage и fill-модель не оставлены неявными.</span></div>
+        <div class="badge-item"><code class="badge-code">manifest</code><span class="badge-desc">Версия стратегии, параметры и выходные отчёты воспроизводимы.</span></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">🚫</div><div class="callout-content"><strong class="callout-title">Look-ahead обнуляет вывод</strong><p><span class="term" data-definition="Look-ahead bias — ошибка, когда решение в прошлом использует данные, которые на тот момент ещё не были известны. Такой тест выглядит умнее реальности.">Подглядывание в будущее</span> делает красивый отчёт недействительным.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">4. Лабораторная работа: соберите испытательный стенд</h2>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Разложите семь карточек</strong><p>Engine → venue → instrument → data → strategy → run → reports.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Пометьте природу слоя</strong><p>Реальная логика, симуляция, входное доказательство или выходное доказательство.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Добавьте проверки</strong><p>Хронология, provenance, fees, slippage, warm-up и детерминированная конфигурация.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Заполните manifest</strong><p>Версия стратегии, диапазон данных, инструмент, параметры, seed и пути отчётов.</p></div></div>
+      </div>
+      <div class="callout callout-info animate-in"><div class="callout-icon">🧪</div><div class="callout-content"><strong class="callout-title">Хороший эксперимент можно опровергнуть</strong><p>До запуска сформулируйте, какие наблюдения отменят гипотезу, а не только какие подтвердят её.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">5. Самостоятельно: сравните 10/20 и 20/50</h2>
+      <p>Подготовьте тест-чартер для двух наборов EMA в одном и том же Rust-harness. Меняются только заявленные периоды; данные, venue model и правила отчёта остаются одинаковыми.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-1)">❓</div><h3 class="pattern-title">Гипотеза</h3><p class="pattern-desc">Какой эффект ожидается и почему он измерим?</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-2)">🔒</div><h3 class="pattern-title">Контроль</h3><p class="pattern-desc">Какие входы и допущения неизменны между прогонами?</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-3)">🧯</div><h3 class="pattern-title">Инвалидация</h3><p class="pattern-desc">При каких ошибках данных или модели оба отчёта отклоняются?</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-5)">📦</div><h3 class="pattern-title">Артефакт</h3><p class="pattern-desc">Чартер, manifest и карта «реальное/симулированное».</p></div>
+      </div>
+      <p>Критерий приёмки: вывод ограничен историческим тестом. Лучший результат не перепрыгивает напрямую к live.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">6. Проверка понимания: можно ли доверять эксперименту?</h2>
+      <div class="quiz-container" id="quiz-module3">
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Верно: перемешивание нарушает причинный порядок и может дать стратегии информацию из будущего." data-explanation-wrong="Скорость загрузки не оправдывает нарушение хронологии событий."><h3 class="quiz-question">1. Данные загружаются быстрее, если перемешать чанки. Что делать?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Перемешать и усреднить прибыль</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Оставить, если тест зелёный</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Восстановить строгую хронологию до запуска</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Точно: честное сравнение меняет только исследуемый фактор, сохраняя остальные условия." data-explanation-wrong="Если одновременно меняются данные или fill-модель, причину различия установить нельзя."><h3 class="quiz-question">2. Как честно сравнить EMA 10/20 и 20/50?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Для каждого взять удобный рынок и период</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Сохранить все входы и менять только периоды EMA</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Оставить только более прибыльный отчёт</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Да: Rust остаётся источником канонического запуска и отчёта; визуализация может быть вторичной, но не заменяет evidence chain." data-explanation-wrong="Не отдавайте канонический расчёт скрытому внешнему runtime, иначе воспроизводимость Rust-контура теряется."><h3 class="quiz-question">3. Как сохранить Rust авторитетным runtime?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Генерировать канонический отчёт в Rust и хранить manifest</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Пересчитать результат отдельным Python-скриптом без сверки</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Сохранить только скриншот графика</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить ответы</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+<section class="module" id="module-4">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 4 · 125 минут</span>
+      <h1 class="module-title">Переход к Live без самообмана</h1>
+      <p class="module-subtitle">Соединение — только первый огонёк на панели. Без сверки состояния, лимитов и аварийного останова система не готова к реальному риску.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">1. Шлюз перед открытым морем</h2>
+      <p>Перед выходом шлюз не спрашивает только «двигатель завёлся?». Он независимо проверяет связь, право доступа, совпадение состояния, ограничения и возможность безопасно остановиться.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-1)"><div class="pattern-icon" style="background:var(--color-actor-1)">🔌</div><h3 class="pattern-title">Соединение</h3><p class="pattern-desc">Сеть и <span class="term" data-definition="Adapter — компонент-переводчик между внутренними командами NautilusTrader и протоколом конкретной биржи.">адаптер</span> могут обмениваться сообщениями.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-2)"><div class="pattern-icon" style="background:var(--color-actor-2)">🔑</div><h3 class="pattern-title">Аутентификация</h3><p class="pattern-desc"><span class="term" data-definition="Учётные данные — секретные данные для доступа, например ключ API и секрет. Успешная аутентификация подтверждает личность, но не безопасность стратегии.">Учётные данные</span> приняты и имеют ровно необходимые права.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-3)"><div class="pattern-icon" style="background:var(--color-actor-3)">⚖️</div><h3 class="pattern-title">Сверка состояния</h3><p class="pattern-desc"><span class="term" data-definition="Сверка состояния — сравнение локальных заявок, исполнений и позиций с отчётами площадки; открытые и отправляемые заявки проверяются отдельно во время работы системы.">Сверка</span> доказывает согласованность заявок, исполнений и позиций.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-4)"><div class="pattern-icon" style="background:var(--color-actor-4)">🛡️</div><h3 class="pattern-title">Лимиты риска</h3><p class="pattern-desc">Экспозиция, частота заявок и условия устаревания данных ограничены заранее.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-5)"><div class="pattern-icon" style="background:var(--color-actor-5)">🛑</div><h3 class="pattern-title">Аварийный останов</h3><p class="pattern-desc"><span class="term" data-definition="Аварийный останов — контролируемый механизм, который прекращает принятие нового риска, обрабатывает открытые заявки и фиксирует причину остановки.">Аварийный останов</span> имеет триггеры, действия и процедуру восстановления.</p></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">⛔</div><div class="callout-content"><strong class="callout-title">Connection OK ≠ Live GO</strong><p>Успешный ping или login доказывает только узкий gate. Он ничего не говорит о позициях, заявках, лимитах и остановке.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">2. Конструктор показывает независимые проверки</h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">RUST · ДОСЛОВНО</span><pre><code><span class="code-line">let mut node = LiveNode::builder(trader_id, Environment::Live)?</span>
+<span class="code-line">    .with_name("MY-NODE-001".to_string())</span>
+<span class="code-line">    .with_logging(log_config)</span>
+<span class="code-line">    .add_data_client(</span>
+<span class="code-line">        None,</span>
+<span class="code-line">        Box::new(OKXDataClientFactory::new()),</span>
+<span class="code-line">        Box::new(data_config),</span>
+<span class="code-line">    )?</span>
+<span class="code-line">    .add_exec_client(</span>
+<span class="code-line">        None,</span>
+<span class="code-line">        Box::new(OKXExecutionClientFactory::new()),</span>
+<span class="code-line">        Box::new(exec_config),</span>
+<span class="code-line">    )?</span>
+<span class="code-line">    .with_reconciliation(false) // Simplified; enable in production</span>
+<span class="code-line">    .with_delay_post_stop_secs(5)</span>
+<span class="code-line">    .build()?;</span></code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-ЧЕЛОВЕЧЕСКИ</span><div class="translation-lines">
+          <p class="tl">Создаём live-узел с идентичностью трейдера и именем экземпляра.</p>
+          <p class="tl">Подключаем журналирование как самостоятельную часть наблюдаемости.</p>
+          <p class="tl">Добавляем отдельный клиент рыночных данных OKX.</p>
+          <p class="tl">Добавляем отдельный клиент исполнения OKX.</p>
+          <p class="tl"><strong>Опасный упрощённый флаг:</strong> сверка отключена; для production её нужно включить и проверить.</p>
+          <p class="tl">После остановки оставляем короткое время на завершение сообщений и строим узел.</p>
+        </div></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">🚨</div><div class="callout-content"><strong class="callout-title"><code>with_reconciliation(false)</code> — предупреждение</strong><p>Это часть упрощённого примера, не рекомендация. При расхождении состояния production-путь должен быть fail-closed: новый риск запрещён.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">3. Переключите слой доказательств</h2>
+      <div class="layer-demo animate-in">
+        <div class="layer-tabs">
+          <button class="layer-tab active" onclick="showLayer('layer-live-connect', this)">Связь</button>
+          <button class="layer-tab" onclick="showLayer('layer-live-auth', this)">+ Auth</button>
+          <button class="layer-tab" onclick="showLayer('layer-live-recon', this)">+ Reconciliation</button>
+          <button class="layer-tab" onclick="showLayer('layer-live-controls', this)">+ Controls</button>
+        </div>
+        <div class="layer-viewport">
+          <div class="layer" id="layer-live-connect" style="display:block"><div class="badge-list"><div class="badge-item"><code class="badge-code">PROVED</code><span class="badge-desc">Endpoint доступен, transport обменивается сообщениями.</span></div><div class="badge-item"><code class="badge-code">NOT PROVED</code><span class="badge-desc">Права, состояние счёта, лимиты и возможность остановки.</span></div></div></div>
+          <div class="layer" id="layer-live-auth" style="display:none"><div class="badge-list"><div class="badge-item"><code class="badge-code">PROVED</code><span class="badge-desc">Ключ принят; разрешения проверены.</span></div><div class="badge-item"><code class="badge-code">NOT PROVED</code><span class="badge-desc">Локальные позиции совпадают с venue.</span></div></div></div>
+          <div class="layer" id="layer-live-recon" style="display:none"><div class="badge-list"><div class="badge-item"><code class="badge-code">COMPARE</code><span class="badge-desc">Orders, fills, positions, execution IDs и timestamps.</span></div><div class="badge-item"><code class="badge-code">ON MISMATCH</code><span class="badge-desc">NO-GO, запрет нового риска, сохранение evidence.</span></div></div></div>
+          <div class="layer" id="layer-live-controls" style="display:none"><div class="badge-list"><div class="badge-item"><code class="badge-code">ACCOUNT</code><span class="badge-desc">Баланс и доступная маржа проверяются отдельным account-state/risk gate.</span></div><div class="badge-item"><code class="badge-code">LIMITS</code><span class="badge-desc">Exposure, order rate, stale data, drawdown.</span></div><div class="badge-item"><code class="badge-code">STOP</code><span class="badge-desc">Kill switch, open-order policy, audit trail, controlled recovery.</span></div></div></div>
+        </div>
+        <p class="layer-description" id="layer-desc">Каждый новый слой расширяет доказательство, но не отменяет предыдущие проверки.</p>
+      </div>
+      <div class="callout callout-accent animate-in"><div class="callout-icon">🧩</div><div class="callout-content"><strong class="callout-title">Готовность — это пересечение gates</strong><p>GO возможен только когда все обязательные проверки зелёные одновременно и подтверждены свежими артефактами.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">4. Лестница продвижения без прыжков</h2>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Build</strong><p>Зафиксированный Rust build и конфигурация. NO-GO: сборка не повторяется или версия не идентифицирована.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Replay / backtest</strong><p>Исторический replay в Rust. NO-GO: невоспроизводимость, look-ahead, неявные costs.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Untouched forward</strong><p>Заранее закрытое окно и неизменённая гипотеза. NO-GO: переобучение по результату или недостающие данные.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Shadow</strong><p>Живые данные и решения без отправки заявок. NO-GO: пропуски событий, расхождение расчётов, нестабильность.</p></div></div>
+        <div class="step-card"><div class="step-num">5</div><div class="step-body"><strong>Bounded canary</strong><p>Минимальный разрешённый риск и узкий инструмент. NO-GO: reconciliation mismatch, breach лимита, stale data.</p></div></div>
+        <div class="step-card"><div class="step-num">6</div><div class="step-body"><strong>Live expansion</strong><p>Расширение только после принятого canary evidence, явного sign-off и готового rollback.</p></div></div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">entry</code><span class="badge-desc">Какое доказательство разрешает войти на ступень?</span></div>
+        <div class="badge-item"><code class="badge-code">scope</code><span class="badge-desc">Как ограничены инструмент, размер, время и частота?</span></div>
+        <div class="badge-item"><code class="badge-code">exit</code><span class="badge-desc">Что считается успехом, а что немедленным NO-GO?</span></div>
+        <div class="badge-item"><code class="badge-code">owner</code><span class="badge-desc">Кто лично разрешает следующий шаг?</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">5. Лабораторная работа: расхождение открытых заявок</h2>
+      <p>Сценарий: venue показывает открытую заявку, которой нет в локальном состоянии. Это не повод «продолжить и посмотреть», а проверка fail-closed поведения.</p>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Остановить новый риск</strong><p>Kill switch запрещает новые заявки; факт и причина фиксируются.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Сохранить evidence</strong><p>Снимки локальных и venue balances, positions, open orders, timestamps и IDs.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Применить open-order policy</strong><p>Отмена или управляемое принятие состояния — только по заранее утверждённой процедуре.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Восстановиться контролируемо</strong><p>Повторная reconciliation, human acknowledgement и новый sign-off до возобновления.</p></div></div>
+      </div>
+      <div class="callout callout-info animate-in"><div class="callout-icon">📋</div><div class="callout-content"><strong class="callout-title">Ваш артефакт</strong><p>Gate matrix + promotion dossier + kill-switch runbook. Это пакет для проверки, а не автоматическое разрешение live.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">6. Самостоятельная работа и итоговая проверка</h2>
+      <p>Подготовьте go/no-go dossier для одноинструментного canary: exposure, order rate, stale-data trigger, reconciliation trigger, ручной и автоматический kill switch, rollback и ответственные.</p>
+      <div class="quiz-container" id="quiz-module4">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Верно: connectivity и auth — лишь два gates. Без сверки состояния и контролей GO недоказан." data-explanation-wrong="Успешная связь не подтверждает позиции, открытые заявки, лимиты и аварийную остановку."><h3 class="quiz-question">1. Узел подключился и ключ принят. Какой verdict корректен?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>LIVE GO</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Connectivity/Auth PASS, общая готовность ещё NO-GO</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Можно пропустить shadow</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Точно: mismatch блокирует новый риск, пока состояние не сохранено, согласовано и повторно проверено." data-explanation-wrong="Продолжение торговли на расходящихся состояниях увеличивает неизвестный риск."><h3 class="quiz-question">2. Reconciliation нашла неизвестную локально заявку. Что делать первым?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Увеличить размер следующей заявки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Игнорировать, если PnL положительный</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Остановить новый риск и сохранить evidence</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Да: лестница ограничивает неизвестность постепенно; каждая ступень создаёт evidence для следующей." data-explanation-wrong="Ни хороший backtest, ни успешный login не заменяют untouched forward, shadow и ограниченный canary."><h3 class="quiz-question">3. Какой путь продвижения допустим?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Build → replay/backtest → forward → shadow → bounded canary → live expansion</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Backtest → Live после успешного login</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Shadow → forward только после увеличения капитала</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Именно: хороший kill switch ограничивает риск, управляет открытыми заявками, сохраняет причину и не допускает бесконтрольный restart." data-explanation-wrong="Простое завершение процесса может оставить заявки на venue и не создаёт безопасной процедуры восстановления."><h3 class="quiz-question">4. Что обязательно входит в kill-switch runbook?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Только команда завершения процесса</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Triggers, stop-new-risk, open-order policy, audit и controlled recovery</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Автоматический restart без проверки</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить ответы</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Пройти ещё раз</button>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">🧭</div><div class="callout-content"><strong class="callout-title">Финальная граница курса</strong><p>Курс учит собирать и проверять evidence. Он не выдаёт разрешение на реальные сделки и не заменяет независимый production review.</p></div></div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+  </main>
+
+  <footer class="course-footer" aria-label="Навигация по программе">
+    <a href="../index.html">Все курсы</a>
+    <a href="../02-backtest-research/index.html">← Предыдущий курс</a>
+    <a href="../resources.html#labs">Практикум и рабочая тетрадь</a>
+    <a href="../docs/index.html">Документы HTML</a>
+    <a href="../resources.html#capstone">Перейти к итоговому проекту →</a>
+  </footer>
+
+</body>
+</html>

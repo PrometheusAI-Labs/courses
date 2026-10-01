@@ -1,0 +1,117 @@
+<section class="module" id="module-4">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 4 · 125 минут</span>
+      <h1 class="module-title">Переход к Live без самообмана</h1>
+      <p class="module-subtitle">Соединение — только первый огонёк на панели. Без сверки состояния, лимитов и аварийного останова система не готова к реальному риску.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">1. Шлюз перед открытым морем</h2>
+      <p>Перед выходом шлюз не спрашивает только «двигатель завёлся?». Он независимо проверяет связь, право доступа, совпадение состояния, ограничения и возможность безопасно остановиться.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-1)"><div class="pattern-icon" style="background:var(--color-actor-1)">🔌</div><h3 class="pattern-title">Соединение</h3><p class="pattern-desc">Сеть и <span class="term" data-definition="Adapter — компонент-переводчик между внутренними командами NautilusTrader и протоколом конкретной биржи.">адаптер</span> могут обмениваться сообщениями.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-2)"><div class="pattern-icon" style="background:var(--color-actor-2)">🔑</div><h3 class="pattern-title">Аутентификация</h3><p class="pattern-desc"><span class="term" data-definition="Учётные данные — секретные данные для доступа, например ключ API и секрет. Успешная аутентификация подтверждает личность, но не безопасность стратегии.">Учётные данные</span> приняты и имеют ровно необходимые права.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-3)"><div class="pattern-icon" style="background:var(--color-actor-3)">⚖️</div><h3 class="pattern-title">Сверка состояния</h3><p class="pattern-desc"><span class="term" data-definition="Сверка состояния — сравнение локальных заявок, исполнений и позиций с отчётами площадки; открытые и отправляемые заявки проверяются отдельно во время работы системы.">Сверка</span> доказывает согласованность заявок, исполнений и позиций.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-4)"><div class="pattern-icon" style="background:var(--color-actor-4)">🛡️</div><h3 class="pattern-title">Лимиты риска</h3><p class="pattern-desc">Экспозиция, частота заявок и условия устаревания данных ограничены заранее.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-5)"><div class="pattern-icon" style="background:var(--color-actor-5)">🛑</div><h3 class="pattern-title">Аварийный останов</h3><p class="pattern-desc"><span class="term" data-definition="Аварийный останов — контролируемый механизм, который прекращает принятие нового риска, обрабатывает открытые заявки и фиксирует причину остановки.">Аварийный останов</span> имеет триггеры, действия и процедуру восстановления.</p></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">⛔</div><div class="callout-content"><strong class="callout-title">Connection OK ≠ Live GO</strong><p>Успешный ping или login доказывает только узкий gate. Он ничего не говорит о позициях, заявках, лимитах и остановке.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">2. Конструктор показывает независимые проверки</h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">RUST · ДОСЛОВНО</span><pre><code><span class="code-line">let mut node = LiveNode::builder(trader_id, Environment::Live)?</span>
+<span class="code-line">    .with_name("MY-NODE-001".to_string())</span>
+<span class="code-line">    .with_logging(log_config)</span>
+<span class="code-line">    .add_data_client(</span>
+<span class="code-line">        None,</span>
+<span class="code-line">        Box::new(OKXDataClientFactory::new()),</span>
+<span class="code-line">        Box::new(data_config),</span>
+<span class="code-line">    )?</span>
+<span class="code-line">    .add_exec_client(</span>
+<span class="code-line">        None,</span>
+<span class="code-line">        Box::new(OKXExecutionClientFactory::new()),</span>
+<span class="code-line">        Box::new(exec_config),</span>
+<span class="code-line">    )?</span>
+<span class="code-line">    .with_reconciliation(false) // Simplified; enable in production</span>
+<span class="code-line">    .with_delay_post_stop_secs(5)</span>
+<span class="code-line">    .build()?;</span></code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-ЧЕЛОВЕЧЕСКИ</span><div class="translation-lines">
+          <p class="tl">Создаём live-узел с идентичностью трейдера и именем экземпляра.</p>
+          <p class="tl">Подключаем журналирование как самостоятельную часть наблюдаемости.</p>
+          <p class="tl">Добавляем отдельный клиент рыночных данных OKX.</p>
+          <p class="tl">Добавляем отдельный клиент исполнения OKX.</p>
+          <p class="tl"><strong>Опасный упрощённый флаг:</strong> сверка отключена; для production её нужно включить и проверить.</p>
+          <p class="tl">После остановки оставляем короткое время на завершение сообщений и строим узел.</p>
+        </div></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">🚨</div><div class="callout-content"><strong class="callout-title"><code>with_reconciliation(false)</code> — предупреждение</strong><p>Это часть упрощённого примера, не рекомендация. При расхождении состояния production-путь должен быть fail-closed: новый риск запрещён.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">3. Переключите слой доказательств</h2>
+      <div class="layer-demo animate-in">
+        <div class="layer-tabs">
+          <button class="layer-tab active" onclick="showLayer('layer-live-connect', this)">Связь</button>
+          <button class="layer-tab" onclick="showLayer('layer-live-auth', this)">+ Auth</button>
+          <button class="layer-tab" onclick="showLayer('layer-live-recon', this)">+ Reconciliation</button>
+          <button class="layer-tab" onclick="showLayer('layer-live-controls', this)">+ Controls</button>
+        </div>
+        <div class="layer-viewport">
+          <div class="layer" id="layer-live-connect" style="display:block"><div class="badge-list"><div class="badge-item"><code class="badge-code">PROVED</code><span class="badge-desc">Endpoint доступен, transport обменивается сообщениями.</span></div><div class="badge-item"><code class="badge-code">NOT PROVED</code><span class="badge-desc">Права, состояние счёта, лимиты и возможность остановки.</span></div></div></div>
+          <div class="layer" id="layer-live-auth" style="display:none"><div class="badge-list"><div class="badge-item"><code class="badge-code">PROVED</code><span class="badge-desc">Ключ принят; разрешения проверены.</span></div><div class="badge-item"><code class="badge-code">NOT PROVED</code><span class="badge-desc">Локальные позиции совпадают с venue.</span></div></div></div>
+          <div class="layer" id="layer-live-recon" style="display:none"><div class="badge-list"><div class="badge-item"><code class="badge-code">COMPARE</code><span class="badge-desc">Orders, fills, positions, execution IDs и timestamps.</span></div><div class="badge-item"><code class="badge-code">ON MISMATCH</code><span class="badge-desc">NO-GO, запрет нового риска, сохранение evidence.</span></div></div></div>
+          <div class="layer" id="layer-live-controls" style="display:none"><div class="badge-list"><div class="badge-item"><code class="badge-code">ACCOUNT</code><span class="badge-desc">Баланс и доступная маржа проверяются отдельным account-state/risk gate.</span></div><div class="badge-item"><code class="badge-code">LIMITS</code><span class="badge-desc">Exposure, order rate, stale data, drawdown.</span></div><div class="badge-item"><code class="badge-code">STOP</code><span class="badge-desc">Kill switch, open-order policy, audit trail, controlled recovery.</span></div></div></div>
+        </div>
+        <p class="layer-description" id="layer-desc">Каждый новый слой расширяет доказательство, но не отменяет предыдущие проверки.</p>
+      </div>
+      <div class="callout callout-accent animate-in"><div class="callout-icon">🧩</div><div class="callout-content"><strong class="callout-title">Готовность — это пересечение gates</strong><p>GO возможен только когда все обязательные проверки зелёные одновременно и подтверждены свежими артефактами.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">4. Лестница продвижения без прыжков</h2>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Build</strong><p>Зафиксированный Rust build и конфигурация. NO-GO: сборка не повторяется или версия не идентифицирована.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Replay / backtest</strong><p>Исторический replay в Rust. NO-GO: невоспроизводимость, look-ahead, неявные costs.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Untouched forward</strong><p>Заранее закрытое окно и неизменённая гипотеза. NO-GO: переобучение по результату или недостающие данные.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Shadow</strong><p>Живые данные и решения без отправки заявок. NO-GO: пропуски событий, расхождение расчётов, нестабильность.</p></div></div>
+        <div class="step-card"><div class="step-num">5</div><div class="step-body"><strong>Bounded canary</strong><p>Минимальный разрешённый риск и узкий инструмент. NO-GO: reconciliation mismatch, breach лимита, stale data.</p></div></div>
+        <div class="step-card"><div class="step-num">6</div><div class="step-body"><strong>Live expansion</strong><p>Расширение только после принятого canary evidence, явного sign-off и готового rollback.</p></div></div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">entry</code><span class="badge-desc">Какое доказательство разрешает войти на ступень?</span></div>
+        <div class="badge-item"><code class="badge-code">scope</code><span class="badge-desc">Как ограничены инструмент, размер, время и частота?</span></div>
+        <div class="badge-item"><code class="badge-code">exit</code><span class="badge-desc">Что считается успехом, а что немедленным NO-GO?</span></div>
+        <div class="badge-item"><code class="badge-code">owner</code><span class="badge-desc">Кто лично разрешает следующий шаг?</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">5. Лабораторная работа: расхождение открытых заявок</h2>
+      <p>Сценарий: venue показывает открытую заявку, которой нет в локальном состоянии. Это не повод «продолжить и посмотреть», а проверка fail-closed поведения.</p>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Остановить новый риск</strong><p>Kill switch запрещает новые заявки; факт и причина фиксируются.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Сохранить evidence</strong><p>Снимки локальных и venue balances, positions, open orders, timestamps и IDs.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Применить open-order policy</strong><p>Отмена или управляемое принятие состояния — только по заранее утверждённой процедуре.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Восстановиться контролируемо</strong><p>Повторная reconciliation, human acknowledgement и новый sign-off до возобновления.</p></div></div>
+      </div>
+      <div class="callout callout-info animate-in"><div class="callout-icon">📋</div><div class="callout-content"><strong class="callout-title">Ваш артефакт</strong><p>Gate matrix + promotion dossier + kill-switch runbook. Это пакет для проверки, а не автоматическое разрешение live.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">6. Самостоятельная работа и итоговая проверка</h2>
+      <p>Подготовьте go/no-go dossier для одноинструментного canary: exposure, order rate, stale-data trigger, reconciliation trigger, ручной и автоматический kill switch, rollback и ответственные.</p>
+      <div class="quiz-container" id="quiz-module4">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Верно: connectivity и auth — лишь два gates. Без сверки состояния и контролей GO недоказан." data-explanation-wrong="Успешная связь не подтверждает позиции, открытые заявки, лимиты и аварийную остановку."><h3 class="quiz-question">1. Узел подключился и ключ принят. Какой verdict корректен?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>LIVE GO</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Connectivity/Auth PASS, общая готовность ещё NO-GO</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Можно пропустить shadow</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Точно: mismatch блокирует новый риск, пока состояние не сохранено, согласовано и повторно проверено." data-explanation-wrong="Продолжение торговли на расходящихся состояниях увеличивает неизвестный риск."><h3 class="quiz-question">2. Reconciliation нашла неизвестную локально заявку. Что делать первым?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Увеличить размер следующей заявки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Игнорировать, если PnL положительный</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Остановить новый риск и сохранить evidence</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Да: лестница ограничивает неизвестность постепенно; каждая ступень создаёт evidence для следующей." data-explanation-wrong="Ни хороший backtest, ни успешный login не заменяют untouched forward, shadow и ограниченный canary."><h3 class="quiz-question">3. Какой путь продвижения допустим?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Build → replay/backtest → forward → shadow → bounded canary → live expansion</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Backtest → Live после успешного login</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Shadow → forward только после увеличения капитала</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Именно: хороший kill switch ограничивает риск, управляет открытыми заявками, сохраняет причину и не допускает бесконтрольный restart." data-explanation-wrong="Простое завершение процесса может оставить заявки на venue и не создаёт безопасной процедуры восстановления."><h3 class="quiz-question">4. Что обязательно входит в kill-switch runbook?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Только команда завершения процесса</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Triggers, stop-new-risk, open-order policy, audit и controlled recovery</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Автоматический restart без проверки</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить ответы</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Пройти ещё раз</button>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">🧭</div><div class="callout-content"><strong class="callout-title">Финальная граница курса</strong><p>Курс учит собирать и проверять evidence. Он не выдаёт разрешение на реальные сделки и не заменяет независимый production review.</p></div></div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

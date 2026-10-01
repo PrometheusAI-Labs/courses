@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NautilusTrader: надёжный бэктест от данных до решения</title>
+
+  <meta name="description" content="Интерактивный курс по воспроизводимому бэктесту в NautilusTrader.">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!--
+    CUSTOMIZE PER COURSE — change only the three accent variables below.
+    Options:
+      vermillion  #D94F30 / #C4432A / #FDEEE9 / #E8836C  (default)
+      coral       #E06B56 / #C85A47 / #FDECEA / #E89585
+      teal        #2A7B9B / #1F6280 / #E4F2F7 / #5A9DB8
+      amber       #D4A843 / #BF9530 / #FDF5E0 / #E0C070
+      forest      #2D8B55 / #226B41 / #E8F5EE / #5AAD7A
+  -->
+  <style>
+    :root {
+      --color-accent:       #B23A24;
+      --color-accent-hover: #952F1D;
+      --color-accent-light: #FDEEE9;
+      --color-accent-muted: #E8836C;
+    }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="nav-inner">
+      <a class="nav-home" href="../index.html">Все курсы</a>
+      <span class="nav-title">NautilusTrader: надёжный бэктест от данных до решения</span>
+      <div class="nav-dots" id="nav-dots" aria-label="Навигация по модулям">
+        <button class="nav-dot" data-target="module-1" data-tooltip="Данные как доказательство" aria-label="Модуль 1: Данные как доказательство"></button>
+<button class="nav-dot" data-target="module-2" data-tooltip="Воспроизводимый запуск" aria-label="Модуль 2: Воспроизводимый запуск"></button>
+<button class="nav-dot" data-target="module-3" data-tooltip="Стратегия как гипотеза" aria-label="Модуль 3: Стратегия как гипотеза"></button>
+<button class="nav-dot" data-target="module-4" data-tooltip="Что результат доказывает" aria-label="Модуль 4: Что результат доказывает"></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- modules/*.html content is assembled here by build.sh -->
+<section class="module" id="module-1">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 1 · 100 минут</span>
+      <h1 class="module-title">Данные как доказательство</h1>
+      <p class="module-subtitle">До выводов о стратегии восстановим проверяемую цепочку: от строки поставщика до запроса к каталогу.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Криминалистический архив, а не мешок файлов</h2>
+      <p>Представьте архив улик: важны не только образцы, но и подписи, время и порядок. В исследовании таким архивом становится <span class="term" data-definition="Catalog — структурированное хранилище рыночных данных, которое можно повторно запрашивать по типу, инструменту и времени. В заданиях AI называйте его источником входов эксперимента.">catalog</span>, а <span class="term" data-definition="Бэктест — симуляция торговых правил на исторических данных и заданной модели исполнения. Он показывает модельный результат, но не гарантирует будущее поведение рынка.">бэктест</span> использует его как вход.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-1)">
+          <div class="pattern-icon" style="background: var(--color-actor-1)">①</div>
+          <h3 class="pattern-title">Происхождение</h3>
+          <p class="pattern-desc">Кто дал данные, какой файл и какой диапазон были получены.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-2)">
+          <div class="pattern-icon" style="background: var(--color-actor-2)">②</div>
+          <h3 class="pattern-title">Порядок</h3>
+          <p class="pattern-desc"><span class="term" data-definition="ts_init — временная метка инициализации записи в модели NautilusTrader. Перед использованием уточняйте семантику конкретной метки и не путайте её автоматически со временем события на бирже.">ts_init</span> задаёт проверяемую последовательность записей.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-3)">
+          <div class="pattern-icon" style="background: var(--color-actor-3)">③</div>
+          <h3 class="pattern-title">Преобразования</h3>
+          <p class="pattern-desc">Нормализация, фильтры и удаления должны оставлять след в отчёте.</p>
+        </div>
+        <div class="pattern-card" style="border-top: 3px solid var(--color-actor-5)">
+          <div class="pattern-icon" style="background: var(--color-actor-5)">④</div>
+          <h3 class="pattern-title">Граница вывода</h3>
+          <p class="pattern-desc">Чистый архив доказывает воспроизводимость входов, но не будущую прибыль.</p>
+        </div>
+      </div>
+      <div class="callout callout-accent animate-in">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content"><strong class="callout-title">Ключевой принцип</strong><p>Сортировка исправляет порядок записей, но не исправляет неверные цены, пропуски или скрытые преобразования.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Путь одной записи: нажимайте «Следующий шаг»</h2>
+      <p><span class="term" data-definition="Data flow — маршрут данных через последовательные этапы обработки. Используйте этот термин, когда просите AI показать, где запись изменилась или потерялась.">Поток данных</span> помогает найти место, где доказательство могло стать слабее.</p>
+      <div class="flow-animation" data-steps='[
+        {"highlight":"flow-actor-1","label":"Поставщик отдаёт исходные строки"},
+        {"highlight":"flow-actor-2","label":"Строки превращаются в типизированные тики","packet":true,"from":"actor-1","to":"actor-2"},
+        {"highlight":"flow-actor-3","label":"Тики сортируются по ts_init","packet":true,"from":"actor-2","to":"actor-3"},
+        {"highlight":"flow-actor-4","label":"Инструмент и тики записываются в catalog","packet":true,"from":"actor-3","to":"actor-4"},
+        {"highlight":"flow-actor-5","label":"Исследователь делает ограниченный запрос","packet":true,"from":"actor-4","to":"actor-5"}
+      ]'>
+        <div class="flow-actors">
+          <div class="flow-actor" id="flow-actor-1"><div class="flow-actor-icon">CSV</div><span>Строки</span></div>
+          <div class="flow-actor" id="flow-actor-2"><div class="flow-actor-icon">T</div><span>Тики</span></div>
+          <div class="flow-actor" id="flow-actor-3"><div class="flow-actor-icon">⇅</div><span>Сортировка</span></div>
+          <div class="flow-actor" id="flow-actor-4"><div class="flow-actor-icon">C</div><span>Catalog</span></div>
+          <div class="flow-actor" id="flow-actor-5"><div class="flow-actor-icon">?</div><span>Запрос</span></div>
+        </div>
+        <div class="flow-packet" id="flow-packet"></div>
+        <div class="flow-step-label">Нажмите «Следующий шаг», чтобы начать</div>
+        <div class="flow-controls">
+          <button class="btn flow-next-btn">Следующий шаг</button>
+          <button class="btn flow-reset-btn">Сначала</button>
+          <span class="flow-progress"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Что именно делает код архива</h2>
+      <p>Слева — точный фрагмент проекта. Справа — смысл действий без предположений о качестве источника.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code">
+          <span class="translation-label">CODE</span>
+          <pre><code># Create a catalog instance
+catalog = ParquetDataCatalog(str(CATALOG_PATH))
+
+# Write instrument to the catalog
+catalog.write_instruments([instrument])
+
+# Write ticks to the catalog
+catalog.write_quote_ticks(ticks)
+</code></pre>
+        </div>
+        <div class="translation-english">
+          <span class="translation-label">ПО-РУССКИ</span>
+          <div class="translation-lines">
+            <p class="tl">Открыть <span class="term" data-definition="Parquet — колоночный формат файлов, удобный для аналитических запросов. Формат хранения не гарантирует корректность содержимого.">Parquet</span>-каталог по заранее выбранному пути.</p>
+            <p class="tl">Сохранить описание инструмента, чтобы тики имели однозначный контекст.</p>
+            <p class="tl">Сохранить подготовленные quote ticks как вход исследования.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-warning animate-in">
+        <div class="callout-icon">⚠</div>
+        <div class="callout-content"><strong class="callout-title">Не переносите механику примера бездумно</strong><p>Удаление каталога даёт чистый учебный запуск, но в реальном исследовании политика хранения и резервного копирования должна быть отдельным решением.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: паспорт данных</h2>
+      <p>У вас шесть тиков: два стоят не по `ts_init`, преобразование цены не описано, заявлен диапазон 10:00–10:05. Цель — не «починить всё», а отделить проверенное от неизвестного.</p>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Зафиксируйте происхождение</strong><p>Источник, файл, часовой пояс, заявленный диапазон и число строк.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Проверьте форму</strong><p>Монотонность времени, дубликаты, пропуски, границы и преобразования.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Сформулируйте границу</strong><p>После сортировки порядок известен; истинность цен и полнота ещё не доказаны.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Дайте задание AI</strong><p>Попросите таблицу проверок с входом, методом, наблюдением и выводом.</p></div></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · 10 минут</h3>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">Артефакт</code><span class="badge-desc">Одностраничный паспорт набора данных и prompt на аудит.</span></div>
+        <div class="badge-item"><code class="badge-code">Приёмка</code><span class="badge-desc">Источник + диапазон + поле сортировки + минимум 4 проверки + явные ограничения.</span></div>
+        <div class="badge-item"><code class="badge-code">Запрет</code><span class="badge-desc">Не называть набор качественным или стратегию прибыльной без измеримых критериев.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Проверка понимания: решение по новым данным</h2>
+      <div class="quiz-container" id="quiz-module1">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Сначала нужен отчёт о дубликатах и правило их обработки; сортировка отвечает только за порядок." data-explanation-wrong="Сортировка не удаляет повторные наблюдения и не объясняет, откуда они взялись.">
+          <h3 class="quiz-question">После сортировки остались одинаковые `ts_init` и цены. Что делать первым?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Считать набор готовым: порядок уже исправлен</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Отдельно измерить дубликаты и зафиксировать правило обработки</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Удалить каждую вторую строку</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Паспорт должен показать преобразование и позволить воспроизвести его; совпадение итоговых чисел недостаточно." data-explanation-wrong="Красивый результат не восстанавливает скрытый этап подготовки данных.">
+          <h3 class="quiz-question">AI пересчитал цены перед записью, но не сохранил правило. Какой вывод допустим?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Результат доказателен, если equity curve гладкая</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Можно доверять, если запуск повторился дважды</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Цепочка неполна, пока преобразование не описано и не воспроизводится</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Границы и ожидаемая частота помогают отличить нормальное отсутствие записи от пробела." data-explanation-wrong="Количество строк без временной структуры не показывает, где именно данные отсутствуют.">
+          <h3 class="quiz-question">Как лучше проверить пропуски в минутном диапазоне?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сравнить наблюдаемые интервалы с ожидаемой частотой и границами</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Проверить только общий размер файла</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запустить стратегию и посмотреть на итоговый финансовый результат</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Такое утверждение ровно соответствует доказательству: известные входы и повторяемая запись, но не рыночная валидность." data-explanation-wrong="Catalog усиливает трассируемость, но не превращает историческую модель в подтверждение live-результата.">
+          <h3 class="quiz-question">Какое утверждение после записи catalog является evidence-bounded?</h3>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Стратегия готова к live</span></button>
+            <button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Эти входы можно повторно запросить при указанных ограничениях</span></button>
+            <button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Данные гарантируют прибыль</span></button>
+          </div><div class="quiz-feedback"></div>
+        </div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Проверить рассуждение</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+<section class="module" id="module-2">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 2 · 105 минут</span>
+      <h1 class="module-title">Воспроизводимый запуск</h1>
+      <p class="module-subtitle">Паспорт эксперимента делает каждый вход видимым: что тестировали, где, когда и при какой модели.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Запуску нужен паспорт</h2>
+      <p>Два результата сравнимы только тогда, когда их рецепты известны. <span class="term" data-definition="Воспроизводимость — способность повторить эксперимент с теми же зафиксированными входами, конфигурацией и версией кода и получить согласованный результат в пределах модели.">Воспроизводимость</span> начинается не с графика, а с явных полей.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">D</div><h3 class="pattern-title">Данные</h3><p class="pattern-desc">Путь к catalog, тип записи и версия набора.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">I</div><h3 class="pattern-title">Инструмент</h3><p class="pattern-desc"><span class="term" data-definition="instrument_id — однозначный идентификатор торгуемого инструмента. Он защищает от случайного теста не того рынка.">instrument_id</span> фиксирует рынок исследования.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-3)">T</div><h3 class="pattern-title">Период</h3><p class="pattern-desc">Начало и конец ограничивают видимую историю.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">V</div><h3 class="pattern-title">Модель площадки</h3><p class="pattern-desc">Допущения симуляции принадлежат рецепту, а не примечанию после теста.</p></div>
+      </div>
+      <div class="callout callout-accent"><div class="callout-icon">💡</div><div class="callout-content"><strong class="callout-title">Один фактор за раз</strong><p>Если между запусками поменялись и период, и инструмент, и модель исполнения, причина различия результата не определена.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Компоненты согласуют рецепт</h2>
+      <p>Пройдите чат по одному сообщению. Здесь <span class="term" data-definition="BacktestNode — координатор высокоуровневого запуска: он получает конфигурации, строит окружение и запускает эксперимент.">BacktestNode</span> не угадывает отсутствующие решения исследователя.</p>
+      <div class="chat-window" id="chat-module2">
+        <div class="chat-messages">
+          <div class="chat-message" data-msg="0" data-sender="researcher" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-1)">И</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-1)">Исследователь</span><p>Тестируем один инструмент, период от start_ns до end_ns. Остальные поля фиксируем.</p></div></div>
+          <div class="chat-message" data-msg="1" data-sender="catalog" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-2)">C</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-2)">Catalog</span><p>Я отдам QuoteTick только по указанному пути, инструменту и диапазону.</p></div></div>
+          <div class="chat-message" data-msg="2" data-sender="node" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-3)">N</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-3)">BacktestNode</span><p>Я соберу запуск из data, venue и engine config — сохраните весь рецепт.</p></div></div>
+          <div class="chat-message" data-msg="3" data-sender="venue" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-4)">V</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-4)">SimulatedVenue</span><p>Мои допущения влияют на модель исполнения. Не называйте их реальным поведением биржи.</p></div></div>
+          <div class="chat-message" data-msg="4" data-sender="researcher" style="display:none"><div class="chat-avatar" style="background: var(--color-actor-1)">И</div><div class="chat-bubble"><span class="chat-sender" style="color: var(--color-actor-1)">Исследователь</span><p>Сохраняю <span class="term" data-definition="Run manifest — паспорт запуска: структурированный список входов, параметров, версии кода и ссылок на результаты, достаточный для аудита и повтора.">manifest</span> и меняю в следующем запуске ровно один фактор.</p></div></div>
+        </div>
+        <div class="chat-typing" id="chat-module2-typing" style="display:none"><div class="chat-avatar" id="chat-module2-typing-avatar">?</div><div class="chat-typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>
+        <div class="chat-controls"><button class="btn chat-next-btn">Следующее сообщение</button><button class="btn chat-all-btn">Показать всё</button><button class="btn chat-reset-btn">Сначала</button><span class="chat-progress"></span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Точный рецепт входов</h2>
+      <p><span class="term" data-definition="Конфигурация — набор явно заданных параметров, управляющих поведением запуска. Просите AI выводить её полностью, а не прятать значения в переменных ноутбука.">Конфигурация</span> превращает скрытые предположения в проверяемые поля.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">CODE</span><pre><code>config = BacktestRunConfig(
+    venues=venue_configs,
+    data=data_configs,
+    engine=BacktestEngineConfig(),
+)
+</code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-РУССКИ</span><div class="translation-lines">
+          <p class="tl">Собрать общий рецепт бэктеста.</p>
+          <p class="tl">Включить в него заранее подготовленные конфигурации площадок и данных.</p>
+          <p class="tl">Добавить явную конфигурацию <span class="term" data-definition="Engine — движок, который координирует события и компоненты во время симуляции. Его настройки являются частью экспериментального рецепта.">движка</span>.</p>
+        </div></div>
+      </div>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Заморозить входы</strong><p>Data ID, период, инструмент, venue, engine, стратегия.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Привязать версию</strong><p>Сохранить commit или иной точный reference кода.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Сохранить manifest</strong><p>Положить рецепт рядом с результатом, а не в память исследователя.</p></div></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: сравните запуски A и B</h2>
+      <p>В A и B отличаются `start_time`, `instrument_id` и <span class="term" data-definition="Venue model — набор допущений симуляции о торговой площадке и исполнении. При сравнении запусков эта модель должна быть зафиксирована как часть рецепта.">venue model</span>. Ваша задача — сначала признать несопоставимость, затем спроектировать B2 с одним изменением.</p>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">DATA</code><span class="badge-desc">Тип, catalog ID/path, диапазон, инструмент.</span></div>
+        <div class="badge-item"><code class="badge-code">MODEL</code><span class="badge-desc">Venue и engine config, комиссии и допущения исполнения.</span></div>
+        <div class="badge-item"><code class="badge-code">CODE</code><span class="badge-desc">Версия стратегии и все параметры.</span></div>
+        <div class="badge-item"><code class="badge-code">DELTA</code><span class="badge-desc">Ровно один заявленный фактор между A и B2.</span></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · 10 минут</h3>
+      <div class="pattern-cards">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-5)">✓</div><h3 class="pattern-title">Артефакт</h3><p class="pattern-desc">Run manifest + таблица diff A/B2 + prompt для AI.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">!</div><h3 class="pattern-title">Граница</h3><p class="pattern-desc">Повторяемость внутри модели не доказывает реалистичность live.</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Проверка понимания: аудит запуска</h2>
+      <div class="quiz-container" id="quiz-module2">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Окна разные, поэтому результат может измениться из-за рыночного периода, а не из-за стратегии." data-explanation-wrong="Одинаковый код не делает разные временные выборки эквивалентными."><h3 class="quiz-question">Код и параметры одинаковы, но один запуск заканчивается на месяц позже. Что верно?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запуски полностью сопоставимы</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Нужно пометить различие периода и не приписывать эффект стратегии</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Достаточно сравнить итоговый PnL</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Instrument ID является частью входа; сравнение разных рынков отвечает на другой вопрос." data-explanation-wrong="Название стратегии не нейтрализует различия ликвидности, цены и поведения инструментов."><h3 class="quiz-question">AI незаметно сменил instrument ID. Как отнестись к результату?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Принять, если метрика улучшилась</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Усреднить с прошлым результатом</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Считать отдельным экспериментом и обновить manifest</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Так сохраняется причинная интерпретация: известен единственный delta между рецептами." data-explanation-wrong="Несколько одновременных изменений превращают причину результата в догадку."><h3 class="quiz-question">Как проверить влияние venue model?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сохранить все входы и изменить только venue model</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Одновременно сменить период и параметры EMA</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Выбрать лучший из множества незадокументированных запусков</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Manifest должен сопровождать результат и связывать его с данными, моделью и кодом." data-explanation-wrong="Скриншот не позволяет повторить входы и проверить скрытые различия."><h3 class="quiz-question">Какой артефакт лучше поддерживает аудит через месяц?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Скриншот графика</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Manifest с входами, параметрами, версией кода и ссылкой на результат</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сообщение «запуск повторён»</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Проверить рассуждение</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+<section class="module" id="module-3">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 3 · 105 минут</span>
+      <h1 class="module-title">Стратегия как проверяемая гипотеза</h1>
+      <p class="module-subtitle"><span class="term" data-definition="EMA cross — событие, при котором быстрое экспоненциальное среднее пересекает медленное. Это наблюдаемое условие правила, а не прогноз или гарантия прибыли.">EMA cross</span> здесь — прозрачный объект исследования: правило можно трассировать, опровергнуть и ограничить.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Термостат, а не оракул</h2>
+      <p>Термостат сравнивает наблюдение с порогом и действует по правилу; он не предсказывает погоду. Так же <span class="term" data-definition="Стратегия — набор явных правил, которые превращают рыночные события и состояние портфеля в торговые намерения. Правило не гарантирует результат исполнения.">стратегия</span> реагирует на данные и состояние.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">≈</div><h3 class="pattern-title">Наблюдение</h3><p class="pattern-desc"><span class="term" data-definition="EMA — экспоненциальное скользящее среднее: сглаженная оценка прошлых цен, где свежие наблюдения имеют больший вес.">Fast и slow EMA</span> описывают прошлые значения по-разному.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">◇</div><h3 class="pattern-title">Состояние</h3><p class="pattern-desc"><span class="term" data-definition="Flat, long и short — состояния позиции: нет позиции, ставка на рост или ставка на снижение. Одно и то же событие может требовать разных действий в разных состояниях.">Flat / short</span> меняют допустимую ветвь.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-3)">→</div><h3 class="pattern-title">Намерение</h3><p class="pattern-desc">`buy()` выражает решение стратегии, но ещё не доказывает fill.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">⊘</div><h3 class="pattern-title">Опровержение</h3><p class="pattern-desc">Гипотеза заранее говорит, какое наблюдение заставит её отвергнуть.</p></div>
+      </div>
+      <div class="callout callout-accent"><div class="callout-icon">💡</div><div class="callout-content"><strong class="callout-title">Сигнал не равен исполнению</strong><p>Между условием и сделкой остаются модель заявок, ликвидность, задержка, комиссии и проскальзывание.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Дерево решений по состоянию</h2>
+      <p>Пройдите слева направо. <span class="term" data-definition="Warm-up — период накопления достаточного числа наблюдений для расчёта индикатора. До завершения warm-up значение не считается готовым к решению.">Warm-up</span> стоит до сигнала: без готовых индикаторов действие запрещено.</p>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Индикаторы готовы?</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>fast EMA ≥ slow EMA?</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Портфель flat или short?</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Buy либо close + buy</p></div>
+      </div>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">NOT READY</code><span class="badge-desc">Вернуться без действия: индикаторам не хватает истории.</span></div>
+        <div class="badge-item"><code class="badge-code">FLAT</code><span class="badge-desc">Создать намерение buy.</span></div>
+        <div class="badge-item"><code class="badge-code">SHORT</code><span class="badge-desc">Закрыть позицию, затем создать намерение buy.</span></div>
+        <div class="badge-item"><code class="badge-code">UNKNOWN</code><span class="badge-desc">Из этого сниппета нельзя выводить fill, цену и PnL.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Читаем реальный обработчик</h2>
+      <p><span class="term" data-definition="Обработчик события — функция, которую система вызывает при поступлении конкретного события. Здесь on_bar реагирует на новый бар.">`on_bar`</span> сначала проверяет готовность, затем выбирает действие по сигналу и состоянию.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">CODE</span><pre><code>    def on_bar(self, _bar: Bar) -> None:
+        if not self.indicators_initialized():
+            return
+
+        if self.fast_ema.value >= self.slow_ema.value:
+            if self.portfolio.is_net_flat(self.config.instrument_id):
+                self.buy()
+            elif self.portfolio.is_net_short(self.config.instrument_id):
+                self.close_all_positions(self.config.instrument_id)
+                self.buy()
+</code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-РУССКИ</span><div class="translation-lines">
+          <p class="tl">Когда приходит новый бар, запустить эту логику.</p>
+          <p class="tl">Если индикаторы ещё не готовы, ничего не делать.</p>
+          <p class="tl">Проверить условие: fast EMA не ниже slow EMA.</p>
+          <p class="tl">Если позиции нет, вызвать `buy()`.</p>
+          <p class="tl">Если позиция short, сначала закрыть все позиции по инструменту.</p>
+          <p class="tl">После закрытия вызвать `buy()` — это намерение, не доказанный fill.</p>
+        </div></div>
+      </div>
+      <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-content"><strong class="callout-title">Не дописывайте поведение мысленно</strong><p>Фрагмент показывает только bullish-ветвь. Он не даёт права угадывать ветвь fast EMA &lt; slow EMA или детали исполнения.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: трасса четырёх баров</h2>
+      <p>Для каждого бара получите «готовность, fast/slow, состояние». Запишите только ожидаемое намерение, а <span class="term" data-definition="Fill — подтверждённое исполнение заявки полностью или частично. Вызов buy ещё не является fill.">fill</span>, <span class="term" data-definition="Latency — задержка между событием, решением, отправкой и обработкой заявки. Она может изменить доступную цену.">latency</span>, <span class="term" data-definition="Fees — комиссии площадки и другие расходы исполнения, которые нужно моделировать отдельно.">fees</span> и <span class="term" data-definition="Slippage — разница между ожидаемой и фактической ценой исполнения из-за рынка, задержки и ликвидности.">slippage</span> оставьте как неизвестные.</p>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Bar A · not ready</strong><p>Сработает guard: намерения нет.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Bar B · fast ≥ slow · flat</strong><p>Ожидается вызов `buy()`.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Bar C · fast ≥ slow · short</strong><p>Ожидается `close_all_positions()`, затем `buy()`.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Bar D · fast &lt; slow</strong><p>Этот фрагмент не показывает действие: вывод ограничен.</p></div></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · карточка гипотезы</h3>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">RULE</code><span class="badge-desc">Явное условие и один изменяемый параметр.</span></div>
+        <div class="badge-item"><code class="badge-code">FALSIFY</code><span class="badge-desc">Наблюдение, при котором гипотеза отвергается.</span></div>
+        <div class="badge-item"><code class="badge-code">OOS</code><span class="badge-desc"><span class="term" data-definition="Out-of-sample — отложенный период, который не использовали для выбора параметров. Он уменьшает риск принять подгонку за обобщаемый результат.">Out-of-sample</span> период, не участвующий в подборе.</span></div>
+        <div class="badge-item"><code class="badge-code">BOUNDARY</code><span class="badge-desc">Никаких обещаний прибыли или переноса на live.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Проверка понимания: что сделал бы исследователь?</h2>
+      <div class="quiz-container" id="quiz-module3">
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 1</span><p>Первый бар пришёл до warm-up, но AI всё равно создал buy.</p></div><div class="quiz-question-block" data-correct="b" data-explanation-right="Guard требует выйти до торговой логики, поэтому действие указывает на несоответствие реализации правилу." data-explanation-wrong="До инициализации индикаторов сравнение EMA не должно вести к решению."><h3 class="quiz-question">Какой первый вывод?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Это сильный ранний сигнал</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Проверить guard: действие не соответствует показанному коду</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Увеличить trade size</span></button></div><div class="quiz-feedback"></div></div></div>
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 2</span><p>Fast EMA выше slow EMA, позиция short.</p></div><div class="quiz-question-block" data-correct="c" data-explanation-right="В показанной ветви сначала закрывается short, затем создаётся buy-намерение." data-explanation-wrong="Состояние short требует другой последовательности, чем flat."><h3 class="quiz-question">Какую трассу ожидать?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Только buy без закрытия</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Ничего не делать</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Close all positions → buy</span></button></div><div class="quiz-feedback"></div></div></div>
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 3</span><p>AI подобрал периоды EMA на всём датасете и там же измерил результат.</p></div><div class="quiz-question-block" data-correct="a" data-explanation-right="Параметры увидели тестовый период; нужен независимый out-of-sample gate." data-explanation-wrong="Высокая метрика на данных подбора совместима с переобучением и не является независимой проверкой."><h3 class="quiz-question">Что исправить?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Отделить подбор от независимого out-of-sample теста</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Выбрать ещё больше комбинаций на том же периоде</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Назвать лучший результат production-ready</span></button></div><div class="quiz-feedback"></div></div></div>
+        <div class="scenario-block"><div class="scenario-context"><span class="scenario-label">Сценарий 4</span><p>`buy()` был вызван, но отчёта об исполнении нет.</p></div><div class="quiz-question-block" data-correct="b" data-explanation-right="Код доказывает путь к намерению; исполнение требует отдельных событий и модели." data-explanation-wrong="Вызов метода стратегии нельзя автоматически приравнять к сделке по ожидаемой цене."><h3 class="quiz-question">Как сформулировать вывод?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Сделка точно исполнена</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Создано торговое намерение; fill пока не подтверждён</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Прибыль уже известна</span></button></div><div class="quiz-feedback"></div></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить рассуждение</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+<section class="module" id="module-4">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 4 · 110 минут</span>
+      <h1 class="module-title">Что результат доказывает — и чего не доказывает</h1>
+      <p class="module-subtitle"><span class="term" data-definition="Бэктест — симуляция торговых правил на исторических данных и заданной модели исполнения. Он показывает модельный результат, но не гарантирует live-поведение.">Бэктест</span> — ценный краш-тест модели. Он показывает поведение в заданных условиях, а не гарантирует реальные дороги.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">Краш-тест полезен именно своими границами</h2>
+      <p><span class="term" data-definition="Детерминированный запуск — эксперимент, который при одинаковых входах и конфигурации воспроизводит согласованное поведение. Детерминизм не доказывает реалистичность модели.">Детерминированность</span> помогает повторить наблюдение. Но реальная площадка может отличаться ликвидностью, задержкой, очередью и отказами.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-5)">✓</div><h3 class="pattern-title">Доказывает</h3><p class="pattern-desc">При этих входах, коде и модели получился этот результат.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">↻</div><h3 class="pattern-title">Позволяет</h3><p class="pattern-desc">Повторить эксперимент и проверить влияние одного изменения.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">?</div><h3 class="pattern-title">Не знает</h3><p class="pattern-desc">Как venue исполнит заявки при реальной очереди и задержке.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">×</div><h3 class="pattern-title">Не гарантирует</h3><p class="pattern-desc">Будущую прибыль, безопасность капитала или production readiness.</p></div>
+      </div>
+      <div class="callout callout-info"><div class="callout-icon">🧭</div><div class="callout-content"><strong class="callout-title">Evidence-bounded формулировка</strong><p>«Результат воспроизведён на указанном catalog и конфигурации» сильнее и честнее, чем «стратегия работает».</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Трасса: построить, добавить, запустить</h2>
+      <p><span class="term" data-definition="Trace — прослеживаемая последовательность шагов и артефактов от конфигурации до результата. Trace помогает аудитору проверить, откуда взялся вывод.">Trace</span> связывает конфигурацию, стратегию и результат, но не добавляет отсутствующие live-доказательства.</p>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">CODE</span><pre><code>node = BacktestNode(configs=[config])
+node.build()
+
+node.add_builtin_strategy(
+    config.id,
+    "EmaCross",
+    EmaCrossConfig(
+        instrument_id=instrument.id,
+        trade_size=Quantity.from_int(1_000_000),
+        fast_period=10,
+        slow_period=20,
+    ),
+)
+</code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-РУССКИ</span><div class="translation-lines">
+          <p class="tl">Создать узел с зафиксированным рецептом запуска.</p>
+          <p class="tl">Построить компоненты эксперимента по конфигурации.</p>
+          <p class="tl">Добавить встроенную стратегию EmaCross к этому config ID.</p>
+          <p class="tl">Указать инструмент и размер торгового намерения.</p>
+          <p class="tl">Зафиксировать быстрый и медленный периоды EMA.</p>
+          <p class="tl">Фрагмент заканчивается регистрацией стратегии; запуск находится ниже в upstream-файле и не смешивается с этой точной выдержкой.</p>
+        </div></div>
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Config</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Build</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Strategy</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Run</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><p>Results</p></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лестница доказательств: каждый шаг — новая проверка</h2>
+      <p><span class="term" data-definition="Gate — заранее определённая проверка, которую нужно пройти перед переходом на следующий уровень риска. Gate должен иметь критерии GO, NO-GO и stop condition.">Gate</span> не выдаёт сертификат навсегда; он отвечает только на вопрос о следующем ограниченном этапе.</p>
+      <div class="step-cards">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Backtest</strong><p>Исторические данные + модель. Артефакты: catalog, config, code, results.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Forward</strong><p>Правила фиксированы до новых наблюдений; нет подбора по уже увиденному периоду.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Shadow</strong><p>Система получает живые события, но не отправляет реальные заявки.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Canary</strong><p>Минимально ограниченный реальный риск со stop conditions.</p></div></div>
+        <div class="step-card"><div class="step-num">5</div><div class="step-body"><strong>Live scope</strong><p>Только подтверждённые лимиты, мониторинг и <span class="term" data-definition="Reconciliation — сверка внутренних orders, fills и positions с execution reports площадки, включая проверки open и in-flight orders. Баланс и маржа относятся к отдельному account-state/risk gate.">reconciliation</span>; не безусловная готовность.</p></div></div>
+      </div>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">BACKTEST</code><span class="badge-desc">GO только к следующей проверке, не к капиталу.</span></div>
+        <div class="badge-item"><code class="badge-code">MISSING</code><span class="badge-desc">Нет forward/shadow/reconciliation — это пробел, а не «почти готово».</span></div>
+        <div class="badge-item"><code class="badge-code">NO-GO</code><span class="badge-desc">Корректное решение, когда gate не подтверждён.</span></div>
+      </div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Лабораторная работа: соберите пакет доказательств</h2>
+      <p>Есть catalog manifest, run config, код, один result и нет reconciliation report. Разложите артефакты по уровням и выберите только следующий безопасный gate.</p>
+      <div class="pattern-cards">
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-1)">C</div><h3 class="pattern-title">Утверждение</h3><p class="pattern-desc">Один узкий вывод, который вы хотите защитить.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-2)">E</div><h3 class="pattern-title">Доказательства</h3><p class="pattern-desc">Конкретные артефакты и история их происхождения.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-4)">G</div><h3 class="pattern-title">Пробел</h3><p class="pattern-desc">Что отсутствует и какой вывод поэтому делать нельзя.</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background: var(--color-actor-5)">N</div><h3 class="pattern-title">Следующая проверка</h3><p class="pattern-desc">Ограничение времени и риска, а также чёткое условие остановки.</p></div>
+      </div>
+      <h3 class="screen-heading">Самостоятельно · итоговое решение</h3>
+      <div class="badge-list">
+        <div class="badge-item"><code class="badge-code">Артефакт</code><span class="badge-desc">Evidence matrix + одностраничное GO/NO-GO решение.</span></div>
+        <div class="badge-item"><code class="badge-code">Приёмка</code><span class="badge-desc">Каждый claim имеет ссылку на evidence или метку «не подтверждено».</span></div>
+        <div class="badge-item"><code class="badge-code">Scope</code><span class="badge-desc">GO относится только к следующему ограниченному gate.</span></div>
+        <div class="badge-item"><code class="badge-code">Stop</code><span class="badge-desc">Указано наблюдение, при котором работа прекращается или откатывается.</span></div>
+      </div>
+      <div class="callout callout-warning"><div class="callout-icon">⚠</div><div class="callout-content"><strong class="callout-title">Текущий кейс</strong><p>Без reconciliation и последующих уровней доказательств production-ready claim получает NO-GO. Допустим следующий контролируемый forward/shadow gate после отдельной проверки.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">Итоговая проверка: GO, NO-GO или следующий этап?</h2>
+      <div class="quiz-container" id="quiz-module4">
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Backtest поддерживает вывод о поведении внутри модели и может открыть только следующий ограниченный gate." data-explanation-wrong="Одна историческая симуляция не покрывает live execution, reconciliation и операционные риски."><h3 class="quiz-question">Бэктест воспроизводим и положителен. Какой вывод допустим?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Стратегия доказанно прибыльна в будущем</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>В заданной модели результат воспроизведён; можно оценить следующий gate</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Можно сразу выделить полный капитал</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Расхождение требует объяснения и блокирует повышение риска до восстановления trace." data-explanation-wrong="Игнорировать несовпадение нельзя: оно опровергает текущую связку модели и наблюдаемого поведения."><h3 class="quiz-question">Shadow-сигналы расходятся с повторным backtest. Решение?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Перейти к canary ради проверки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Выбрать более красивый отчёт</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>NO-GO и диагностика данных, конфигурации и событий</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Ограниченный пробный запуск должен сдерживать ущерб и иметь заранее определённую остановку; иначе это не контролируемый этап проверки." data-explanation-wrong="Малый капитал без временного лимита, мониторинга и условия остановки всё равно оставляет неограниченный процессный риск."><h3 class="quiz-question">Как выглядит корректный ограниченный пробный запуск?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Малый лимит риска, срок, мониторинг, сверка состояния и условие остановки</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Любой Live-запуск с небольшим депозитом</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>Запуск без сверки, если бэктест хороший</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="NO-GO точно фиксирует пробел и защищает от вывода, который evidence pack не поддерживает." data-explanation-wrong="Отсутствие evidence нельзя заменить уверенностью, повтором формулировки или обещанием добавить отчёт позже."><h3 class="quiz-question">Reconciliation report отсутствует. Как записать production readiness?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>GO, если команда уверена</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>NO-GO для production claim; указать недостающий артефакт</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><div class="quiz-option-radio"></div><span>GO с пометкой «проверим потом»</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Проверить решение</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Пройти ещё раз</button>
+      </div>
+      <div class="callout callout-accent"><div class="callout-icon">→</div><div class="callout-content"><strong class="callout-title">Следующий курс</strong><p>Rust/live path продолжит лестницу через адаптеры, события исполнения и reconciliation. Этот курс не выдал production authority — он научил требовать её доказательства.</p></div></div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>
+  </main>
+
+  <footer class="course-footer" aria-label="Навигация по программе">
+    <a href="../index.html">Все курсы</a>
+    <a href="../01-engine-foundations/index.html">← Предыдущий курс</a>
+    <a href="../resources.html#labs">Практикум и рабочая тетрадь</a>
+    <a href="../docs/index.html">Документы HTML</a>
+    <a href="../03-rust-live/index.html">Следующий курс →</a>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<section class="module" id="module-3">
+  <div class="module-content">
+    <header class="module-header animate-in">
+      <span class="module-number">Модуль 3 · 110 минут</span>
+      <h1 class="module-title">Нативный Rust-бэктест</h1>
+      <p class="module-subtitle">Собираем испытательный стенд, где стратегия реальна, а площадка и прошлый рынок — контролируемая модель.</p>
+    </header>
+
+    <div class="screen">
+      <h2 class="screen-heading">1. Что на стенде настоящее, а что моделируется</h2>
+      <p><span class="term" data-definition="Backtest — воспроизведение торговой стратегии на исторических данных. Он проверяет поведение в заданной модели прошлого, но не гарантирует будущий результат.">Бэктест</span> полезен только тогда, когда вы точно знаете природу каждого слоя. Как на стенде двигателя: контроллер настоящий, нагрузка смоделирована, измерения обязаны быть воспроизводимыми.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-1)"><div class="pattern-icon" style="background:var(--color-actor-1)">🦀</div><h3 class="pattern-title">Реальная стратегия</h3><p class="pattern-desc">Тот же Rust-тип, параметры и обработчики, которые вы проверяете перед дальнейшим продвижением.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-2)"><div class="pattern-icon" style="background:var(--color-actor-2)">🏛️</div><h3 class="pattern-title">Симулированная площадка</h3><p class="pattern-desc">Модель исполнения, комиссий и <span class="term" data-definition="Проскальзывание — разница между ожидаемой и фактической ценой исполнения. В бэктесте это допущение модели, которое нужно задавать явно.">проскальзывания</span>, а не настоящая биржа.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-3)"><div class="pattern-icon" style="background:var(--color-actor-3)">🧾</div><h3 class="pattern-title">Историческое воспроизведение</h3><p class="pattern-desc">Упорядоченный поток прошлых событий с известным источником и диапазоном времени.</p></div>
+        <div class="pattern-card" style="border-top:3px solid var(--color-actor-5)"><div class="pattern-icon" style="background:var(--color-actor-5)">📊</div><h3 class="pattern-title">Нативный отчёт</h3><p class="pattern-desc">Результаты производит тот же Rust-контур; внешний Python-скрипт не становится канонической истиной.</p></div>
+      </div>
+      <div class="callout callout-accent animate-in"><div class="callout-icon">💡</div><div class="callout-content"><strong class="callout-title">Модель — часть результата</strong><p>Доходность без описания данных, комиссий и исполнения — не доказательство, а число без условий.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">2. Стратегия подключается явно</h2>
+      <div class="translation-block animate-in">
+        <div class="translation-code"><span class="translation-label">RUST · ДОСЛОВНО</span><pre><code><span class="code-line">use nautilus_model::types::Quantity;</span>
+<span class="code-line">use nautilus_trading::examples::strategies::EmaCross;</span>
+
+<span class="code-line">let strategy = EmaCross::new(</span>
+<span class="code-line">    instrument_id,</span>
+<span class="code-line">    Quantity::from("100000"),</span>
+<span class="code-line">    10, // fast EMA period</span>
+<span class="code-line">    20, // slow EMA period</span>
+<span class="code-line">);</span>
+
+<span class="code-line">engine.add_strategy(strategy)?;</span>
+<span class="code-line">engine.run(None, None, None, false)?;</span></code></pre></div>
+        <div class="translation-english"><span class="translation-label">ПО-ЧЕЛОВЕЧЕСКИ</span><div class="translation-lines">
+          <p class="tl">Подключаем тип количества и пример стратегии пересечения средних.</p>
+          <p class="tl">Создаём стратегию для выбранного инструмента и размера.</p>
+          <p class="tl">Задаём две <span class="term" data-definition="EMA, exponential moving average, — средняя цена с большим весом свежих наблюдений. Здесь две EMA используют разные периоды.">EMA</span>: быструю с периодом 10 и медленную с периодом 20.</p>
+          <p class="tl">Передаём готовую стратегию движку.</p>
+          <p class="tl">Запускаем нативный прогон с уже собранными окружением и данными.</p>
+        </div></div>
+      </div>
+      <p>Эти строки — только финал сборки. До них движок должен получить venue, инструмент и хронологически корректные данные.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">3. Полная сборка эксперимента</h2>
+      <div class="flow-steps animate-in">
+        <div class="flow-step"><div class="flow-step-num">1</div><p>Engine + config</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">2</div><p>Venue model</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">3</div><p>Instrument</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">4</div><p>Ordered data</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">5</div><p>Strategy</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">6</div><p>Run</p></div><div class="flow-arrow">→</div>
+        <div class="flow-step"><div class="flow-step-num">7</div><p>Reports</p></div>
+      </div>
+      <div class="badge-list animate-in">
+        <div class="badge-item"><code class="badge-code">provenance</code><span class="badge-desc">Источник, диапазон и версия данных записаны.</span></div>
+        <div class="badge-item"><code class="badge-code">chronology</code><span class="badge-desc">События отсортированы; будущее не просачивается в прошлое.</span></div>
+        <div class="badge-item"><code class="badge-code">costs</code><span class="badge-desc">Комиссии, slippage и fill-модель не оставлены неявными.</span></div>
+        <div class="badge-item"><code class="badge-code">manifest</code><span class="badge-desc">Версия стратегии, параметры и выходные отчёты воспроизводимы.</span></div>
+      </div>
+      <div class="callout callout-warning animate-in"><div class="callout-icon">🚫</div><div class="callout-content"><strong class="callout-title">Look-ahead обнуляет вывод</strong><p><span class="term" data-definition="Look-ahead bias — ошибка, когда решение в прошлом использует данные, которые на тот момент ещё не были известны. Такой тест выглядит умнее реальности.">Подглядывание в будущее</span> делает красивый отчёт недействительным.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">4. Лабораторная работа: соберите испытательный стенд</h2>
+      <div class="step-cards stagger-children">
+        <div class="step-card"><div class="step-num">1</div><div class="step-body"><strong>Разложите семь карточек</strong><p>Engine → venue → instrument → data → strategy → run → reports.</p></div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-body"><strong>Пометьте природу слоя</strong><p>Реальная логика, симуляция, входное доказательство или выходное доказательство.</p></div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-body"><strong>Добавьте проверки</strong><p>Хронология, provenance, fees, slippage, warm-up и детерминированная конфигурация.</p></div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-body"><strong>Заполните manifest</strong><p>Версия стратегии, диапазон данных, инструмент, параметры, seed и пути отчётов.</p></div></div>
+      </div>
+      <div class="callout callout-info animate-in"><div class="callout-icon">🧪</div><div class="callout-content"><strong class="callout-title">Хороший эксперимент можно опровергнуть</strong><p>До запуска сформулируйте, какие наблюдения отменят гипотезу, а не только какие подтвердят её.</p></div></div>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">5. Самостоятельно: сравните 10/20 и 20/50</h2>
+      <p>Подготовьте тест-чартер для двух наборов EMA в одном и том же Rust-harness. Меняются только заявленные периоды; данные, venue model и правила отчёта остаются одинаковыми.</p>
+      <div class="pattern-cards stagger-children">
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-1)">❓</div><h3 class="pattern-title">Гипотеза</h3><p class="pattern-desc">Какой эффект ожидается и почему он измерим?</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-2)">🔒</div><h3 class="pattern-title">Контроль</h3><p class="pattern-desc">Какие входы и допущения неизменны между прогонами?</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-3)">🧯</div><h3 class="pattern-title">Инвалидация</h3><p class="pattern-desc">При каких ошибках данных или модели оба отчёта отклоняются?</p></div>
+        <div class="pattern-card"><div class="pattern-icon" style="background:var(--color-actor-5)">📦</div><h3 class="pattern-title">Артефакт</h3><p class="pattern-desc">Чартер, manifest и карта «реальное/симулированное».</p></div>
+      </div>
+      <p>Критерий приёмки: вывод ограничен историческим тестом. Лучший результат не перепрыгивает напрямую к live.</p>
+    </div>
+
+    <div class="screen">
+      <h2 class="screen-heading">6. Проверка понимания: можно ли доверять эксперименту?</h2>
+      <div class="quiz-container" id="quiz-module3">
+        <div class="quiz-question-block" data-correct="c" data-explanation-right="Верно: перемешивание нарушает причинный порядок и может дать стратегии информацию из будущего." data-explanation-wrong="Скорость загрузки не оправдывает нарушение хронологии событий."><h3 class="quiz-question">1. Данные загружаются быстрее, если перемешать чанки. Что делать?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Перемешать и усреднить прибыль</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Оставить, если тест зелёный</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Восстановить строгую хронологию до запуска</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="b" data-explanation-right="Точно: честное сравнение меняет только исследуемый фактор, сохраняя остальные условия." data-explanation-wrong="Если одновременно меняются данные или fill-модель, причину различия установить нельзя."><h3 class="quiz-question">2. Как честно сравнить EMA 10/20 и 20/50?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Для каждого взять удобный рынок и период</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Сохранить все входы и менять только периоды EMA</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Оставить только более прибыльный отчёт</span></button></div><div class="quiz-feedback"></div></div>
+        <div class="quiz-question-block" data-correct="a" data-explanation-right="Да: Rust остаётся источником канонического запуска и отчёта; визуализация может быть вторичной, но не заменяет evidence chain." data-explanation-wrong="Не отдавайте канонический расчёт скрытому внешнему runtime, иначе воспроизводимость Rust-контура теряется."><h3 class="quiz-question">3. Как сохранить Rust авторитетным runtime?</h3><div class="quiz-options"><button class="quiz-option" data-value="a" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Генерировать канонический отчёт в Rust и хранить manifest</span></button><button class="quiz-option" data-value="b" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Пересчитать результат отдельным Python-скриптом без сверки</span></button><button class="quiz-option" data-value="c" onclick="selectOption(this)"><span class="quiz-option-radio"></span><span>Сохранить только скриншот графика</span></button></div><div class="quiz-feedback"></div></div>
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Проверить ответы</button><button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Пройти ещё раз</button>
+      </div>
+    </div>
+    <div class="callout callout-info animate-in"><div class="callout-icon">📝</div><div class="callout-content"><strong class="callout-title">Практический пакет</strong><p><a href="../resources.html#labs">Откройте входные данные лаборатории, форму workbook и критерии приёмки</a>.</p></div></div>
+  </div>
+</section>

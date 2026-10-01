@@ -1,0 +1,256 @@
+<!-- ═══════════════════════════════════════════════════════════
+     MODULE 1 — Что такое Rust Incubator?
+     ═══════════════════════════════════════════════════════════ -->
+<section class="module" id="module-1" style="background: var(--color-bg);">
+  <div class="module-content">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">Что такое Rust Incubator?</h1>
+      <p class="module-subtitle">Пошаговый путь изучения Rust — от основ языка до бэкенд-разработки</p>
+    </header>
+
+    <!-- ── Screen 1: Opening hook ──────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Зачем нужен Rust Incubator?</h2>
+
+      <p class="animate-in">
+        <span class="term" data-definition="Системный язык программирования от Mozilla. Гарантирует безопасность памяти без сборщика мусора благодаря системе владения (ownership).">Rust</span> — это язык, который даёт тебе мощь C++ без его ловушек. Rust Incubator — это жёсткий, но чёткий маршрут обучения от самых основ до <span class="term" data-definition="Серверная часть приложения: обработка запросов, работа с базами данных, бизнес-логика. В Rust для этого используют фреймворки вроде Actix-web и Axum.">бэкенд</span>-разработки.
+      </p>
+
+      <p class="animate-in">
+        Представьте инкубатор как парник для растений. Проект создаёт идеальные условия для роста ваших навыков Rust: структурированные шаги, практические задания и постепенное усложнение.
+      </p>
+
+      <div class="callout callout-info animate-in">
+        <span class="callout-icon">&#128218;</span>
+        <div class="callout-content">
+          <span class="callout-title">Как это работает?</span>
+          <p>Каждый шаг содержит теорию, примеры кода и задание. <span class="term" data-definition="Программа, которая переводит исходный код в машинный. Компилятор Rust (rustc) известен строгими проверками, которые ловят ошибки ещё до запуска программы.">Компилятор</span> Rust — ваш строгий наставник: он не пропустит ни одной ошибки.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: Структура курса — 5 этапов ────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Структура курса — 5 этапов</h2>
+
+      <p class="animate-in">
+        Rust Incubator разбит на пять последовательных шагов. Каждый этап опирается на предыдущий — от базового синтаксиса до реальных бэкенд-сервисов.
+      </p>
+
+      <div class="pattern-cards stagger-children animate-in">
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-accent-light); color: var(--color-accent);">0</div>
+          <div class="pattern-title">Шаг 0: Основы</div>
+          <p class="pattern-desc">Знакомство с синтаксисом, моделью памяти, системой типов. Три дня интенсивной работы с фундаментом языка.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-info-light); color: var(--color-info);">1</div>
+          <div class="pattern-title">Шаг 1: Концепции</div>
+          <p class="pattern-desc">Default, Clone, Copy, Box, Pin, Rc, Cell, Send/Sync, Phantom — 9 подшагов по ключевым концепциям Rust.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: var(--color-success-light); color: var(--color-success);">2</div>
+          <div class="pattern-title">Шаг 2: Идиомы</div>
+          <p class="pattern-desc">Newtype, typestates, mem::replace, sealing — 6 подшагов. Учимся писать код так, как принято в Rust-сообществе.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(123,109,170,0.12); color: #7B6DAA;">3</div>
+          <div class="pattern-title">Шаг 3: Экосистема</div>
+          <p class="pattern-desc">Тестирование, макросы, serde, async, потоки — 11 подшагов по инструментам и библиотекам Rust.</p>
+        </div>
+        <div class="pattern-card animate-in">
+          <div class="pattern-icon" style="background: rgba(212,168,67,0.12); color: #D4A843;">4</div>
+          <div class="pattern-title">Шаг 4: Бэкенд</div>
+          <p class="pattern-desc">Базы данных, HTTP-серверы, GraphQL API — 3 подшага. Собираем всё вместе в реальный бэкенд-сервис.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: Как устроен проект ────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Как устроен проект</h2>
+
+      <p class="animate-in">
+        Репозиторий организован как Cargo workspace. Каждая папка — отдельный этап обучения со своими подшагами.
+      </p>
+
+      <div class="file-tree animate-in">
+        <div class="ft-folder">
+          <span class="ft-name">rust-incubator/</span>
+          <div class="ft-children">
+            <div class="ft-folder">
+              <span class="ft-name">0_basics/</span>
+              <span class="ft-desc">— Основы: ownership, borrowing, абстракции</span>
+              <div class="ft-children">
+                <div class="ft-folder">
+                  <span class="ft-name">day01_ownership_borrowing/</span>
+                </div>
+                <div class="ft-folder">
+                  <span class="ft-name">day02_building_abstractions/</span>
+                </div>
+                <div class="ft-folder">
+                  <span class="ft-name">day03_memory_management/</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">1_concepts/</span>
+              <span class="ft-desc">— Ключевые концепции Rust</span>
+              <div class="ft-children">
+                <div class="ft-folder">
+                  <span class="ft-name">1_1_default_clone_copy/</span>
+                </div>
+                <div class="ft-folder">
+                  <span class="ft-name">1_2_box_pin/</span>
+                </div>
+                <div class="ft-file">
+                  <span class="ft-name">... (9 подшагов)</span>
+                </div>
+              </div>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">2_idioms/</span>
+              <span class="ft-desc">— Идиоматичный Rust</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">3_ecosystem/</span>
+              <span class="ft-desc">— Экосистема и библиотеки</span>
+            </div>
+            <div class="ft-folder">
+              <span class="ft-name">4_backend/</span>
+              <span class="ft-desc">— Бэкенд-разработка</span>
+            </div>
+            <div class="ft-file">
+              <span class="ft-name">Cargo.toml</span>
+              <span class="ft-desc">— Конфигурация workspace</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: Практика на каждом шаге ────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Практика на каждом шаге</h2>
+
+      <p class="animate-in">
+        Каждый шаг в Rust Incubator — это не просто текст для чтения. Это полноценный учебный блок с теорией, кодом и заданием.
+      </p>
+
+      <div class="step-cards stagger-children animate-in">
+        <div class="step-card animate-in">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>README с теорией и ссылками</strong>
+            <p>Каждый подшаг начинается с README-файла, где изложена теория и даны ссылки на официальную документацию и дополнительные материалы.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Исходный код с примерами</strong>
+            <p>В папке examples/ находятся готовые примеры, которые можно запустить и изучить. Они демонстрируют концепцию в действии.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Задание для самостоятельной реализации</strong>
+            <p>В каждом шаге есть Task — задание, которое нужно выполнить самостоятельно. Это ключевая часть обучения.</p>
+          </div>
+        </div>
+        <div class="step-card animate-in">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Тесты для проверки</strong>
+            <p>Написанные заранее тесты проверяют вашу реализацию. Запустите cargo test и убедитесь, что всё работает правильно.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Callout ──────────────────────────────────────────── -->
+    <div class="callout callout-accent animate-in">
+      <span class="callout-icon">&#9888;&#65039;</span>
+      <div class="callout-content">
+        <span class="callout-title">Важно</span>
+        <p>Rust Incubator — не просто набор упражнений. Это целый маршрут, где каждый шаг опирается на предыдущий. Пропускать этапы — значит строить дом без фундамента.</p>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: Quiz ──────────────────────────────────── -->
+    <div class="screen">
+      <h2 class="screen-heading animate-in">Проверьте себя</h2>
+
+      <div class="quiz-container animate-in" id="quiz-module1">
+
+        <!-- Question 1 -->
+        <div class="quiz-question-block" data-correct="5" data-explanation-right="Верно! Этапы пронумерованы от 0 до 4: Основы, Концепции, Идиомы, Экосистема и Бэкенд." data-explanation-wrong="Не совсем. Этапов пять, и они пронумерованы от 0 до 4: Основы, Концепции, Идиомы, Экосистема и Бэкенд.">
+          <div class="quiz-question">1. Сколько основных этапов в Rust Incubator?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="3" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 3 — основы, концепции, бэкенд
+            </button>
+            <button class="quiz-option" data-value="5" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 5 — от 0 до 4
+            </button>
+            <button class="quiz-option" data-value="7" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 7 — семь модулей
+            </button>
+            <button class="quiz-option" data-value="4" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> 4 — от 1 до 4
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-block" data-correct="readme-code-task" data-explanation-right="Именно так! Каждый шаг — это теория в README, примеры кода и практическое задание с тестами." data-explanation-wrong="Не совсем. Каждый шаг содержит README с теорией, код-примеры в examples/ и задание (Task) для самостоятельной реализации.">
+          <div class="quiz-question">2. Что делает каждый шаг в проекте?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="only-theory" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Содержит только теоретические статьи
+            </button>
+            <button class="quiz-option" data-value="readme-code-task" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Содержит README, код-примеры и задание для самостоятельной реализации
+            </button>
+            <button class="quiz-option" data-value="video-lectures" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Включает видеолекции и тесты
+            </button>
+            <button class="quiz-option" data-value="only-code" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Содержит только исходный код без пояснений
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-block" data-correct="idiomatic" data-explanation-right="Точно! Этап «Идиомы» учит писать код так, как это принято в Rust-сообществе: newtype, typestates, sealing и другие паттерны." data-explanation-wrong="Не совсем. Этап «Идиомы» нужен, чтобы научиться писать код так, как это принято в Rust-сообществе, используя паттерны вроде newtype и typestates.">
+          <div class="quiz-question">3. Для чего нужен этап «Идиомы»?</div>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="performance" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы оптимизировать производительность программ
+            </button>
+            <button class="quiz-option" data-value="idiomatic" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы научиться писать код так, как это принято в Rust-сообществе
+            </button>
+            <button class="quiz-option" data-value="syntax" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы выучить синтаксис языка
+            </button>
+            <button class="quiz-option" data-value="testing" onclick="selectOption(this)">
+              <span class="quiz-option-radio"></span> Чтобы научиться писать тесты
+            </button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <button class="quiz-check-btn" onclick="checkQuiz('quiz-module1')">Проверить ответы</button>
+        <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module1')">Сбросить</button>
+      </div>
+    </div>
+
+  </div>
+</section>
