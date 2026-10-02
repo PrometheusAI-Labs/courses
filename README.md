@@ -1,5 +1,11 @@
 # Prometheus AI Labs: Courses
 
+## Онлайн-курсы
+
+**[Открыть каталог курсов →](https://prometheusai-labs.github.io/courses/)**
+
+Сайт на GitHub Pages: https://prometheusai-labs.github.io/courses/
+
 Five interactive courses with a shared static catalog.
 
 - `nautilus/`: three Russian-language NautilusTrader courses, plus learning materials and third-party notices.
